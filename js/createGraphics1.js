@@ -3,14 +3,16 @@ var stationData=d3.csv('./../data/stationsDataProto2.csv');
 var meanSum=d3.csv('./../data/meanSum30.csv');
 mapWidth=800;
 mapHeight=600;
-barWidth=1000;
-barHeight=300;
+barWidth=2000;
+barHeight=400;
 var margin = ({
     top: 20,
     right: 150, // 10
     bottom: 20,
     left: 150 // 35
   });
+
+var year =1970;
 
 var sweGeo = fetch('./../data/jsonSwe.json')
 .then(response => response.text())
@@ -23,10 +25,14 @@ var sweGeo = fetch('./../data/jsonSwe.json')
 
 var radiusScale=d3.scaleLinear(
     // domain
-      [ 0, 20 ], 
+      [ 0, 2.53 ], 
       // range
-      [ '1%', '4%' ]
+      [ '1%', '2%' ]
   );
+
+function radiusScaleArea(d){
+    return radiusScale(Math.sqrt(d/Math.PI));
+}
 
 var colorRange=d3.scaleLinear().domain([ 1, 20 ])
       .range(["#fff5f0", "#99000d"]);
@@ -36,9 +42,16 @@ var colorRange=d3.scaleLinear().domain([ 1, 20 ])
 function getValueOfYear(d,year){
     const val = parseInt(d[year],10)
     if(val == 999){
-        return radiusScale(0);
+        return radiusScaleArea(0);
     }
-    return radiusScale(val);
+    return radiusScaleArea(val);
+}
+
+function getValueOfYearLegend(d){
+    if(d == 999){
+        return radiusScaleArea(0);
+    }
+    return radiusScaleArea(d);
 }
 
 function getColorOfYear(d,year){
@@ -50,6 +63,25 @@ function getColorOfYear(d,year){
       return '#ffffff';
     }
     return colorRange(val);
+}
+
+function getColorOfYearLegend(d){
+    if(d == 999){
+      return '#737373';
+    }
+    if(d==0){
+      return '#ffffff';
+    }
+    return colorRange(d);
+}
+
+function setYear(){
+    year=parseInt(document.getElementById("vizRange").value,10);
+    createStationCircles();
+}
+
+function getYear(){
+    return year;
 }
 
 
@@ -66,6 +98,52 @@ function loadMap(){
     .attr("class", "Sweden")
     .attr("fill", '#d9d9d9')
     .attr("d", geoPath);
+
+    var legendData=[999]
+    for (let i = 0; i < 21; i++) {
+        if( (i % 5) == 0){
+            legendData.push(i);
+        }
+    }
+    const circles = d3.select('.chart2').append('g')
+            .attr("class", "legend")
+            .selectAll('circle')
+            .data( legendData )
+            .join('circle')
+            
+            circles.call(g => g
+                .attr("r",d => getValueOfYearLegend(d))
+                .style("fill",d=>getColorOfYearLegend(d))
+                .style("stroke",'#000')
+                .style("stroke-width",'0.1%')
+                .style("opacity","0.7")
+                .attr("transform", (d,i) => {
+                    return "translate(800,"+45*i+")";
+                }))
+                .call(g => g
+                    // then we append a text label to the data point
+                    .append('text')
+                    .attr('font-size', "100%")
+                    .attr('font-color', "#000")
+                    .attr('x', 10)
+                      .attr('dy', '0.35em')
+                    // I've filter out values too low in order to avoid label overlap
+                    // see what happens if you remove the condition and just return d.company
+                    .text(d=> getValueOfYearLegend(d))
+                   );
+    /*const text = d3.select('.chart2').append('text')
+    .attr("class", "legendText")
+    .selectAll('text')
+    .data( legendData )
+    .join('text');
+    
+    text
+        .attr('x',"800")
+        .attr('y', (d,i) => 90*i)
+        .attr('font-size', "100%")
+        .attr('font-color', "#000")
+        .text(d, d=> getValueOfYearLegend(d));*/
+
  })
    
 }
@@ -108,11 +186,14 @@ function createStationCircles(){
             stationPosition.push(txt);
             }
 
+            d3.selectAll('.station').remove();
+            d3.selectAll('.stationCenter').remove();
+
             const info = d3.select('.chart2 .infotext')
             .attr('font-size', "100%")
             .attr('font-color', "#000")
             .join("text")
-            .text('Year: '+2018);
+            .text('Year: '+year);
             
             const circles = d3.select('.chart2').append('g')
             .attr("class", "station")
@@ -121,8 +202,8 @@ function createStationCircles(){
             .join('circle')
             
             circles
-                .attr("r",d => getValueOfYear(d,2018))
-                .style("fill",d=>getColorOfYear(d,2018))
+                .attr("r",d => getValueOfYear(d,year))
+                .style("fill",d=>getColorOfYear(d,year))
                 .style("stroke",'#000')
                 .style("stroke-width",'0.1%')
                 .style("opacity","0.7")
@@ -133,13 +214,13 @@ function createStationCircles(){
                     d3.select(this)
                     .style("stroke-width",'0.2%')
                     .raise();
-                    d3.select(".chart2 .infotext").text(c['Name']+': '+c[2018]);
+                    d3.select(".chart2 .infotext").text(c['Name']+': '+c[year]);
                     }
                 )
             .on("mouseout", function (d) {
             d3.select(this)
             .style("stroke-width",'0.1%');
-            d3.select(".chart2 .infotext").text('Year: '+2018);
+            d3.select(".chart2 .infotext").text('Year: '+year);
             //d3.select(".infobox").style('visibility', 'hidden');
             })
 
