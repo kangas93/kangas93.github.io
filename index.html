@@ -18,8 +18,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
 .fa-anchor,.fa-coffee {font-size:200px}
 </style>
-<body onload="loadAndCreateMap();"> 
+<body> 
+<script>
+loadMap();
+createStationCircles();
+createBarChart();
 
+</script>
 <!-- Navbar 
 <div class="w3-top">
   <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
@@ -81,8 +86,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       </div>
 
     <div class="viz">
-        <svg class="chart1" width="600" height="300" viewbox="0,0,80,80" style="border:1px solid #ccc"></svg>
-        <svg class="chart2" width="600" height="300" viewbox="0,0,50,50" style="border:1px solid #ccc"></svg>
+        <svg class="chart1" width="800" height="600" viewbox="0,0,800,600" style="border:1px solid #ccc"></svg>
+        <svg class="chart2" width="800" height="600" viewbox="0,0,800,600" style="border:1px solid #ccc">
+          <text x="50" y="300" class="infotext"></text>
+        </svg>
     </div>
 
    
