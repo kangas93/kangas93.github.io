@@ -23,7 +23,7 @@ var sweGeo = fetch('./../data/jsonSwe.json')
     return topojson.feature(jData,jData.objects.data);
   });     
 
-
+//Returns a radius for the circles
 var radiusScale=d3.scaleLinear(
     // domain
       [ 0, 2.53 ], 
@@ -31,6 +31,7 @@ var radiusScale=d3.scaleLinear(
       [ '1%', '2%' ]
   );
 
+//Calculates the radius for a given area for the circles
 function radiusScaleArea(d){
     return radiusScale(Math.sqrt(d/Math.PI));
 }
@@ -39,7 +40,7 @@ var colorRange=d3.scaleLinear().domain([ 1, 20 ])
       .range(["#fff5f0", "#99000d"]);
 
 
-
+//Returns the radius for a station value at a given year
 function getValueOfYear(d,year){
     const val = parseInt(d[year],10)
     if(val == 999){
@@ -54,7 +55,7 @@ function getValueOfYearLegend(d){
     }
     return radiusScaleArea(d);
 }
-
+//Returns the color for a station value at a given year
 function getColorOfYear(d,year){
     const val = parseInt(d[year],10)
     if(val == 999){
@@ -76,6 +77,7 @@ function getColorOfYearLegend(d){
     return colorRange(d);
 }
 
+//Returns the number of days from each station
 function getStationInfo(d){
     if(d==999){
         return "Ingen data";
@@ -84,7 +86,7 @@ function getStationInfo(d){
         return parseInt(d,10)+' dagar';
     }
 }
-
+//Sets the year from the slider to the variable 'year'. Also calls on 'createStationCircles'
 function setYear(){
     year=parseInt(document.getElementById("vizRange").value,10);
     createStationCircles();
@@ -95,7 +97,7 @@ function getYear(){
     return year;
 }
 
-
+//Loads and draws the map and the legend
 function loadMap(){
     sweGeo.then((geo) => {
     var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
@@ -110,7 +112,7 @@ function loadMap(){
     .attr("fill", '#d9d9d9')
     .attr("d", geoPath);
 
-    //CREATING A LEGEND
+    //Creating a legend
     var legendData=[999]
     for (let i = 0; i < 21; i++) {
         if( (i % 5) == 0){
@@ -118,32 +120,15 @@ function loadMap(){
         }
     }
     const legend = d3.select('.chart2').append('g');
-            //.attr("class", "legendCircle")
-            //.selectAll('circle')
-            //.data( legendData )
-            //.join('circle')
-            
-            /*circles
-                .attr("r",d => getValueOfYearLegend(d))
-                .style("fill",d=>getColorOfYearLegend(d))
-                .style("stroke",'#000')
-                .style("stroke-width",'0.1%')
-                .style("opacity","0.7")
-                .attr("transform", (d,i) => {
-                    return "translate(800,"+45*i+")";
-                });*/
+    
     legend
     .selectAll('g')
     .data( legendData )
-    // each data point is a group
     .join('g')
         .attr('class', 'legendCircle')
         .attr("transform", (d,i) => {
             return "translate(800,"+45*i+")";
         })
-    // .call() passes in the current d3 selection
-    // This is great if we want to append something
-    // but still want to work with the original selection after that
     .call(g => g
         // first we append a circle to our data point
         .append('circle')
@@ -154,64 +139,44 @@ function loadMap(){
         .style("opacity","0.5")
     )
     .call(g => g
-        // then we append a text label to the data point
         .append('text')
         .attr('x', d => getValueOfYearLegend(d))
         .attr('dy', '0.35em')
-        // I've filter out values too low in order to avoid label overlap
-        // see what happens if you remove the condition and just return d.company
         .text(d=> getStationInfo(d))
         );
-    
-    /*const text = d3.select('.chart2 .legendText').append('g')
-    .attr("class", "legendText")
-    .data( legendData)
-    .append('tspan')
-    //.join('tspan');
-    .attr('x',"810")
-    .attr('y', (d,i) => 90*i)
-    .attr('font-size', "100%")
-    .attr('font-color', "#000")
-    .text(d, d=> getStationInfo(d));*/
-                
-    /*const text = d3.select('.chart2').append('text')
-    .attr("class", "legendText")
-    .selectAll('text')
-    .data( legendData )
-    .join('text');
-    
-    text
-        .attr('x',"800")
-        .attr('y', (d,i) => 90*i)
-        .attr('font-size', "100%")
-        .attr('font-color', "#000")
-        .text(d, d=> getValueOfYearLegend(d));*/
 
  })
    
 }
 
+//Creates the circles that represents each station
 function createStationCircles(){
     stationData.then(function(stations){
         //stationsSorted=stations["2018"].sort(d3.descending);
         var stationPosition=[];
         sweGeo.then(function(geo) {
+            //Creates the projection for setting the circle position
             var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
+            //Creates a list with the station positions
             for (let i = 0; i < stations.length; i++) {
             var coord = projection([stations[i].Longitude,stations[i].Latitude]);
             var txt= "translate(" + coord + ")";
             stationPosition.push(txt);
             }
-
+            //Removes the circles so that new circles can be drawn when switching year
+            //It would be useful to solve the drawing in an other way. Is it better to update
+            // the current circles rather than deleting them?
             d3.selectAll('.station').remove();
             d3.selectAll('.stationCenter').remove();
 
+            //Sets the year text
             const info = d3.select('.chart2 .infotext')
             .attr('font-size', "100%")
             .attr('font-color', "#000")
             .join("text")
             .text('År: '+year);
             
+            //Creates the circles for each station
             const circles = d3.select('.chart2').append('g')
             .attr("class", "station")
             .selectAll('circle')
@@ -244,7 +209,7 @@ function createStationCircles(){
                 subStations.push(i.ID);
                 createStationScatter();
             })
-
+            //Creating a center point for each circle
             const circleCenter = d3.select('.chart2').append('g')
                 .attr("class", "stationCenter")
                 .selectAll('circle')
@@ -261,7 +226,8 @@ function createStationCircles(){
         });
     });
 }
-
+//Creates the bar chart showing the mean value
+// TODO: add title and axis labels
 function createBarChart(){
     meanSum.then(function(data){
         var yMaxM = d3.max(data, d => parseInt(d.Mean,10));
@@ -316,16 +282,13 @@ function createBarChart(){
                 });
             });
         
-    // Here we render the x axis
+    // Here the x axis is rendered
     d3.select(".chart1").append('g')
         .attr('class', 'x-axis')
-        // First set its container's (g) position to the 
-        // bottom of the chart
         .attr('transform', `translate(0,${ barHeight - margin.bottom })`)
-        // then just call this to render it
         .call( xAxis )
 
-    // it works the same for the y axis
+    // Y axis is rendered
     d3.select(".chart1").append('g')
         .attr('class', 'y-axis')
         .attr('transform', `translate(${ margin.left },0)`)
@@ -334,7 +297,7 @@ function createBarChart(){
     })
 
 }
-
+//Updates the barchart so that the slider year is highlighted in the barchart
 function updateSelectedBar(){
     var allRect=d3.selectAll(".bar").nodes();
     d3.selectAll('.bar').each((k,j) =>{
@@ -350,12 +313,21 @@ function updateSelectedBar(){
     });
 }
 
+//Not finished - placeholder function. When clicking on the circles on the map
+// a line scatterplot is going to appear instead of the barchart, showing the timeline
+//of the station
 function createStationScatter(){
 
     for(let i=0; i<subStations.length; i++){
         console.log(subStations[i]);
 
     }
+}
+
+//Not finished - placeholder function. Creates a svg element with buttons that can filter
+// the view for the user.
+function createFilterSettings(){
+
 }
 
 function msg(){
