@@ -80,10 +80,10 @@ function getColorOfYearLegend(d){
 //Returns the number of days from each station
 function getStationInfo(d){
     if(d==999){
-        return "Ingen data";
+        return "  Ingen data";
     }
     else{
-        return parseInt(d,10)+' dagar';
+        return '  '+parseInt(d,10)+' dagar';
     }
 }
 //Sets the year from the slider to the variable 'year'. Also calls on 'createStationCircles'
@@ -127,10 +127,9 @@ function loadMap(){
     .join('g')
         .attr('class', 'legendCircle')
         .attr("transform", (d,i) => {
-            return "translate(800,"+45*i+")";
+            return "translate(800,"+(20+40*i)+")";
         })
     .call(g => g
-        // first we append a circle to our data point
         .append('circle')
         .attr("r",d => getValueOfYearLegend(d))
         .style("fill",d=>getColorOfYearLegend(d))
@@ -171,7 +170,7 @@ function createStationCircles(){
 
             //Sets the year text
             const info = d3.select('.chart2 .infotext')
-            .attr('font-size', "100%")
+            .attr('font-size', "150%")
             .attr('font-color', "#000")
             .join("text")
             .text('År: '+year);

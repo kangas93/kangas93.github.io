@@ -18,22 +18,20 @@ body {
     position:absolute;
     top:0px;
     left:0px;
-    /* height:300px; */
-    /* width:100% */
-    /* position: static; */
-    /* margin-left: auto;
-    margin-right: auto; */
-
+   
 }
 
+.chart2-container{
+    width: 100%;
+    padding-top: 2%;
+    position: relative; 
+  
+}
 
-/* 
 .chart2 {
     position: relative;
-} */
-
-.chart2 {
-    position: relative;
+    top:0px;
+    left:0px;
 }
 
 
@@ -43,11 +41,6 @@ body {
 }
 
 .rangeInput {
-    /* position: static;
-    padding: 3%;
-    width: 800px;
-    
-     */
 
     width: 80%;
     margin: 0 auto;
