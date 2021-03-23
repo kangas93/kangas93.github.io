@@ -1,16 +1,14 @@
 
 var stationData=d3.csv('./../data/stationsDataProto2.csv');
 var meanSum=d3.csv('./../data/meanSum30.csv');
-mapWidth=800;
-mapHeight=600;
-barWidth=2000;
-barHeight=300;
-var margin = ({
-    top: 100,
-    right: 100, // 10
-    bottom: 0,
-    left: 20 // 35
-  });
+marginChart1 = ({top: 20, right: 30, bottom: 10, left: 60});
+marginChart2 = ({top: 20, right: 30, bottom: 30, left: 60});
+chartOneWidth=screen.width*0.8-marginChart1.left-marginChart1.right;//2000;
+chartOneHeight=screen.height*0.2;
+mapWidth=chartOneWidth*0.5;
+mapHeight=screen.height*0.68-chartOneHeight-marginChart2.top-marginChart2.bottom;
+//barWidth=Math.floor((screen.width-marginChart1.right-marginChart1.left)/50.0);
+
 
 var year = 1970;
 var subStations=[];
@@ -28,7 +26,7 @@ var radiusScale=d3.scaleLinear(
     // domain
       [ 0, 2.53 ], 
       // range
-      [ '1%', '2%' ]
+      [ '0.8%', '1.8%' ]
   );
 
 //Calculates the radius for a given area for the circles
@@ -127,7 +125,7 @@ function loadMap(){
     .join('g')
         .attr('class', 'legendCircle')
         .attr("transform", (d,i) => {
-            return "translate(800,"+(20+40*i)+")";
+            return "translate("+mapWidth*0.8+","+(mapHeight*0.1+25*i)+")";
         })
     .call(g => g
         .append('circle')
@@ -139,7 +137,7 @@ function loadMap(){
     )
     .call(g => g
         .append('text')
-        .attr('x', d => getValueOfYearLegend(d))
+        .attr('x', '2%') //d => getValueOfYearLegend(d)
         .attr('dy', '0.35em')
         .text(d=> getStationInfo(d))
         );
@@ -170,7 +168,7 @@ function createStationCircles(){
 
             //Sets the year text
             const info = d3.select('.chart2 .infotext')
-            .attr('font-size', "150%")
+            .attr('font-size', '1em')
             .attr('font-color', "#000")
             .join("text")
             .text('År: '+year);
@@ -195,13 +193,13 @@ function createStationCircles(){
                     d3.select(this)
                     .style("stroke-width",'0.3%')
                     .raise();
-                    d3.select(".chart2 .infotext").text(c['Name']+': '+getStationInfo(c[year]));
+                    d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
                     }
                 )
             .on("mouseout", function (d) {
             d3.select(this)
             .style("stroke-width",'0.1%');
-            d3.select(".chart2 .infotext").text('År: '+year);
+            d3.select(".chart2 .stationText").text("");
             //d3.select(".infobox").style('visibility', 'hidden');
             })
             .on('click', function(d,i){
@@ -234,12 +232,12 @@ function createBarChart(){
 
         xScale = d3.scaleBand()
         .domain( xDomain )
-        .range([ margin.left, barWidth - margin.right - margin.left ])
-        .padding(0.5);
+        .range([ marginChart1.left, chartOneWidth - marginChart1.right - marginChart1.left ])
+        .padding(0.1); //.padding(0.5);
 
         yScale = d3.scaleLinear()
         .domain([ 0, yMaxM ])
-        .range([ barHeight - margin.bottom, margin.top ])
+        .range([ chartOneHeight - marginChart1.bottom, marginChart1.top ])
 
         xAxis = d3.axisBottom(xScale)
         .tickSizeOuter(0);
@@ -257,7 +255,7 @@ function createBarChart(){
             .attr('class', 'bar')
             .attr('x', d => xScale(parseInt(d.Year,10)))
             .attr('y', d => yScale(parseInt(d.Mean, 10)))
-            .attr('width', xScale.bandwidth())
+            .attr('width',xScale.bandwidth()) //xScale.bandwidth()
             .attr('height', d => yScale(0) - yScale(parseInt(d.Mean, 10)))
             .style('fill', '#d9d9d9')
             .style('stroke-width','0.05%')
@@ -267,7 +265,8 @@ function createBarChart(){
                 d3.selectAll('.bar').each((k,j) =>{
                     if(k.Year==i.Year){
                         //d3.select(this).style('stroke-width','0.2%');
-                        d3.select(allRect[j]).style('stroke-width','0.2%')
+                        d3.select(allRect[j]).style('fill','#fc9272')
+                        .style('stroke-width','0.2%')
                         .style('stroke','#99000d');
                         year=i.Year;
                         document.getElementById("vizRange").value=i.Year;
@@ -275,8 +274,10 @@ function createBarChart(){
 
                     }
                     else{
-                        d3.select(allRect[j]).style('stroke-width','0.05%').
-                        style('stroke', '#000');
+                        d3.select(allRect[j]).style('stroke-width','0.05%')
+                        .style('fill', '#d9d9d9')
+                        .style('stroke', '#000');
+                        
                     }
                 });
             });
@@ -284,13 +285,15 @@ function createBarChart(){
     // Here the x axis is rendered
     d3.select(".chart1").append('g')
         .attr('class', 'x-axis')
-        .attr('transform', `translate(0,${ barHeight - margin.bottom })`)
+        .style("font-size", "40%")
+        .attr('transform', `translate(0,${ chartOneHeight - marginChart1.bottom })`)
         .call( xAxis )
-
+    
     // Y axis is rendered
     d3.select(".chart1").append('g')
         .attr('class', 'y-axis')
-        .attr('transform', `translate(${ margin.left },0)`)
+        .style("font-size", "100%")
+        .attr('transform', `translate(${ marginChart1.left },0)`)
         .call( yAxis );
 
     })
@@ -303,10 +306,10 @@ function updateSelectedBar(){
         if(parseInt(k.Year,10)==year){
             //d3.select(this).style('stroke-width','0.2%');
             d3.select(allRect[j]).style('stroke-width','0.2%')
-            .style('stroke','#99000d');
+            .style('stroke','#99000d').style('fill','#fc9272');
         }
         else{
-            d3.select(allRect[j]).style('stroke-width','0.05%')
+            d3.select(allRect[j]).style('stroke-width','0.05%').style('fill', '#d9d9d9')
             .style('stroke', '#000');
         }
     });

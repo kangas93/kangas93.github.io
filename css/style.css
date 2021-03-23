@@ -15,7 +15,7 @@ body {
 }
 .chart1 {
 
-    position:absolute;
+    position: relative;
     top:0px;
     left:0px;
    
@@ -42,6 +42,10 @@ body {
 
 .rangeInput {
 
-    width: 80%;
+    width: 89%;
     margin: 0 auto;
+}
+
+.stationText{
+    font-size: 70%;
 }
