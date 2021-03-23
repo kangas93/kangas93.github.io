@@ -4,12 +4,12 @@ var meanSum=d3.csv('./../data/meanSum30.csv');
 mapWidth=800;
 mapHeight=600;
 barWidth=2000;
-barHeight=400;
+barHeight=300;
 var margin = ({
     top: 20,
-    right: 150, // 10
-    bottom: 20,
-    left: 150 // 35
+    right: 100, // 10
+    bottom: 60,
+    left: 100 // 35
   });
 
 var year =1970;

@@ -86,12 +86,16 @@ createBarChart();
       </div>
 
     <div class="viz">
-        <svg class="chart1" width="800" height="400" viewbox="0,0,2000,400" style="border:1px solid #ccc"></svg>
+        <svg class="chart1" width="1400" height="400" viewbox="0,0,1750,100" style="border:1px solid #ccc">
+        </svg>
+        
+        <input type="range" id="vizRange" class="rangeInput" min="1970" max="2020" step=1 value="1970" oninput='setYear()'> </input>
+       
         <svg class="chart2" width="800" height="600" viewbox="0,0,1000,600" style="border:1px solid #ccc">
           <text x="50" y="300" class="infotext"></text>
           <text class="legendText"></text>
         </svg>
-        <input type="range" id="vizRange" min="1970" max="2020" step=1 value="1970" oninput='setYear()'>
+       
     </div>
 
    

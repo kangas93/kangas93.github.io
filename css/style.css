@@ -2,3 +2,27 @@ body {
     background-color: #3e3e3e;
    }
 
+.viz{
+position: relative;
+}
+
+.chart1{
+    position: relative;
+    
+}
+
+.chart2{
+    position: relative;
+}
+
+.chart2{
+    position: relative;
+}
+
+.rangeInput{
+    position: static;
+    padding: 3%;
+    width: 800px;
+    
+    
+}
