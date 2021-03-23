@@ -6,13 +6,14 @@ mapHeight=600;
 barWidth=2000;
 barHeight=300;
 var margin = ({
-    top: 20,
+    top: 100,
     right: 100, // 10
-    bottom: 60,
-    left: 100 // 35
+    bottom: 0,
+    left: 20 // 35
   });
 
-var year =1970;
+var year = 1970;
+var subStations=[];
 
 var sweGeo = fetch('./../data/jsonSwe.json')
 .then(response => response.text())
@@ -75,9 +76,19 @@ function getColorOfYearLegend(d){
     return colorRange(d);
 }
 
+function getStationInfo(d){
+    if(d==999){
+        return "Ingen data";
+    }
+    else{
+        return parseInt(d,10)+' dagar';
+    }
+}
+
 function setYear(){
     year=parseInt(document.getElementById("vizRange").value,10);
     createStationCircles();
+    updateSelectedBar();
 }
 
 function getYear(){
@@ -99,19 +110,20 @@ function loadMap(){
     .attr("fill", '#d9d9d9')
     .attr("d", geoPath);
 
+    //CREATING A LEGEND
     var legendData=[999]
     for (let i = 0; i < 21; i++) {
         if( (i % 5) == 0){
             legendData.push(i);
         }
     }
-    const circles = d3.select('.chart2').append('g')
-            .attr("class", "legend")
-            .selectAll('circle')
-            .data( legendData )
-            .join('circle')
+    const legend = d3.select('.chart2').append('g');
+            //.attr("class", "legendCircle")
+            //.selectAll('circle')
+            //.data( legendData )
+            //.join('circle')
             
-            circles.call(g => g
+            /*circles
                 .attr("r",d => getValueOfYearLegend(d))
                 .style("fill",d=>getColorOfYearLegend(d))
                 .style("stroke",'#000')
@@ -119,18 +131,49 @@ function loadMap(){
                 .style("opacity","0.7")
                 .attr("transform", (d,i) => {
                     return "translate(800,"+45*i+")";
-                }))
-                .call(g => g
-                    // then we append a text label to the data point
-                    .append('text')
-                    .attr('font-size', "100%")
-                    .attr('font-color', "#000")
-                    .attr('x', 10)
-                      .attr('dy', '0.35em')
-                    // I've filter out values too low in order to avoid label overlap
-                    // see what happens if you remove the condition and just return d.company
-                    .text(d=> getValueOfYearLegend(d))
-                   );
+                });*/
+    legend
+    .selectAll('g')
+    .data( legendData )
+    // each data point is a group
+    .join('g')
+        .attr('class', 'legendCircle')
+        .attr("transform", (d,i) => {
+            return "translate(800,"+45*i+")";
+        })
+    // .call() passes in the current d3 selection
+    // This is great if we want to append something
+    // but still want to work with the original selection after that
+    .call(g => g
+        // first we append a circle to our data point
+        .append('circle')
+        .attr("r",d => getValueOfYearLegend(d))
+        .style("fill",d=>getColorOfYearLegend(d))
+        .style("stroke",'#000')
+        .style("stroke-width",'0.1%')
+        .style("opacity","0.5")
+    )
+    .call(g => g
+        // then we append a text label to the data point
+        .append('text')
+        .attr('x', d => getValueOfYearLegend(d))
+        .attr('dy', '0.35em')
+        // I've filter out values too low in order to avoid label overlap
+        // see what happens if you remove the condition and just return d.company
+        .text(d=> getStationInfo(d))
+        );
+    
+    /*const text = d3.select('.chart2 .legendText').append('g')
+    .attr("class", "legendText")
+    .data( legendData)
+    .append('tspan')
+    //.join('tspan');
+    .attr('x',"810")
+    .attr('y', (d,i) => 90*i)
+    .attr('font-size', "100%")
+    .attr('font-color', "#000")
+    .text(d, d=> getStationInfo(d));*/
+                
     /*const text = d3.select('.chart2').append('text')
     .attr("class", "legendText")
     .selectAll('text')
@@ -146,32 +189,6 @@ function loadMap(){
 
  })
    
-}
-
-function projectPoints(data){
-    points=sweGeo.then(function(geo) {
-        return d3.geoMercator().fitSize([mapWidth,projHeigth],geo);})
-        .then(function(projection){
-            var coord = projection([data.Longitude,data.Latitude]);
-            return coord;
-        }).then(function(c){
-           return "translate(" + c + ")";
-        })
-    return points.then(function(result) {
-        console.log(result);
-        return result;
-    });
-}
-
-function projectPoints2(data){
-    return proj1.then(function(c){
-        var coord = projection([data.Longitude,data.Latitude]);
-        return coord;
-    })
-    .then(function(c){
-        return "translate(" + c + ")";
-     });
-
 }
 
 function createStationCircles(){
@@ -193,7 +210,7 @@ function createStationCircles(){
             .attr('font-size', "100%")
             .attr('font-color', "#000")
             .join("text")
-            .text('Year: '+year);
+            .text('År: '+year);
             
             const circles = d3.select('.chart2').append('g')
             .attr("class", "station")
@@ -206,22 +223,26 @@ function createStationCircles(){
                 .style("fill",d=>getColorOfYear(d,year))
                 .style("stroke",'#000')
                 .style("stroke-width",'0.1%')
-                .style("opacity","0.7")
+                .style("opacity","0.5")
                 .attr("transform", (d,i) => {
                     return stationPosition[i];
                 })
                 .on("mouseover", function (d,c) {
                     d3.select(this)
-                    .style("stroke-width",'0.2%')
+                    .style("stroke-width",'0.3%')
                     .raise();
-                    d3.select(".chart2 .infotext").text(c['Name']+': '+c[year]);
+                    d3.select(".chart2 .infotext").text(c['Name']+': '+getStationInfo(c[year]));
                     }
                 )
             .on("mouseout", function (d) {
             d3.select(this)
             .style("stroke-width",'0.1%');
-            d3.select(".chart2 .infotext").text('Year: '+year);
+            d3.select(".chart2 .infotext").text('År: '+year);
             //d3.select(".infobox").style('visibility', 'hidden');
+            })
+            .on('click', function(d,i){
+                subStations.push(i.ID);
+                createStationScatter();
             })
 
             const circleCenter = d3.select('.chart2').append('g')
@@ -261,24 +282,40 @@ function createBarChart(){
         yAxis = d3.axisLeft(yScale)
         .tickSizeOuter(0);
 
-        d3.select(".chart1").append('g')
+        const rect = d3.select(".chart1").append('g')
         .attr('class', 'bars')
         .selectAll('rect')
         .data( data )
-        .join('rect')
-        .attr('class', 'bar')
-        .attr('x', d => xScale(parseInt(d.Year,10)))
-        .attr('y', d => yScale(parseInt(d.Mean, 10)))
-        // bandwidth is a special function of scaleBand
-        // it returns the width of the band (bar) based on the configuration
-        // we set up earlier
-        .attr('width', xScale.bandwidth())
-        // remember that yScale(0) is the height of the entire chart
-        // so we subtract the y position of the top of the bar yScale(d.value)
-        // from it to get the total height of the bar.
-        .attr('height', d => yScale(0) - yScale(parseInt(d.Mean, 10)))
-        .style('fill', '#7472c0')
-    
+        .join('rect');
+
+        rect
+            .attr('class', 'bar')
+            .attr('x', d => xScale(parseInt(d.Year,10)))
+            .attr('y', d => yScale(parseInt(d.Mean, 10)))
+            .attr('width', xScale.bandwidth())
+            .attr('height', d => yScale(0) - yScale(parseInt(d.Mean, 10)))
+            .style('fill', '#d9d9d9')
+            .style('stroke-width','0.05%')
+            .style('stroke', '#000')
+            .on('click',function(d,i){
+                var allRect=rect.nodes();
+                d3.selectAll('.bar').each((k,j) =>{
+                    if(k.Year==i.Year){
+                        //d3.select(this).style('stroke-width','0.2%');
+                        d3.select(allRect[j]).style('stroke-width','0.2%')
+                        .style('stroke','#99000d');
+                        year=i.Year;
+                        document.getElementById("vizRange").value=i.Year;
+                        createStationCircles();
+
+                    }
+                    else{
+                        d3.select(allRect[j]).style('stroke-width','0.05%').
+                        style('stroke', '#000');
+                    }
+                });
+            });
+        
     // Here we render the x axis
     d3.select(".chart1").append('g')
         .attr('class', 'x-axis')
@@ -296,6 +333,29 @@ function createBarChart(){
 
     })
 
+}
+
+function updateSelectedBar(){
+    var allRect=d3.selectAll(".bar").nodes();
+    d3.selectAll('.bar').each((k,j) =>{
+        if(parseInt(k.Year,10)==year){
+            //d3.select(this).style('stroke-width','0.2%');
+            d3.select(allRect[j]).style('stroke-width','0.2%')
+            .style('stroke','#99000d');
+        }
+        else{
+            d3.select(allRect[j]).style('stroke-width','0.05%')
+            .style('stroke', '#000');
+        }
+    });
+}
+
+function createStationScatter(){
+
+    for(let i=0; i<subStations.length; i++){
+        console.log(subStations[i]);
+
+    }
 }
 
 function msg(){

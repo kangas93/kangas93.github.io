@@ -23,6 +23,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 loadMap();
 createStationCircles();
 createBarChart();
+updateSelectedBar();
+
 
 </script>
 <!-- Navbar 
@@ -86,12 +88,12 @@ createBarChart();
       </div>
 
     <div class="viz">
-        <svg class="chart1" width="1400" height="400" viewbox="0,0,1750,100" style="border:1px solid #ccc">
+        <svg class="chart1" width="1000" height="300" viewbox="0,0,1900,100">
         </svg>
         
         <input type="range" id="vizRange" class="rangeInput" min="1970" max="2020" step=1 value="1970" oninput='setYear()'> </input>
        
-        <svg class="chart2" width="800" height="600" viewbox="0,0,1000,600" style="border:1px solid #ccc">
+        <svg class="chart2" width="800" height="600" viewbox="50,50,1000,600" >
           <text x="50" y="300" class="infotext"></text>
           <text class="legendText"></text>
         </svg>
