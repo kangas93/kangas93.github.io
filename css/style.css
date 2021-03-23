@@ -1,30 +1,54 @@
 body {
     background-color: #3e3e3e;
-   }
-
-.viz{
-position: relative;
 }
 
-.chart1{
-    position: static;
-    margin-left: auto;
-    margin-right: auto;
-    
-}
-
-.chart2{
+.viz {
     position: relative;
 }
 
-.chart2{
+
+.chart1-container{
+    width: 100%;
+    padding-top: 20%;
+    position: relative; 
+  
+}
+.chart1 {
+
+    position:absolute;
+    top:0px;
+    left:0px;
+    /* height:300px; */
+    /* width:100% */
+    /* position: static; */
+    /* margin-left: auto;
+    margin-right: auto; */
+
+}
+
+
+/* 
+.chart2 {
+    position: relative;
+} */
+
+.chart2 {
     position: relative;
 }
 
-.rangeInput{
-    position: static;
+
+.input-container {
+    display: flex;
+    justify-content: center;
+}
+
+.rangeInput {
+    /* position: static;
     padding: 3%;
     width: 800px;
     
-    
+     */
+
+    width: 80%;
+    margin: 0 auto;
 }
