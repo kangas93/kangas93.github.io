@@ -74,21 +74,33 @@ updateSelectedBar();
 
     <div class="viz">
       <div class="chart1-container">
-        <svg class="chart1" viewbox="0,0,1000,200" style="border:1px solid #ccc"  ></svg>
+        <div class='radiobutton1-container'>
+          <input type="radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
+          <input type="radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Summa
+          <input type="radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
+        </div>
+        
+        <svg class="chart1" viewbox="0,0,1000,220" style="border:1px solid #ccc"  ></svg>
       </div>
 
-      <div class='input-container'>
-        <input type="range" id="vizRange" class="rangeInput" min="1970" max="2020" step=1 value="1970" oninput='setYear()'> </input>
+      <div class='slider-container'>
+        <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()'> </input>
       </div>
 
       <div class='chart2-container'>
+
+        <div class='radiobutton2-container'>
+          <input type="radio" class="chart2Radio" checked="checked" name="filterData" value='Max' oninput='changeDataSet()'></input> Dagar över 30 grader
+          <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input>Tropiska Nätter
+        </div>
+
         <svg class="chart2" viewbox="0,0,700,400" style="border:1px solid #ccc"  >
-          <text x="50" y="100" class="infotext"></text>
-          <text x="50" y="130" class="stationText"></text>
+          <text x="50" y="100" class="yearText"></text>
+          <text x="50" y="120" class="yearValueText"></text>
+          <text x="50" y="140" class="stationText"></text>
           <text class="legendText"></text>
         </svg>
       </div>
-       
     </div>
 
    
