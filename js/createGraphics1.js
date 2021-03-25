@@ -9,7 +9,9 @@ mapWidth=chartOneWidth*0.5;
 mapHeight=screen.height*0.68-chartOneHeight-marginChart2.top-marginChart2.bottom;
 //barWidth=Math.floor((screen.width-marginChart1.right-marginChart1.left)/50.0);
 var yearData="Mean";
-var yearValue="";
+//var yearValue="";
+var timer;
+var animationStartYear;
 
 
 var year = 1969;
@@ -276,6 +278,7 @@ function createBarChart(){
                         .style('stroke','#99000d');
                         year=i.Year;
                         document.getElementById("vizRange").value=i.Year;
+                        setYearValueText(i[yearData]);
                         createStationCircles();
 
                     }
@@ -336,23 +339,27 @@ function updateSelectedBar(){
             //d3.select(this).style('stroke-width','0.2%');
             d3.select(allRect[j]).style('stroke-width','0.2%')
             .style('stroke','#99000d').style('fill','#fc9272');
-            yearValue=k[yearData];
-        }
+            setYearValueText(k[yearData]);
+            }
         else{
             d3.select(allRect[j]).style('stroke-width','0.05%').style('fill', '#d9d9d9')
             .style('stroke', '#000');
         }
     });
 
+}
+
+function setYearValueText(yearValue){
+
     if(yearData=='Mean'){
-        var text="Medelvärde per station: "+yearValue.toString()+" dagar";
+        var text="Medelvärde: "+yearValue.toString()+" dagar";
     }
     else if (yearData=='Sum'){
-        var text="Årets mätningar: "+yearValue.toString()+" mätningar";
+        var text="Totalt: "+yearValue.toString()+" mätningar";
 
     }
     else if (yearData=='Median'){
-        var text="Medianen för stationerna: "+yearValue.toString()+" dagar";
+        var text="Median: "+yearValue.toString()+" dagar";
     };
      d3.select('.chart2 .yearValueText')
             .attr('font-size', '1em')
@@ -388,6 +395,26 @@ function changeDataSet() {
         stationData=d3.csv('./../data/stationsDataProto2.csv');
         meanSumMedian=d3.csv('./../data/meanMedianSum30.csv');
     }
+    if(type == 'HeatWave')
+    {
+        stationData=d3.csv('./../data/stationHeatWaveDaysProto2.csv');
+        meanSumMedian=d3.csv('./../data/HeatWaveDaysMeanMedianSum.csv');
+    }
+    if(type == 'HighTemp')
+    {   console.log('hej');
+        stationData=d3.csv('./../data/stationHighTempDaysProto2.csv');
+        meanSumMedian=d3.csv('./../data/HighTempMeanMedianSum.csv');
+    }
+    if(type == 'Class1')
+    {
+        stationData=d3.csv('./../data/stationClass1DaysProto2.csv');
+        meanSumMedian=d3.csv('./../data/Class1MeanMedianSum.csv');
+    }
+    if(type == 'Class2')
+    {
+        stationData=d3.csv('./../data/stationClass2DaysProto2.csv');
+        meanSumMedian=d3.csv('./../data/Class2MeanMedianSum.csv');
+    }
     createStationCircles();
     createBarChart();
 }
@@ -406,6 +433,28 @@ function changeYearData(){
     createBarChart();
 }
 
-function msg(){
-    console.log('HejHej');
+function playSlider(){
+    var state=document.getElementById("playButton").value;
+    if(state == "Pausa"){
+        document.getElementById("playButton").value="Spela";
+        clearInterval(timer);
+    }
+    else{
+        document.getElementById("playButton").value="Pausa";
+        animationStartYear = parseInt(document.getElementById("vizRange").value,10);
+        timer = setInterval(function(){
+            if(animationStartYear<2021){
+                animationStartYear += 1;
+                document.getElementById("vizRange").value=animationStartYear.toString();
+                setYear();
+            }
+            else{
+                clearInterval(timer);
+                document.getElementById("playButton").value="Spela";
+            }
+        },225);
+        
+    }
+    
+    
 }

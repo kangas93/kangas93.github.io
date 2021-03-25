@@ -23,9 +23,10 @@ body {
 
 .radiobutton1-container{
     position: relative;
-    left:72%;
+    left:0%;
     bottom:0px;
 }
+
 
 .chart2-container{
     width: 100%;
@@ -43,7 +44,7 @@ body {
 
 .radiobutton2-container{
     position: relative;
-    left:72%;
+    left:0%;
     bottom:0px;
 }
 

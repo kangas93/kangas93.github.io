@@ -75,15 +75,15 @@ updateSelectedBar();
     <div class="viz">
       <div class="chart1-container">
         <div class='radiobutton1-container'>
-          <input type="radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
-          <input type="radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Summa
-          <input type="radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
+          <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
+          <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt
+          <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
         </div>
-        
         <svg class="chart1" viewbox="0,0,1000,220" style="border:1px solid #ccc"  ></svg>
       </div>
 
       <div class='slider-container'>
+        <input type="button" value="Spela" id="playButton" onclick="playSlider()"></input>
         <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()'> </input>
       </div>
 
@@ -91,7 +91,11 @@ updateSelectedBar();
 
         <div class='radiobutton2-container'>
           <input type="radio" class="chart2Radio" checked="checked" name="filterData" value='Max' oninput='changeDataSet()'></input> Dagar över 30 grader
-          <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input>Tropiska Nätter
+          <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input>Tropiska dygn
+          <input type="radio" class="chart2Radio" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input>Dagar med värmebölja
+          <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input>Höga temperaturer
+          <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>Klass 1
+          <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>Klass 2
         </div>
 
         <svg class="chart2" viewbox="0,0,700,400" style="border:1px solid #ccc"  >
