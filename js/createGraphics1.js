@@ -9,9 +9,10 @@ mapWidth=chartOneWidth*0.5;
 mapHeight=screen.height*0.68-chartOneHeight-marginChart2.top-marginChart2.bottom;
 //barWidth=Math.floor((screen.width-marginChart1.right-marginChart1.left)/50.0);
 var yearData="Mean";
-//var yearValue="";
 var timer;
 var animationStartYear;
+var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019];
+var narrativeData = d3.json('./../data/narrativeData.json');
 
 
 var year = 1969;
@@ -96,6 +97,7 @@ function setYear(){
     year=parseInt(document.getElementById("vizRange").value,10);
     createStationCircles();
     updateSelectedBar();
+    setNarrativeText();
 }
 
 function getYear(){
@@ -148,8 +150,32 @@ function loadMap(){
         .attr('dy', '0.35em')
         .text(d=> getStationInfo(d))
         );
+    
+    const place = d3.select('.chart2').append('g')
+    .selectAll('g')
+    .data([1])
+    .join('g')
+    .attr("class", "narrativePlaceLegend")
+    .attr("transform", (d,i) => {
+        return "translate("+mapWidth*0.8+","+(mapHeight*0.1+25*6)+")";
+    })
+    .call( g =>g
+        .append('path')
+        .attr("d",d3.symbol().type(d3.symbolStar))
+        .style("fill",'#3182bd')
+        .style("stroke",'#000')
+        .style("stroke-width",'0.1%')
+        .style("opacity","0.5")
+    )
+    .call(g => g
+        .append('text')
+        .attr('x', '2%') //d => getValueOfYearLegend(d)
+        .attr('dy', '0.35em')
+        .text("Plats av intresse")
+        );
+    
 
- })
+ });
    
 }
 
@@ -278,8 +304,9 @@ function createBarChart(){
                         .style('stroke','#99000d');
                         year=i.Year;
                         document.getElementById("vizRange").value=i.Year;
-                        setYearValueText(i[yearData]);
-                        createStationCircles();
+                        //setYearValueText(i[yearData]);
+                        //createStationCircles();
+                        setYear();
 
                     }
                     else{
@@ -380,9 +407,67 @@ function createStationScatter(){
     }
 }
 
-//Not finished - placeholder function. Creates a svg element with buttons that can filter
-// the view for the user.
-function createFilterSettings(){
+function setNarrativeText(){
+    d3.selectAll('.narrativePlace').remove();
+    d3.select('.narrativeText').style('visibility', 'hidden');
+    if (narrativeYears.includes(year)) {
+        narrativeData.then(function(data){
+            d3.select('.narrativeText').style('visibility', 'visible');
+            if(data[year].Lat == 0){
+                d3.select('.narrativeText')
+                .attr('font-size', '0.5em')
+                .attr('font-color', "#000")
+                .join("text")
+                .text(data[year].Text).raise();
+            }
+            else{
+                d3.select('.narrativeText')
+                .attr('font-size', '0.5em')
+                .attr('font-color', "#000")
+                .join("text")
+                .text(data[year].Text).raise();
+                sweGeo.then((geo) => setNarrativeSymhol(geo,data));
+            }
+        });
+    }
+    return;
+}
+
+function setNarrativeSymhol(geo,data){
+    var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
+    var coord = "translate("+projection([data[year].Long,data[year].Lat])+")";
+    //d3.selectAll('.station').remove();
+    //d3.selectAll('.stationCenter').remove();
+    //Creates the circles for each station
+    const place = d3.select('.chart2').append('g')
+    .attr("class", "narrativePlace")
+    .selectAll('path')
+    .data([1])
+    .join('path');
+    
+    place
+        .attr("d",d3.symbol().type(d3.symbolStar))
+        .style("fill",'#3182bd')
+        .style("stroke",'#000')
+        .style("stroke-width",'0.1%')
+        .style("opacity","0.5")
+        .attr("transform", coord)
+        .on("mouseover", function() {
+            d3.select(this)
+            .style("stroke-width",'0.2%')
+            .raise();
+            d3.select(".narrativeText").style("background-color","#000")
+            .style("color","#FFFFFF");
+            }
+        )
+    .on("mouseout", function () {
+    d3.select(this)
+    .style("stroke-width",'0.1%');
+    d3.select(".narrativeText").style("background-color","")
+    .style("color","#000");
+    //d3.select(".infobox").style('visibility', 'hidden');
+    });
+
 }
 
 function changeDataSet() {

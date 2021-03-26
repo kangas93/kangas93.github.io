@@ -42,6 +42,17 @@ body {
     left:0px;
 }
 
+.narrativeText{
+    position: absolute;
+    left:60%;
+    top:55%;
+    width: 30%;
+    text-align: justify;
+    font-size: 100%;
+    color: "#000";
+
+}
+
 .radiobutton2-container{
     position: relative;
     left:0%;
