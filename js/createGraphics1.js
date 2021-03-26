@@ -14,7 +14,6 @@ var animationStartYear;
 var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019];
 var narrativeData = d3.json('./../data/narrativeData.json');
 
-
 var year = 1969;
 var subStations=[];
 

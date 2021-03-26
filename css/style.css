@@ -2,6 +2,14 @@ body {
     background-color: #3e3e3e;
 }
 
+.bodyText{
+    color:gainsboro;
+}
+
+.bodyHeader{
+    color:ghostwhite;
+}
+
 .viz {
     position: relative;
 }
