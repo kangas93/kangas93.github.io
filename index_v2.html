@@ -79,19 +79,23 @@ setNarrativeText();
   <div class="w3-content">
     <h1>Visualisering</h1>
     <div class="viz">
+
+
+      <div class='slider-container'>
+        <input type="button" value="Spela" id="playButton" onclick="playSlider()"></input>
+        <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()'> </input>
+      </div>
+      
       <div class="chart1-container">
         <div class='radiobutton1-container'>
           <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
           <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt
           <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
         </div>
-        <svg class="chart1" viewbox="0,0,2000,1000" style="border:1px solid #ccc"></svg> 
+        <svg class="chart1" viewbox="0,0,200,400" style="border:1px solid #ccc"></svg> 
       </div>
 
-      <div class='slider-container'>
-        <input type="button" value="Spela" id="playButton" onclick="playSlider()"></input>
-        <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()'> </input>
-      </div>
+      
 
       <div class='chart2-container'>
 
@@ -104,7 +108,7 @@ setNarrativeText();
           <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>Klass 2
         </div>
 
-        <svg class="chart2" viewbox="0,0,700,400" >
+        <svg class="chart2" viewbox="0,0,500,400" style="border:1px solid #ccc" >
           <text x="50" y="100" class="yearText"></text>
           <text x="50" y="120" class="yearValueText"></text>
           <text x="50" y="140" class="stationText"></text>

@@ -1,12 +1,12 @@
 
 var stationData=d3.csv('./../data/stationsDataProto2.csv');
 var meanSumMedian=d3.csv('./../data/meanMedianSum30.csv');
-marginChart1 = ({top: 20, right: 30, bottom: 10, left: 60});
-marginChart2 = ({top: 20, right: 30, bottom: 30, left: 60});
-chartOneWidth=screen.width*0.4-marginChart1.left-marginChart1.right;//2000;
-chartOneHeight=screen.height-marginChart1.top-marginChart1.bottom;
-mapWidth=chartOneWidth*0.5;
-mapHeight=screen.height*0.68-chartOneHeight-marginChart2.top-marginChart2.bottom;
+marginChart1 = ({top: 10, right: 20, bottom: 30, left: 20});
+marginChart2 = ({top: 10, right: 10, bottom: 10, left: 30});
+chartOneWidth=200-marginChart1.left-marginChart1.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//2000;
+chartOneHeight=400-marginChart1.top-marginChart1.bottom;//screen.height-marginChart1.top-marginChart1.bottom;
+mapWidth=500-marginChart2.left-marginChart2.right;//screen.width*0.5-chartOneWidth;
+mapHeight=400-marginChart2.top-marginChart2.bottom;
 //barWidth=Math.floor((screen.width-marginChart1.right-marginChart1.left)/50.0);
 var yearData="Mean";
 var timer;
@@ -270,7 +270,7 @@ function createBarChart(){
         yScale = d3.scaleBand()
             .domain( yDomain )
             .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
-            .padding(0.1)
+            .padding(0.5)
 
         xAxis = d3.axisBottom(xScale)
         .tickSizeOuter(0);
@@ -283,11 +283,10 @@ function createBarChart(){
         const scatter = d3.select(".chart1").append('g')
         .selectAll('g')
         .data( data )
-        .join('g')
+        .join('g');
         
         
         
-       
 
         scatter
             .attr('class', 'scatter')
@@ -295,7 +294,8 @@ function createBarChart(){
             .call(g => g
                 // first we append a circle to our data point
                 .append('circle')
-                .attr('r', 5)
+                .attr('transform',`translate(0,1)`)
+                .attr('r', '0.5%')
                 .style('fill', '#d9d9d9')
                 .style('stroke-width','0.05%')
                 .style('stroke', '#000')
@@ -304,7 +304,7 @@ function createBarChart(){
                     d3.selectAll('.scatter').each((k,j) =>{
                         if(k.Year==i.Year){
                             //d3.select(this).style('stroke-width','0.2%');
-                            d3.select(allScatter[j]).style('fill','#fc9272')
+                            d3.select(allScatter[j]).select('circle').style('fill','#fc9272')
                             .style('stroke-width','0.2%')
                             .style('stroke','#99000d');
                             year=i.Year;
@@ -315,7 +315,7 @@ function createBarChart(){
     
                         }
                         else{
-                            d3.select(allScatter[j]).style('stroke-width','0.05%')
+                            d3.select(allScatter[j]).select('circle').style('stroke-width','0.05%')
                             .style('fill', '#d9d9d9')
                             .style('stroke', '#000');
                             
@@ -323,44 +323,49 @@ function createBarChart(){
                     });
                 })
               );
-    
-    d3.selectAll('.x-axis').remove();
-    d3.selectAll('.y-axis').remove();
-    d3.selectAll('.x-label').remove();
-    d3.selectAll('.y-label').remove();
 
-    // Here the x axis is rendered
-    d3.select(".chart1").append('g')
-        .attr('class', 'x-axis')
-        .style("font-size", "40%")
-        .attr('transform', `translate(0,${ chartOneHeight - marginChart1.bottom })`)
-        .call( xAxis );
-
-        d3.select(".chart1").append("text")
-        .attr("class", "x-label")
-        .attr("text-anchor", "end")
-        .attr("x", (chartOneWidth-marginChart1.right-marginChart1.left)/2)
-        .attr("y", chartOneHeight+30)
-        .text("Årtal");
     
-    // Y axis is rendered
-    d3.select(".chart1").append('g')
-        .attr('class', 'y-axis')
-        .style("font-size", "100%")
-        .attr('transform', `translate(${ chartOneWidth - marginChart1.right - marginChart1.left},0)`)
-        .call( yAxis );
+        d3.selectAll('.x-axis').remove();
+        d3.selectAll('.y-axis').remove();
+        d3.selectAll('.x-label').remove();
+        d3.selectAll('.y-label').remove();
+
+        // Here the x axis is rendered
+        d3.select(".chart1").append('g')
+            .attr('class', 'x-axis')
+            .style("font-size", "25%")
+            .style("stroke-width","0.15%")
+            .attr('transform', `translate(0,${ chartOneHeight - marginChart1.bottom })`)
+            .call( xAxis );
+
+            d3.select(".chart1").append("text")
+            .attr("class", "x-label")
+            .style("font-size", "30%")
+            .attr("text-anchor", "end")
+            .attr("x", chartOneWidth/2)
+            .attr("y", chartOneHeight)
+            .text("Antal mätningar");
         
-    
-    d3.select(".chart1").append("text")
-        .attr("class", "y-label")
-        .attr("text-anchor", "end")
-        .attr("x", -40)
-        .attr("y", 3)
-        .attr("dy", ".75em")
-        .attr("transform", "rotate(-90)")
-        .text("Antal mätningar");
-    
-    updateSelectedBar();
+        // Y axis is rendered
+        d3.select(".chart1").append('g')
+            .attr('class', 'y-axis')
+            .style("font-size", "25%")
+            .style("stroke-width","0.15%")
+            .attr('transform', `translate(${ chartOneWidth - marginChart1.right - marginChart1.left},0)`)
+            .call( yAxis );
+            
+        
+        d3.select(".chart1").append("text")
+            .attr("class", "y-label")
+            .style("font-size", "30%")
+            .attr("text-anchor", "end")
+            .attr("x", chartOneWidth)
+            .attr("y", chartOneHeight/2)
+            //.attr("dy", ".75em")
+            //.attr("transform", "rotate(-90)")
+            .text("Årtal");
+        
+       updateSelectedBar();
 
     })
 
@@ -371,12 +376,12 @@ function updateSelectedBar(){
     d3.selectAll('.scatter').each((k,j) =>{
         if(parseInt(k.Year,10)==year){
             //d3.select(this).style('stroke-width','0.2%');
-            d3.select(allScatter[j]).style('stroke-width','0.2%')
+            d3.select(allScatter[j]).select('circle').style('stroke-width','0.2%')
             .style('stroke','#99000d').style('fill','#fc9272');
             setYearValueText(k[yearData]);
             }
         else{
-            d3.select(allScatter[j]).style('stroke-width','0.05%').style('fill', '#d9d9d9')
+            d3.select(allScatter[j]).select('circle').style('stroke-width','0.05%').style('fill', '#d9d9d9')
             .style('stroke', '#000');
         }
     });
