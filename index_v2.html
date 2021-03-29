@@ -81,18 +81,18 @@ setNarrativeText();
     <div class="viz">
 
 
-      <div class='slider-container'>
-        <input type="button" value="Spela" id="playButton" onclick="playSlider()"></input>
-        <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()'> </input>
+      <div class='slider-container' >
+        <input type="button" value="Spela" id="playButton" class="animation" onclick="playSlider()"></input>
+        <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()' > </input>
       </div>
       
       <div class="chart1-container">
         <div class='radiobutton1-container'>
           <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
-          <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt
+          <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt <br>
           <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
         </div>
-        <svg class="chart1" viewbox="0,0,200,400" style="border:1px solid #ccc"></svg> 
+        <svg class="chart1" viewbox="0,15,165,350"></svg> 
       </div>
 
       
@@ -100,15 +100,15 @@ setNarrativeText();
       <div class='chart2-container'>
 
         <div class='radiobutton2-container'>
-          <input type="radio" class="chart2Radio" checked="checked" name="filterData" value='Max' oninput='changeDataSet()'></input> Dagar över 30 grader
-          <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input>Tropiska dygn
-          <input type="radio" class="chart2Radio" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input>Dagar med värmebölja
-          <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input>Höga temperaturer
-          <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>Klass 1
-          <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>Klass 2
+          Dagar över 30 grader <input type="radio" class="chart2Radio" checked="checked" name="filterData" value='Max' oninput='changeDataSet()'></input>
+          Tropiska dygn  <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input> <br>
+          Dagar med värmebölja <input type="radio" class="chart2Radio" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input>
+          Höga temperaturer  <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input> <br>
+          Klass 1<input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>
+          Klass 2 <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>
         </div>
 
-        <svg class="chart2" viewbox="0,0,500,400" style="border:1px solid #ccc" >
+        <svg class="chart2" viewbox="50,0,440,400" >
           <text x="50" y="100" class="yearText"></text>
           <text x="50" y="120" class="yearValueText"></text>
           <text x="50" y="140" class="stationText"></text>

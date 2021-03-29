@@ -16,16 +16,17 @@ body {
 
 
 .chart1-container{
-    width: 100%;
+    width: 25%;
+    height: 90%;
     position: absolute; 
     bottom: 0%;
-    left:60%;
+    left:65%;
   
 }
 .chart1 {
     position: relative;
-    width:30%; 
-    top:0px;
+    width:100%;
+    top:20px;
     left:0px;
 }
 
@@ -37,7 +38,7 @@ body {
 
 
 .chart2-container{
-    width: 100%;
+    width: 48%;
     padding-top: 2%;
     position: relative; 
   
@@ -45,26 +46,26 @@ body {
 
 .chart2 {
     position: relative;
-    width: 60%;
+    width: 130%;
     top:0px;
     left:0px;
 }
 
 .narrativeText{
     position: absolute;
-    left:60%;
-    top:55%;
-    width: 30%;
+    left:80%;
+    top:65%;
+    width: 40%;
     text-align: justify;
-    font-size: 100%;
+    font-size: 75%;
     color: "#000";
 
 }
 
 .radiobutton2-container{
     position: relative;
-    left:0%;
-    bottom:0px;
+    left:0px;
+    top:0px;
 }
 
 .chart2Radio{
@@ -74,15 +75,26 @@ body {
 
 
 .slider-container {
-    display: flex;
-    justify-content: right;
+    position: absolute;
+    width: 10%;
+    height: 100%;
     padding-bottom: 0px;
+    right:30px;
 }
 
 .rangeInput {
-    width: 89%;
-    transform: rotate(270deg);
-    margin: auto;
+    position: relative;
+    transform: rotate(-270deg);
+    width:500%;
+    top:350px;
+    right: 200px;
+    display: flex;
+    justify-content: center;
+}
+.animation {
+    position:relative;
+    top:100px;
+    left: 10px;
 }
 
 .stationText{

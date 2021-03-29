@@ -203,7 +203,7 @@ function createStationCircles(){
             .attr('font-size', '1em')
             .attr('font-color', "#000")
             .join("text")
-            .text('År: '+year);
+            .text('År: '+year).raise();
             
             //Creates the circles for each station
             const circles = d3.select('.chart2').append('g')
