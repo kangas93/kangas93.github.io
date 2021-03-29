@@ -17,6 +17,11 @@ var narrativeData = d3.json('./../data/narrativeData.json');
 var year = 1969;
 var subStations=[];
 
+var allYears=[];
+for(let i=1969; i<2021; i++){
+    allYears.push(i)
+}
+
 var sweGeo = fetch('./../data/jsonSwe.json')
 .then(response => response.text())
 .then((data) => {
@@ -284,6 +289,7 @@ function createStationCircles(){
     });
 }
 
+
 function createStationBars(){
     stationData.then(function(stations){
         //stationsSorted=stations["2018"].sort(d3.descending);
@@ -329,17 +335,34 @@ function createStationBars(){
         }
     )
         .on("mouseover", function (d,c) {
-        d3.select(this)
-        .style("stroke-width",'0.2%')
-        .raise();
-        d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
+        if(!subStations.includes(c.ID)){ 
+            d3.select(this)
+            .style("stroke-width",'0.2%');
+        }
+            d3.select(this).raise();
+            d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
     })
-    .on("mouseout", function (d) {
-        d3.select(this)
-        .style("stroke-width",'0.1%');
+    .on("mouseout", function (d,i) {
+        if(!subStations.includes(i.ID)){
+            d3.select(this)
+            .style("stroke-width",'0.1%');
+        }
         d3.select(".chart2 .stationText").text("");
         //d3.select(".infobox").style('visibility', 'hidden');
-    });
+    })
+    .on('click', function(d,i){
+
+        if(subStations.includes(i.ID)){
+            subStations = subStations.filter(item => item !== i.ID)
+            d3.select(this).style("stroke-width",'0.2%');
+        }
+        else{
+            subStations.push(i.ID);
+            d3.select(this).style("stroke-width",'0.5%');
+        }
+        createStationPlot();
+            
+            });
 
     const barsFloor = d3.select('.chart2').append('g')
         .attr("class", "stationFloor")
@@ -361,7 +384,6 @@ function createStationBars(){
     });
 }
 //Creates the bar chart showing the mean value
-// TODO: add title and axis labels
 function createScatterChart(){
     meanSumMedian.then(function(data){
 
@@ -369,7 +391,7 @@ function createScatterChart(){
         yDomain = data.map(d => parseInt(d.Year, 10));
 
         xScale = d3.scaleLinear()
-        .domain([ 0, xMax ])
+        .domain([ 0, xMax +1 ])
         .range([chartOneWidth - marginChart1.left - marginChart1.right , marginChart1.right ]);
 
         yScale = d3.scaleBand()
@@ -383,6 +405,27 @@ function createScatterChart(){
         yAxis = d3.axisRight(yScale)
         .tickSizeOuter(0);
 
+
+        d3.selectAll('.mainLine').remove();
+        var lineMain = d3.line()
+            .x(function(d) { 
+                return xScale(d[yearData]); })
+            .y(function(d) { 
+                return yScale(d.Year); })
+            .curve(d3.curveLinear);
+
+       
+        d3.select(".chart1").append("g")
+        .attr("class", 'mainLine')
+        .selectAll('path')
+        .data(data)
+        .join('path')
+            .attr('d', lineMain(data))
+            .style('stroke','#d9d9d9')
+            .style('stroke-width', '0.5%')
+            .attr("fill", 'transparent');
+            
+
        
         d3.selectAll('.scatter').remove();
         const scatter = d3.select(".chart1").append('g')
@@ -390,16 +433,13 @@ function createScatterChart(){
         .data( data )
         .join('g');
         
-        
-        
-
         scatter
             .attr('class', 'scatter')
             .attr('transform', d => `translate(${xScale(d[yearData])},${yScale(d.Year)})`)
             .call(g => g
                 // first we append a circle to our data point
                 .append('circle')
-                .attr('transform',`translate(0,1)`)
+                //.attr('transform',`translate(0,1)`)
                 .attr('r', '1.0%')
                 .style('fill', '#d9d9d9')
                 .style('stroke-width','0.05%')
@@ -429,7 +469,7 @@ function createScatterChart(){
                 })
               );
 
-    
+        
         d3.selectAll('.x-axis').remove();
         d3.selectAll('.y-axis').remove();
         d3.selectAll('.x-label').remove();
@@ -477,6 +517,8 @@ function createScatterChart(){
 }
 //Updates the barchart so that the slider year is highlighted in the barchart
 function updateSelectedScatter(){
+    d3.selectAll('.stationLines').remove();
+    subStations=[];
     var allScatter=d3.selectAll(".scatter").nodes();
     d3.selectAll('.scatter').each((k,j) =>{
         if(parseInt(k.Year,10)==year){
@@ -516,12 +558,88 @@ function setYearValueText(yearValue){
 //Not finished - placeholder function. When clicking on the circles on the map
 // a line scatterplot is going to appear instead of the barchart, showing the timeline
 //of the station
-function createStationScatter(){
+function createStationPlot(){
 
-    for(let i=0; i<subStations.length; i++){
-        console.log(subStations[i]);
+    if(stationData.length ==0){
+        d3.selectAll('.stationLines').remove();
+        createScatterChart();
+        return;
 
     }
+    stationData.then(function(stations){
+        //for(let i=0; i<subStations.length; i++){
+
+            var data=stations.filter(function(d){
+                return subStations.includes(d.ID);
+            })
+            //transformedData = {ID:[], Year:[], Value:[]}
+            transformedData = [];
+            
+           for(let j=0; j<data.length; j++){
+                
+                for(let i=1969; i<2021; i++){
+                    object={ID:data[j].ID, Year:i, Value:parseInt(data[j][i],10)};
+                    transformedData.push(object);
+                    //transformedData['ID'].push(data[j].ID);
+                    //transformedData['Year'].push(i);
+                    //transformedData['Value'].push(data[j][i]);
+                }
+           }
+        console.log(transformedData);
+
+        xMax = d3.max(transformedData, d => d.Value);
+        yDomain = transformedData.map(d => d.Year);
+        
+
+        xScale = d3.scaleLinear()
+        .domain([ 0, xMax +1 ])
+        .range([chartOneWidth - marginChart1.left - marginChart1.right , marginChart1.right ]);
+
+        yScale = d3.scaleBand()
+            .domain( yDomain )
+            .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
+            .padding(0.5)
+
+        xAxis = d3.axisBottom(xScale)
+        .tickSizeOuter(0);
+
+        yAxis = d3.axisRight(yScale)
+        .tickSizeOuter(0);
+
+        const names =  transformedData.map(d => d.ID);
+        var colors=d3.scaleOrdinal( 
+            names,
+            d3.schemeCategory10
+          );
+        
+
+
+        //d3.selectAll('.mainLine').remove();
+        d3.selectAll('.stationLines').remove();
+        /*var lineStation = d3.line()
+            .x(function(d) { 
+                return xScale(d.Value); })
+            .y(function(d) { 
+                return yScale(d.Year); })
+            .curve(d3.curveLinear);*/
+        var lineStation = d3.line()
+        .x( d => xScale(d.Value))
+        .y(d => yScale(d.Year))
+        .curve(d3.curveLinear);
+       
+        var stLine = d3.select(".chart1").append("g")
+        .attr("class", 'stationLines')
+        .selectAll('path')
+        .data(transformedData)
+        .join('path')
+            .attr('d', lineStation(transformedData))
+            .style('stroke',d => colors(d.ID))
+            .style('stroke-width', '0.5%')
+            .attr("fill", 'transparent');
+    });
+
+   
+
 }
 
 function setNarrativeText(){
