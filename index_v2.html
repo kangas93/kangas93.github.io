@@ -22,12 +22,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <script>
 // The map is drawn and the legend is created
 loadMap();
-// The circles that represent each station is created. They are updated on the input from the slider
-createStationCircles();
-// The barchart is created
-createBarChart();
+// The bars that represent each station is created. They are updated on the input from the slider
+//createStationCircles();
+createStationBars();
+// The scatterChart is created
+createScatterChart();
 //The highlighting of the bar showing the current year is created
-updateSelectedBar();
+updateSelectedScatter();
 //Sets the narrative text in the start
 setNarrativeText();
 

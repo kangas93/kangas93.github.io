@@ -41,7 +41,7 @@ function radiusScaleArea(d){
 /*var colorRange=d3.scaleLinear().domain([ 1, 20 ])
       .range(["#fff5f0", "#99000d"]);*/
 
-var colorRange=d3.scaleSequential().domain([1,20])
+var colorRange=d3.scaleSequential().domain([1,30])
       .interpolator(d3.interpolateReds);
 
 
@@ -82,6 +82,31 @@ function getColorOfYearLegend(d){
     return colorRange(d);
 }
 
+function getValueOfYearRect(d,year){
+    const val = parseInt(d[year],10)
+    if(val == 999){
+      return rectHeight(0);
+    }
+    return rectHeight(val);
+}
+
+function getValueOfYearRectLegend(d){
+    const val = parseInt(d,10)
+    if(val == 999){
+      return rectHeight(0);
+    }
+    return rectHeight(val);
+}
+
+rectHeight=d3.scaleLinear(
+    // domain
+      [ 0, 30 ], 
+      // range
+      [ 4, 24 ]
+  );
+
+  
+
 //Returns the number of days from each station
 function getStationInfo(d){
     if(d==999){
@@ -94,8 +119,9 @@ function getStationInfo(d){
 //Sets the year from the slider to the variable 'year'. Also calls on 'createStationCircles'
 function setYear(){
     year=parseInt(document.getElementById("vizRange").value,10);
-    createStationCircles();
-    updateSelectedBar();
+    //createStationCircles();
+    createStationBars();
+    updateSelectedScatter();
     setNarrativeText();
 }
 
@@ -119,33 +145,35 @@ function loadMap(){
     .attr("d", geoPath);
 
     //Creating a legend
-    var legendData=[999]
-    for (let i = 0; i < 21; i++) {
+    var legendData=[999, 0, 5, 10, 20]
+    /*for (let i = 0; i < 21; i++) {
         if( (i % 5) == 0){
             legendData.push(i);
         }
-    }
+    }*/
     const legend = d3.select('.chart2').append('g');
     
     legend
     .selectAll('g')
     .data( legendData )
     .join('g')
-        .attr('class', 'legendCircle')
+        .attr('class', 'legendBar')
         .attr("transform", (d,i) => {
             return "translate("+mapWidth*0.8+","+(mapHeight*0.1+25*i)+")";
         })
     .call(g => g
-        .append('circle')
-        .attr("r",d => getValueOfYearLegend(d))
-        .style("fill",d=>getColorOfYearLegend(d))
+        .append('rect')
+        .attr("height",d => getValueOfYearRectLegend(d))
+        .attr("width","1.0%")
+        .style("fill",d => getColorOfYearLegend(d))
         .style("stroke",'#000')
         .style("stroke-width",'0.1%')
-        .style("opacity","0.5")
+        .style("opacity","0.7")
     )
     .call(g => g
         .append('text')
         .attr('x', '2%') //d => getValueOfYearLegend(d)
+        .attr('y', d => getValueOfYearRectLegend(d)/2)
         .attr('dy', '0.35em')
         .text(d=> getStationInfo(d))
         );
@@ -255,9 +283,86 @@ function createStationCircles(){
         });
     });
 }
+
+function createStationBars(){
+    stationData.then(function(stations){
+        //stationsSorted=stations["2018"].sort(d3.descending);
+        var stationPosition=[];
+        sweGeo.then(function(geo) {
+            //Creates the projection for setting the circle position
+            var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
+            //Creates a list with the station positions
+            for (let i = 0; i < stations.length; i++) {
+            var coord = projection([stations[i].Longitude,stations[i].Latitude]);
+            //var txt= "translate(" + coord + ")";
+            stationPosition.push(coord);
+
+            }
+            //Removes the circles so that new circles can be drawn when switching year
+            //It would be useful to solve the drawing in an other way. Is it better to update
+            // the current circles rather than deleting them?
+            d3.selectAll('.station').remove();
+            d3.selectAll('.stationFloor').remove();
+
+            //Sets the year text
+            const info = d3.select('.chart2 .yearText')
+            .attr('font-size', '1em')
+            .attr('font-color', "#000")
+            .join("text")
+            .text('År: '+year).raise();
+            
+            const bars = d3.select('.chart2').append('g')
+            .attr("class", "station")
+            .selectAll('rect')
+            .data( stations )
+            .join('rect')
+    bars
+       .attr("height",d => getValueOfYearRect(d,year))
+       .attr("width","1.0%")
+       .style("fill",d=>getColorOfYear(d,year))
+       .style("stroke",'#000')
+       .style("stroke-width",'0.1%')
+       .style("opacity","0.7")
+       .attr("transform", function(d,i) {
+        var pos="translate(" +stationPosition[i][0].toString()+","+ (stationPosition[i][1]-getValueOfYearRect(d,year)).toString()+ ")";
+        return pos;
+        }
+    )
+        .on("mouseover", function (d,c) {
+        d3.select(this)
+        .style("stroke-width",'0.2%')
+        .raise();
+        d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
+    })
+    .on("mouseout", function (d) {
+        d3.select(this)
+        .style("stroke-width",'0.1%');
+        d3.select(".chart2 .stationText").text("");
+        //d3.select(".infobox").style('visibility', 'hidden');
+    });
+
+    const barsFloor = d3.select('.chart2').append('g')
+        .attr("class", "stationFloor")
+        .selectAll('rect')
+        .data( stations )
+        .join('rect');
+    
+    barsFloor
+        .attr("height","0.5")
+        .attr("width","2.0%")
+        .style("fill","#000")
+        .attr("transform", function(d,i) {
+            var pos="translate(" +(stationPosition[i][0]-mapWidth*0.005).toString()+","+ stationPosition[i][1].toString()+ ")";
+            return pos;
+            }
+        );
+
+    });
+    });
+}
 //Creates the bar chart showing the mean value
 // TODO: add title and axis labels
-function createBarChart(){
+function createScatterChart(){
     meanSumMedian.then(function(data){
 
         xMax = d3.max(data, d => parseInt(d[yearData],10));
@@ -295,7 +400,7 @@ function createBarChart(){
                 // first we append a circle to our data point
                 .append('circle')
                 .attr('transform',`translate(0,1)`)
-                .attr('r', '0.5%')
+                .attr('r', '1.0%')
                 .style('fill', '#d9d9d9')
                 .style('stroke-width','0.05%')
                 .style('stroke', '#000')
@@ -333,7 +438,7 @@ function createBarChart(){
         // Here the x axis is rendered
         d3.select(".chart1").append('g')
             .attr('class', 'x-axis')
-            .style("font-size", "25%")
+            .style("font-size", "30%")
             .style("stroke-width","0.15%")
             .attr('transform', `translate(0,${ chartOneHeight - marginChart1.bottom })`)
             .call( xAxis );
@@ -349,7 +454,7 @@ function createBarChart(){
         // Y axis is rendered
         d3.select(".chart1").append('g')
             .attr('class', 'y-axis')
-            .style("font-size", "25%")
+            .style("font-size", "40%")
             .style("stroke-width","0.15%")
             .attr('transform', `translate(${ chartOneWidth - marginChart1.right - marginChart1.left},0)`)
             .call( yAxis );
@@ -365,13 +470,13 @@ function createBarChart(){
             //.attr("transform", "rotate(-90)")
             .text("Årtal");
         
-       updateSelectedBar();
+       updateSelectedScatter();
 
     })
 
 }
 //Updates the barchart so that the slider year is highlighted in the barchart
-function updateSelectedBar(){
+function updateSelectedScatter(){
     var allScatter=d3.selectAll(".scatter").nodes();
     d3.selectAll('.scatter').each((k,j) =>{
         if(parseInt(k.Year,10)==year){
@@ -512,8 +617,9 @@ function changeDataSet() {
         stationData=d3.csv('./../data/stationClass2DaysProto2.csv');
         meanSumMedian=d3.csv('./../data/Class2MeanMedianSum.csv');
     }
-    createStationCircles();
-    createBarChart();
+    //createStationCircles();
+    createStationBars();
+    createScatterChart();
 }
 
 function changeYearData(){
@@ -527,7 +633,7 @@ function changeYearData(){
     else if(type == 'Median'){
         yearData='Median';
     }
-    createBarChart();
+    createScatterChart();
 }
 
 function playSlider(){
