@@ -17,10 +17,6 @@ var narrativeData = d3.json('./../data/narrativeData.json');
 var year = 1969;
 var subStations=[];
 
-var allYears=[];
-for(let i=1969; i<2021; i++){
-    allYears.push(i)
-}
 
 var sweGeo = fetch('./../data/jsonSwe.json')
 .then(response => response.text())
@@ -87,6 +83,46 @@ function getColorOfYearLegend(d){
     return colorRange(d);
 }
 
+function getColorOfYearBarFloorLegend(d){
+    if(d == 999){
+      return '#ffffff';
+      //'#737373';
+    }
+    else{
+      return '#000';
+    }
+}
+
+function getColorOfYearBarFloor(d, year){
+    const val = parseInt(d[year],10)
+    if( val == 999){
+      return '#ffffff';
+      //'#737373';
+    }
+    else{
+      return '#000';
+    }
+}
+
+function getHeightOfYearBarFloor(d,year){
+    const val = parseInt(d[year],10)
+    if( val == 999){
+      return "0.7%";
+    }
+    else{
+      return '0.2%';
+    }
+}
+
+function getHeightOfYearBarFloorLegend(d){
+    if( d == 999){
+      return "0.7%";
+    }
+    else{
+      return '0.2%';
+    }
+}
+
 function getValueOfYearRect(d,year){
     const val = parseInt(d[year],10)
     if(val == 999){
@@ -107,7 +143,8 @@ rectHeight=d3.scaleLinear(
     // domain
       [ 0, 30 ], 
       // range
-      [ 4, 24 ]
+      //[ 4, 24 ]
+      [0,40]
   );
 
   
@@ -174,6 +211,19 @@ function loadMap(){
         .style("stroke",'#000')
         .style("stroke-width",'0.1%')
         .style("opacity","0.7")
+    )
+    .call(
+        g => g
+        .append('rect')
+        .style('stroke','#000')
+        .style('stroke-width','0.1%')
+        .attr("height",d => getHeightOfYearBarFloorLegend(d))
+        .attr("width","2.0%")
+        .style("fill",d => getColorOfYearBarFloorLegend(d))
+        .attr('transform', function(d){
+            return 'translate('+-mapWidth*0.005+','+ getValueOfYearRectLegend(d) +')';
+        })
+
     )
     .call(g => g
         .append('text')
@@ -371,14 +421,36 @@ function createStationBars(){
         .join('rect');
     
     barsFloor
-        .attr("height","0.5")
+        .attr("height",d => getHeightOfYearBarFloor(d,year))
         .attr("width","2.0%")
-        .style("fill","#000")
+        .style('stroke','#000')
+        .style('stroke-width','0.1%')
+        .style("fill",d => getColorOfYearBarFloor(d,year))
         .attr("transform", function(d,i) {
             var pos="translate(" +(stationPosition[i][0]-mapWidth*0.005).toString()+","+ stationPosition[i][1].toString()+ ")";
             return pos;
             }
-        );
+        )
+        .on("mouseover", function (d,c) {
+            if(!subStations.includes(c.ID)){ 
+                //var val= parseFloat(d3.select(this).style('height').split('%')[0],10);
+                d3.select(this)
+                //.attr("height",(val+0.2)+'%');
+                .style('stroke-width','0.3%').raise();
+            }
+                d3.select(this).raise();
+                d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
+        })
+        .on("mouseout", function (d,i) {
+            if(!subStations.includes(i.ID)){
+                //var val= parseFloat(d3.select(this).style('height').split('%')[0],10);
+                d3.select(this)
+                //.attr("height",(val-0.2)+'%');
+                .style('stroke-width','0.1%').lower();
+            }
+            d3.select(".chart2 .stationText").text("");
+            //d3.select(".infobox").style('visibility', 'hidden');
+        });
 
     });
     });
