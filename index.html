@@ -47,11 +47,11 @@ setNarrativeText();
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
-    <h1 class="bodyHeader">Varningskriterier för höga temperaturer</h1>
-    <p class="bodyText">Varma sommardagar är ofta förknippade med en skön dag på stranden och härliga sommarminnen. Men för hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället på höga temperaturer. Men hur har det sett ut historiskt? Nedan har vi tittat på tittat på den dagliga maxtemperaturen från år 1969 till 2020 från 38 stycken väderstationer. Vi har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har vi även räknat ihop antalet tropiska dygn och dagar med värmeböljor.</p>
-    <h1 class="bodyHeader">Negativ påverkan på hälsan</h1>
-    <p class="bodyText">SMHI startade sitt projekt med varningssystem för höga temperaturer i Sverige år 2011. Inom ramen för projektet utredde Umeå universitet risken för höga temperaturer. Deras resultat visar att den dagliga dödligheten ökar med cirka 10 procent om temperaturen når 26°C eller mer tre dygn i rad. Dödligheten ökar ytterligare med 10 procent om temperaturen når 30°C eller mer tre dygn i rad.
-   </p>
+      <h1 class="bodyHeader">Varningskriterier för höga temperaturer</h1>
+      <p class="bodyText">Varma sommardagar är ofta förknippade med sköna dagar på stranden och härliga sommarminnen. Men hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället inför höga temperaturer. Men hur har det sett ut historiskt? Nedan har jag tittat på den dagliga maxtemperaturen från år 1969 till 2020 från 38 stycken väderstationer. Jag har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har jag även räknat ihop antalet tropiska dygn och dagar med värmeböljor.</p>
+      <h1 class="bodyHeader">Negativ påverkan på hälsan</h1>
+      <p class="bodyText">SMHI startade sitt projekt med varningssystem för höga temperaturer i Sverige år 2011. Inom ramen för projektet utredde Umeå universitet risker med för höga temperaturer. Deras resultat visar att den dagliga dödligheten ökar med cirka 10 procent om temperaturen når 26°C eller mer tre dygn i rad. Dödligheten ökar ytterligare med 10 procent om temperaturen når 30°C eller mer tre dygn i rad.
+     </p>
    <p class="bodyText">För mer information om varningskriterierna, <a href="https://www.smhi.se/kunskapsbanken/meteorologi/varning-for-mycket-hoga-temperaturer-1.30684" target="_blank">klicka här</a>.</p>
     <h1 class="bodyHeader">Definitioner</h1>
    <h3 class="bodyHeader">Meddelande om höga temperaturer</h3>
@@ -120,12 +120,35 @@ setNarrativeText();
   </div>
 </div>
 
-<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
-    <h1 class="w3-margin w3-xlarge">Skapad av Jussi Kangas</h1>
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird"> 
+      <h1 class="bodyHeader">Varför bara 38 väderstationer?</h1>
+      <p class="bodyText"> Antalet väderstationer i Sverige har ökat genom åren. För att rättvist kunna jämföra mätningarna genom åren har jag valt att bara titta på samma 38 platser för varje år. Detta för att många platser med väderstationer i Sverige idag har inte någon referenspunkt som sträcker sig ända till år 1969.
+
+      </p>
+      <p class="bodyText"> [PLACE HOLDER: LÄGG IN GRAF FÖR ANTALET STATIONER]
+
+
+      </p>
+      <p class="bodyText"> Men detta betyder även att det till antalet finns fler mätningar idag (delvis pga. av fler väderstationer) än vad de fanns för 30-50 år sedan. Men variation mellan åren är oftast ungefär densamma oavsett om 38 stationer eller alla stationer används. Detta innebär att det går att se de övergripande trenderna genom åren även med 38 stationer. Detta är dock inte statistiskt säkerställt i denna visualisering.
+
+      </p>
+      <p class="bodyText"> Utav de 38 stationerna är det 19 stycken vars tidsserier är sammansatta. Detta betyder att icke-aktiva stationer har lagts samman med aktiva stationer idag om de legat geografiskt nära varandra. Detta för att kunna skapa en tidsserier för en och samma plats som sträcker sig från år 1969 till år 2020. De krav som har ställts för att kunna lägga ihop två stationer är att det får högst vara 10 km ifrån varandra och det får högst vara 100 meter skillnad i havsnivå höjd mellan stationernas platser. Att sätta samman stationer kan introducerar fel eftersom det är svårt att kontrollera att stationerna har haft exakt samma mätnings förutsättningar. Dessa fel skulle kunna vara att den nya stationen systematiskt läser av temperaturen någon grad högre eller lägre än den gamla stationen. Men den övergripande variationen mellan åren är ungefär densamma. Detta innebär att ett varmt år även skulle synas som utstickande för båda stationer även om deras mätnings förutsättningar är lite olika.
+
+      </p>
+      <p class="bodyText"> Ett ständigt problem med SMHIs väderstationer är att de kan sluta fungera under perioder. Dessa fel kan ibland inte upptäckas förens veckor eller månader senare. I visualiseringen ovan är det vissa år där stationerna har haft avbrott i sina mätningar. Om en station under sommarhalvåret haft ett avbrott på totalt 3 veckor eller mer så har mätningarna för det året tagits bort i visualiseringen. Det är dessa platser där det står “Ingen data”. Detta har gjorts för att inte ge missvisande värden.
+
+      </p>
+
+    </div>
+  </div>
+    
 </div>
 
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
+  <h1 class="w3-margin w3-xlarge">Skapad av Jussi Kangas</h1>
  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
 </footer>
 

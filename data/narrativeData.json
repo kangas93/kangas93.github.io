@@ -6,5 +6,6 @@
   "2007": {"Text":"Den 10 juni året 2007 var Kolmården-Strömsfors i Östergötland varmast i Europa med 32,4°.","Lat":58.6892, "Long":16.3069},
   "2011": {"Text":"Den 10 juni 2011 uppmätte Sverige den högsta temperaturen i Europa. Det var stationen Markusvinsa i Norrbotten som uppmätte 33,5° vilket var det varmaste bland alla tillgängliga stationer i Europa.","Lat":66.7259, "Long":22.894},
   "2018": {"Text":"2018 var en varm sommar som även hade en av de mest intensivaste värmeböljorna i Sverige. Folkhälsomyndigheten rapporterade att det inträffade ungefär 750 fler dödsfall än normalt under värmeböljan i Juli. Modeller har senare visat att mellan 600 och 745 av dessa kan tillskrivas till de höga temperaturerna.","Lat":0.0, "Long":0.0},
-  "2019": {"Text":"Den 26 juli 2019 uppmättes den högsta temperaturen i Sverige norr om polcirkeln. Temperaturen var 34,8° och uppmättes i Markusvinsa i Norrbotten.","Lat":66.7259, "Long":22.894}
+  "2019": {"Text":"Den 26 juli 2019 uppmättes den högsta temperaturen i Sverige norr om polcirkeln. Temperaturen var 34,8° och uppmättes i Markusvinsa i Norrbotten.","Lat":66.7259, "Long":22.894},
+  "2020": {"Text":"Den högsta temperaturen sommaren 2020 blev 34,0° och uppmättes vid Skellefteå flygplats i Västerbotten den 25 juni. Denna temperatur var det fjärde högsta som observerats i Norrland under juni månad. Under 2020 slog även Sverigemedeltemperaturen rekord och blev drygt en halv grad högre än under det tidigare varmaste året 2014.","Lat":64.6244,"Long":21.0717}
 }

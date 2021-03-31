@@ -1,6 +1,6 @@
 
-var stationData=d3.csv('./../data/stationsDataProto2.csv');
-var meanSumMedian=d3.csv('./../data/meanMedianSum30.csv');
+var stationData=d3.csv('./../data/stationOver30Proto2.csv');
+var meanSumMedian=d3.csv('./../data/meanMedianSumOver30.csv');
 marginChart1 = ({top: 20, right: 30, bottom: 10, left: 60});
 marginChart2 = ({top: 20, right: 30, bottom: 30, left: 60});
 chartOneWidth=screen.width*0.8-marginChart1.left-marginChart1.right;//2000;
@@ -11,7 +11,7 @@ mapHeight=screen.height*0.68-chartOneHeight-marginChart2.top-marginChart2.bottom
 var yearData="Mean";
 var timer;
 var animationStartYear;
-var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019];
+var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019,2020];
 var narrativeData = d3.json('./../data/narrativeData.json');
 
 var year = 1969;
@@ -119,12 +119,13 @@ function loadMap(){
     .attr("d", geoPath);
 
     //Creating a legend
-    var legendData=[999]
-    for (let i = 0; i < 21; i++) {
+    //var legendData=[999]
+    var legendData=[999, 0, 5, 10, 20]
+    /*for (let i = 0; i < 21; i++) {
         if( (i % 5) == 0){
             legendData.push(i);
         }
-    }
+    }*/
     const legend = d3.select('.chart2').append('g');
     
     legend
@@ -156,7 +157,7 @@ function loadMap(){
     .join('g')
     .attr("class", "narrativePlaceLegend")
     .attr("transform", (d,i) => {
-        return "translate("+mapWidth*0.8+","+(mapHeight*0.1+25*6)+")";
+        return "translate("+mapWidth*0.8+","+(mapHeight*0.1+25*5)+")";
     })
     .call( g =>g
         .append('path')
@@ -473,16 +474,16 @@ function changeDataSet() {
     var type = document.querySelector('input[name="filterData"]:checked').value;
     if(type == 'Min'){
         meanSumMedian=d3.csv('./../data/meanMedianSumMin20.csv');
-        stationData=d3.csv('./../data/stationMinProto2.csv');
+        stationData=d3.csv('./../data/stationMin20Proto2.csv');
     }
     if(type == 'Max'){
-        stationData=d3.csv('./../data/stationsDataProto2.csv');
-        meanSumMedian=d3.csv('./../data/meanMedianSum30.csv');
+        stationData=d3.csv('./../data/stationOver30Proto2.csv');
+        meanSumMedian=d3.csv('./../data/meanMedianSumOver30.csv');
     }
     if(type == 'HeatWave')
     {
         stationData=d3.csv('./../data/stationHeatWaveDaysProto2.csv');
-        meanSumMedian=d3.csv('./../data/HeatWaveDaysMeanMedianSum.csv');
+        meanSumMedian=d3.csv('./../data/HeatWaveMeanMedianSum.csv');
     }
     if(type == 'HighTemp')
     {   console.log('hej');

@@ -54,10 +54,10 @@ body {
 .narrativeText{
     position: absolute;
     left:80%;
-    top:65%;
-    width: 40%;
+    top:60%;
+    width: 55%;
     text-align: justify;
-    font-size: 75%;
+    font-size: 90%;
     color: "#000";
 
 }
