@@ -7,11 +7,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style3.css">
 <head>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://d3js.org/topojson.v3.min.js"></script>
-  <script type="text/javascript" src="./js/createGraphics1.js"></script>                      
+  <script type="text/javascript" src="./js/createGraphics3.js"></script>                      
 </head>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
@@ -22,12 +22,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <script>
 // The map is drawn and the legend is created
 loadMap();
-// The circles that represent each station is created. They are updated on the input from the slider
-createStationCircles();
-// The barchart is created
-createBarChart();
+// The bars that represent each station is created. They are updated on the input from the slider
+//createStationCircles();
+createStationBars();
+// The scatterChart is created
+createScatterChartInMapChart();
+//createScatterChart();
 //The highlighting of the bar showing the current year is created
-updateSelectedBar();
+updateSelectedScatter();
 //Sets the narrative text in the start
 setNarrativeText();
 
@@ -47,11 +49,11 @@ setNarrativeText();
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
-      <h1 class="bodyHeader">Varningskriterier för höga temperaturer</h1>
-      <p class="bodyText">Varma sommardagar är ofta förknippade med sköna dagar på stranden och härliga sommarminnen. Men hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället inför höga temperaturer. Men hur har det sett ut historiskt? Nedan har jag tittat på den dygnsmaxtemperaturen från året 1969 till 2020 från 38 stycken väderstationer som SMHI har. Jag har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har jag även räknat ihop antalet tropiska dygn och dagar med värmeböljor.</p>
-      <h1 class="bodyHeader">Negativ påverkan på hälsan</h1>
-      <p class="bodyText">SMHI startade sitt projekt med varningssystem för höga temperaturer i Sverige år 2011. Inom ramen för projektet utredde Umeå universitet risker med för höga temperaturer. Deras resultat visar att den dagliga dödligheten ökar med cirka 10 procent om temperaturen når 26°C eller mer tre dygn i rad. Dödligheten ökar ytterligare med 10 procent om temperaturen når 30°C eller mer tre dygn i rad.
-     </p>
+    <h1 class="bodyHeader">Varningskriterier för höga temperaturer</h1>
+    <p class="bodyText">Varma sommardagar är ofta förknippade med sköna dagar på stranden och härliga sommarminnen. Men hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället inför höga temperaturer. Men hur har det sett ut historiskt? Nedan har jag tittat på den dygnsmaxtemperaturen från året 1969 till 2020 från 38 stycken väderstationer som SMHI har. Jag har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har jag även räknat ihop antalet tropiska dygn och dagar med värmeböljor.</p>
+    <h1 class="bodyHeader">Negativ påverkan på hälsan</h1>
+    <p class="bodyText">SMHI startade sitt projekt med varningssystem för höga temperaturer i Sverige år 2011. Inom ramen för projektet utredde Umeå universitet risker med för höga temperaturer. Deras resultat visar att den dagliga dödligheten ökar med cirka 10 procent om temperaturen når 26°C eller mer tre dygn i rad. Dödligheten ökar ytterligare med 10 procent om temperaturen når 30°C eller mer tre dygn i rad.
+   </p>
    <p class="bodyText">För mer information om varningskriterierna, <a href="https://www.smhi.se/kunskapsbanken/meteorologi/varning-for-mycket-hoga-temperaturer-1.30684" target="_blank">klicka här</a>.</p>
     <h1 class="bodyHeader">Definitioner</h1>
    <h3 class="bodyHeader">Meddelande om höga temperaturer</h3>
@@ -70,8 +72,7 @@ setNarrativeText();
    <p class="bodyText">En sammanhängande period då dygnets högsta temperatur är minst 25.0°C minst fem dagar i sträck.</p>
    <h1>OBS!</h1>
    <p>Antalet filter och deras placering kommer att ändras till slutgiltig version, kanske bara intressant ha 3 filter?</p>
-   <p><a href="index_v2.html" target="_blank">Klicka här för VERSION 2</a></p>
-   <p><a href="index_v3.html" target="_blank">Klicka här för VERSION 3</a></p>
+   <p><a href="index.html" target="_blank">Klicka här för VERSION 1</a></p>
   </div>
   </div>
 </div>
@@ -81,39 +82,44 @@ setNarrativeText();
   <div class="w3-content">
     <h1>Visualisering</h1>
     <div class="viz">
-      <div class="chart1-container">
-        <div class='radiobutton1-container'>
-          <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
-          <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt
-          <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
-        </div>
-        <svg class="chart1" viewbox="0,0,1000,220"></svg> 
-      </div>
 
-      <div class='slider-container'>
-        <input type="button" value="Spela" id="playButton" onclick="playSlider()"></input>
-        <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()'> </input>
-      </div>
 
+      
+    
       <div class='chart2-container'>
 
-        <div class='radiobutton2-container'>
-          <input type="radio" class="chart2Radio" checked="checked" name="filterData" value='Max' oninput='changeDataSet()'></input> Dagar över 30 grader
-          <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input>Tropiska dygn
-          <input type="radio" class="chart2Radio" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input>Dagar med värmebölja
-          <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input>Höga temperaturer
-          <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>Klass 1
-          <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>Klass 2
+        <div class='radiobutton1-container'>
+          <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
+          <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt <br>
+          <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
         </div>
 
-        <svg class="chart2" viewbox="0,0,700,400" >
-          <text x="50" y="100" class="yearText"></text>
-          <text x="50" y="120" class="yearValueText"></text>
-          <text x="50" y="140" class="stationText"></text>
+        <div class='radiobutton2-container'>
+          Dagar med värmebölja <input type="radio" class="chart2Radio"  checked="checked" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input>
+          Höga temperaturer <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input> <br>
+          Mycket höga <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>
+          Extremt höga  <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>
+          <!--Dagar över 30 grader <input type="radio" class="chart2Radio"  name="filterData" value='Max' oninput='changeDataSet()'></input> -->
+          Tropiska dygn  <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input> <br>
+          
+        </div>
+
+        <svg class="chart2" viewbox="0,0,500,400" >
+          <text x="5%" y="10%" class="yearText"></text>
+          <text x="5%" y="15%" class="yearValueText"></text>
+          <text x="5%" y="20%" class="stationText"></text>
           <!-- <text x="60%" y="60%" class="narrativeText"></text> -->
           <text class="legendText"></text>
         </svg>
-        <p x="60%" y="60%" class="narrativeText"></p>
+        <p class="narrativeText"></p>
+
+        <div class='stepper-container' >
+          <!--<input type="button" value="Spela" id="playButton" class="animation" onclick="playSlider()"></input>
+          <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()' > </input> -->
+          <input type="button" value="<--" id="backwardB" class="stepper" onclick="stepperMoveBackward()"></input>
+          <input type="button" value="-->" id="forwardB" class="stepper" onclick="stepperMoveForward()"></input>
+        </div>
+     
       </div>
     </div>
 

@@ -1,0 +1,104 @@
+body {
+    background-color: #3e3e3e;
+}
+
+.bodyText{
+    color:gainsboro;
+}
+
+.bodyHeader{
+    color:ghostwhite;
+}
+
+.viz {
+    position: relative;
+}
+
+
+.radiobutton1-container{
+    position: absolute;
+    left:50%;
+    top:4%;
+}
+
+
+.chart2-container{
+    width: 100%;
+    height:100%;
+    padding-top: 2%;
+    position: relative; 
+  
+}
+
+.chart2 {
+    position: relative;
+    width: 65%;
+    top:0px;
+    left:0px;
+}
+
+.narrativeText{
+    position: absolute;
+    left:70%;
+    bottom:35%;
+    width: 25%;
+    text-align: justify;
+    font-size: 90%;
+    color: "#000";
+
+}
+
+.radiobutton2-container{
+    position: relative;
+    left:0px;
+    top:0px;
+}
+
+.chart2Radio{
+    position: relative;
+    margin: 0 10px 0 10px;
+}
+
+
+.slider-container {
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    padding-bottom: 0px;
+    right:30%;
+}
+
+.rangeInput {
+    position: relative;
+    transform: rotate(-270deg);
+    width:500%;
+    top:350px;
+    right: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.stepper-container {
+    position: absolute;
+    transform: rotate(-270deg);
+    width: 10%;
+    height: 10%;
+    left:60%;
+    bottom: 40%;
+}
+
+.stepper{
+    position: relative;
+    justify-content: center;
+}
+
+
+.animation {
+    position:relative;
+    top:100px;
+    left: 10px;
+}
+
+.stationText{
+    font-size: 70%;
+}
