@@ -83,29 +83,25 @@ setNarrativeText();
   <div class="w3-content">
     <h1>Visualisering</h1>
     <div class="viz">
-
-
-      
-    
       <div class='chart2-container'>
 
         <div class='radiobutton1-container'>
-          <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde
+          <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde <br>
           <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt <br>
           <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median
         </div>
 
         <div class='radiobutton2-container'>
-          Dagar med värmebölja <input type="radio" class="chart2Radio"  checked="checked" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input>
-          Höga temperaturer <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input> <br>
-          Mycket höga <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>
-          Extremt höga  <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input>
+          <input type="radio" class="chart2Radio"  checked="checked" name="filterData" value='HeatWave' oninput='changeDataSet()'> </input> Dagar med värmebölja <br>
+          <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> </input>  Höga temperaturer <br>
+          <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'> </input>  Mycket höga temperaturer <br>
+          <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'> </input> Extremt höga temperaturer <br>
           <!--Dagar över 30 grader <input type="radio" class="chart2Radio"  name="filterData" value='Max' oninput='changeDataSet()'></input> -->
-          Tropiska dygn  <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input> <br>
+          <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'> </input> Tropiska dygn  <br>
           
         </div>
 
-        <svg class="chart2" viewbox="0,0,500,400" >
+        <svg class="chart2" viewbox="0,180,500,400"  >
           <text x="5%" y="10%" class="yearText"></text>
           <text x="5%" y="15%" class="yearValueText"></text>
           <text x="5%" y="20%" class="stationText"></text>
@@ -114,12 +110,13 @@ setNarrativeText();
         </svg>
         <p class="narrativeText"></p>
 
-        <div class='stepper-container' >
-          <!--<input type="button" value="Spela" id="playButton" class="animation" onclick="playSlider()"></input>
-          <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()' > </input> -->
-          <input type="button" value="<--" id="backwardB" class="stepper" onclick="stepperMoveBackward()"></input>
-          <input type="button" value="-->" id="forwardB" class="stepper" onclick="stepperMoveForward()"></input>
-        </div>
+        <input type="button" value="<--" id="backwardB" class="stepper" onclick="stepperMoveBackward()"></input>
+        <input type="button" value="-->" id="forwardB" class="stepper" onclick="stepperMoveForward()"></input>
+
+         <!-- <div class='stepper-container' >
+          <input type="button" value="Spela" id="playButton" class="animation" onclick="playSlider()"></input>
+          <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step=1 value="1969" oninput='setYear()' > </input> 
+        </div> -->
      
       </div>
     </div>

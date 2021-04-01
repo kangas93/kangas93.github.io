@@ -3,10 +3,10 @@ var stationData=d3.csv('./../data/stationHeatWaveDaysProto2.csv');
 var meanSumMedian=d3.csv('./../data/HeatWaveMeanMedianSum.csv');
 marginChart1 = ({top: 10, right: 20, bottom: 30, left: 20}); //10,30
 marginChart2 = ({top: 10, right: 10, bottom: 10, left: 30});
-chartOneWidth=250-marginChart1.left-marginChart1.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//2000;
-chartOneHeight=430-marginChart1.top-marginChart1.bottom;//screen.height-marginChart1.top-marginChart1.bottom;
+chartOneWidth=300-marginChart1.left-marginChart1.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
+chartOneHeight=720-marginChart1.top-marginChart1.bottom;//screen.height-marginChart1.top-marginChart1.bottom;//430
 mapWidth=500-marginChart2.left-marginChart2.right;//screen.width*0.5-chartOneWidth;
-mapHeight=400-marginChart2.top-marginChart2.bottom;
+mapHeight=470-marginChart2.top-marginChart2.bottom;
 //barWidth=Math.floor((screen.width-marginChart1.right-marginChart1.left)/50.0);
 var yearData="Mean";
 var timer;
@@ -144,7 +144,7 @@ rectHeight=d3.scaleLinear(
       [ 0, 30 ], 
       // range
       //[ 4, 24 ]
-      [0,40]
+      [0,60]
   );
 
   
@@ -197,7 +197,7 @@ function getYear(){
 //Loads and draws the map and the legend
 function loadMap(){
     sweGeo.then((geo) => {
-    var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
+    var projection= d3.geoMercator().fitSize([mapWidth*0.8,mapHeight*1.5],geo);
     var geoPath =  d3.geoPath().projection(projection);
     
     const map = d3.select('.chart2').append("g")
@@ -206,7 +206,7 @@ function loadMap(){
     .data(geo.features)
     .join("path")
     .attr("class", "Sweden")
-    .attr("fill", '#d9d9d9')
+    .attr("fill", '#bdbdbd') //#d9d9d9
     .attr("d", geoPath);
 
     //Creating a legend
@@ -224,12 +224,12 @@ function loadMap(){
     .join('g')
         .attr('class', 'legendBar')
         .attr("transform", (d,i) => {
-            return "translate("+mapWidth*0.05+","+(mapHeight*0.3+25*i)+")"; //mapWidth*0.8
+            return "translate("+mapWidth*0.05+","+(mapHeight*0.25+25*i)+")"; //mapWidth*0.8
         })
     .call(g => g
         .append('rect')
         .attr("height",d => getValueOfYearRectLegend(d))
-        .attr("width","1.0%")
+        .attr("width","1.0%") //1.0%
         .style("fill",d => getColorOfYearLegend(d))
         .style("stroke",'#000')
         .style("stroke-width",'0.1%')
@@ -262,7 +262,7 @@ function loadMap(){
     .join('g')
     .attr("class", "narrativePlaceLegend")
     .attr("transform", (d,i) => {
-        return "translate("+mapWidth*0.05+","+(mapHeight*0.3+25*6)+")";
+        return "translate("+mapWidth*0.05+","+(mapHeight*0.25+10+25*6)+")";
     })
     .call( g =>g
         .append('path')
@@ -369,7 +369,7 @@ function createStationBars(){
         var stationPosition=[];
         sweGeo.then(function(geo) {
             //Creates the projection for setting the circle position
-            var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
+            var projection= d3.geoMercator().fitSize([mapWidth*0.8,mapHeight*1.5],geo);
             //Creates a list with the station positions
             for (let i = 0; i < stations.length; i++) {
             var coord = projection([stations[i].Longitude,stations[i].Latitude]);
@@ -614,7 +614,7 @@ function createScatterChart(){
 function createScatterChartInMapChart(){
     meanSumMedian.then(function(data){
 
-        xRatio=0.60;
+        xRatio=0.45;
         yRatio=0.000;
 
         xMax = d3.max(data, d => parseInt(d[yearData],10));
@@ -630,7 +630,7 @@ function createScatterChartInMapChart(){
             .padding(0.5)
 
         xAxis = d3.axisBottom(xScale)
-        .tickSizeOuter(0);
+        .tickSizeOuter(0).ticks(5);
 
         yAxis = d3.axisRight(yScale)
         .tickSizeOuter(0);
@@ -651,10 +651,10 @@ function createScatterChartInMapChart(){
         .data(data)
         .join('path')
             .attr("transform", (d) => {
-                return "translate("+mapWidth*xRatio+","+(mapHeight*yRatio)+")";
+                return "translate("+mapWidth*xRatio+","+mapHeight*yRatio+")"; //mapHeight*yRatio
             })
             .attr('d', lineMain(data))
-            .style('stroke','#d9d9d9')
+            .style('stroke','#d9d9d9') //
             .style('stroke-width', '0.5%')
             .attr("fill", 'transparent');
             
@@ -668,12 +668,12 @@ function createScatterChartInMapChart(){
 
         scatter
             .attr('class', 'scatter')
-            .attr('transform', d => `translate(${mapWidth*xRatio+xScale(d[yearData])},${mapHeight*yRatio+yScale(d.Year)})`)
+            .attr('transform', d => `translate(${mapWidth*xRatio+xScale(d[yearData])},${mapHeight*yRatio+yScale(d.Year)})`) //mapHeight*yRatio
             .call(g => g
                 // first we append a circle to our data point
                 .append('circle')
                 //.attr('transform',`translate(0,1)`)
-                .attr('r', '1.0%')
+                .attr('r', '1.5%')
                 .style('fill', '#d9d9d9')
                 .style('stroke-width','0.05%')
                 .style('stroke', '#000')
@@ -711,34 +711,34 @@ function createScatterChartInMapChart(){
         // Here the x axis is rendered
         d3.select(".chart2").append('g')
             .attr('class', 'x-axis')
-            .style("font-size", "30%")
+            .style("font-size", "70%")
             .style("stroke-width","0.15%")
-            .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
+            .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`) //mapHeight*yRatio
             .call( xAxis );
 
             d3.select(".chart2").append("text")
             .attr("class", "x-label")
-            .style("font-size", "30%")
+            .style("font-size", "70%")
             .attr("text-anchor", "end")
             .attr("x", mapWidth*xRatio+chartOneWidth/2)
-            .attr("y", mapHeight*yRatio+chartOneHeight)
+            .attr("y", mapHeight*yRatio+chartOneHeight) //mapHeight*yRatio
             .text("Antal mätningar");
         
         // Y axis is rendered
         d3.select(".chart2").append('g')
             .attr('class', 'y-axis')
-            .style("font-size", "40%")
+            .style("font-size", "60%")
             .style("stroke-width","0.15%")
-            .attr('transform', `translate(${mapWidth*xRatio+ chartOneWidth - marginChart1.right - marginChart1.left},${mapHeight*yRatio})`)
+            .attr('transform', `translate(${mapWidth*xRatio+ chartOneWidth - marginChart1.right - marginChart1.left},${mapHeight*yRatio})`) //mapHeight*yRatio
             .call( yAxis );
             
         
         d3.select(".chart2").append("text")
             .attr("class", "y-label")
-            .style("font-size", "30%")
+            .style("font-size", "70%")
             .attr("text-anchor", "end")
-            .attr("x", mapWidth*xRatio+chartOneWidth)
-            .attr("y", mapHeight*yRatio+chartOneHeight/2)
+            .attr("x", mapWidth*xRatio+chartOneWidth*1.08)
+            .attr("y", mapHeight*yRatio+chartOneHeight/2) //mapHeight*yRatio
             //.attr("dy", ".75em")
             //.attr("transform", "rotate(-90)")
             .text("Årtal");
@@ -903,7 +903,7 @@ function setNarrativeText(){
 }
 
 function setNarrativeSymhol(geo,data){
-    var projection= d3.geoMercator().fitSize([mapWidth,mapHeight],geo);
+    var projection= d3.geoMercator().fitSize([mapWidth*0.8,mapHeight],geo);
     var coord = "translate("+projection([data[year].Long,data[year].Lat])+")";
     //d3.selectAll('.station').remove();
     //d3.selectAll('.stationCenter').remove();
