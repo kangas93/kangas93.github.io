@@ -25,7 +25,7 @@ if (screen.width >= 1020) {
     mapHeight=470-marginChart2.top-marginChart2.bottom;
 
     var xRatioLegend=0.02;
-    var yRatioLegend=0.20;
+    var yRatioLegend=0.25;
 }
 else{
     var xRatio=0.45;

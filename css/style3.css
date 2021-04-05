@@ -561,16 +561,15 @@ body {
 
     .radiobutton1-container{
         position: relative;
-        left:120%;
-        top:0%;
+        left:115%;
+        top:10%;
         font-size:70%;
     }
 
     .chart1radio{
         position: relative;
         margin: 3% 1% 2% 1%;
-        display: block;
-        orientation: horizontal;
+        display: inline;
 
     }
     
@@ -583,7 +582,7 @@ body {
     
     .chart2 {
         position: absolute;
-        width: 85%;
+        width: 80%;
         height:110%;
         padding-top: 1%;
         top:0%;
@@ -612,8 +611,7 @@ body {
     .chart2Radio{
         position: relative;
         margin: 2% 1% 2% 1%;
-        display: block;
-        orientation: vertical;
+        display: inline;
         
     }
 
