@@ -14,6 +14,24 @@ var animationStartYear;
 var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019,2020];
 var narrativeData = d3.json('./../data/narrativeData.json');
 
+if (screen.width >= 1020) {
+    var xRatio=0.55;
+    var yRatio=0.000;
+
+    var xRatioLegend=0.02;
+    var yRatioLegend=0.20;
+}
+else{
+    var xRatio=0.45;
+    var yRatio=0.000;
+    var xRatioLegend=0.05;
+    var yRatioLegend=0.25;
+
+
+}
+
+
+
 var year = 1969;
 var subStations=[];
 
@@ -160,7 +178,16 @@ function getStationInfo(d){
 }
 //Sets the year from the slider to the variable 'year'. Also calls on 'createStationCircles'
 function setYear(){
-    //year=parseInt(document.getElementById("vizRange").value,10);
+    try {
+        var e = document.getElementById("vizRange");
+        if(window.getComputedStyle(e).display != 'none'){
+        year=document.getElementById("vizRange").value; //find a solution for this
+        }
+      }
+      catch(err) {
+        console.log('error');
+      }
+    
     //createStationCircles();
     createScatterChartInMapChart();
     createStationBars();
@@ -169,23 +196,27 @@ function setYear(){
 }
 
 function stepperMoveBackward(){
+    year=parseInt(year,10);
     if(year>1969){
         year -= 1;
+        year=year.toString();
         setYear();
     }
     else{
-        year=2020
+        year="2020"
         setYear();
     }
 }
 
 function stepperMoveForward(){
+    year=parseInt(year,10);
     if(year<2020){
         year += 1;
+        year=year.toString();
         setYear();
     }
     else{
-        year=1969
+        year="1969"
         setYear();
     }
 }
@@ -224,7 +255,7 @@ function loadMap(){
     .join('g')
         .attr('class', 'legendBar')
         .attr("transform", (d,i) => {
-            return "translate("+mapWidth*0.05+","+(mapHeight*0.25+25*i)+")"; //mapWidth*0.8
+            return "translate("+mapWidth*xRatioLegend+","+(mapHeight*yRatioLegend+25*i)+")"; //mapWidth*0.8
         })
     .call(g => g
         .append('rect')
@@ -262,7 +293,7 @@ function loadMap(){
     .join('g')
     .attr("class", "narrativePlaceLegend")
     .attr("transform", (d,i) => {
-        return "translate("+mapWidth*0.05+","+(mapHeight*0.25+10+25*6)+")";
+        return "translate("+mapWidth*xRatioLegend+","+(mapHeight*yRatioLegend+10+25*6)+")";
     })
     .call( g =>g
         .append('path')
@@ -614,9 +645,6 @@ function createScatterChart(){
 function createScatterChartInMapChart(){
     meanSumMedian.then(function(data){
 
-        xRatio=0.45;
-        yRatio=0.000;
-
         xMax = d3.max(data, d => parseInt(d[yearData],10));
         yDomain = data.map(d => parseInt(d.Year, 10));
 
@@ -687,6 +715,18 @@ function createScatterChartInMapChart(){
                             .style('stroke','#99000d');
                             year=i.Year;
                             //document.getElementById("vizRange").value=i.Year;
+                            try {
+                                var e = document.getElementById("vizRange");
+                                if(window.getComputedStyle(e).display != 'none'){
+                                document.getElementById("vizRange").value = i.Year; //find a solution for this
+                                }
+                              }
+                              catch(err) {
+                                console.log('error');
+                              }
+
+
+
                             //setYearValueText(i[yearData]);
                             //createStationCircles();
                             setYear();
