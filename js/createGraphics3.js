@@ -15,8 +15,14 @@ var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019,2020];
 var narrativeData = d3.json('./../data/narrativeData.json');
 
 if (screen.width >= 1020) {
-    var xRatio=0.55;
-    var yRatio=0.000;
+    var xRatio=0.6;
+    var yRatio=0.020;
+
+    chartOneWidth=230-marginChart1.left-marginChart1.right;
+    chartOneHeight=720-marginChart1.top-marginChart1.bottom;
+
+    mapWidth=500-marginChart2.left-marginChart2.right;
+    mapHeight=470-marginChart2.top-marginChart2.bottom;
 
     var xRatioLegend=0.02;
     var yRatioLegend=0.20;
