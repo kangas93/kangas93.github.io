@@ -36,8 +36,6 @@ else{
 
 }
 
-
-
 var year = 1969;
 var subStations=[];
 
@@ -313,7 +311,7 @@ function loadMap(){
         .append('text')
         .attr('x', '3%') //d => getValueOfYearLegend(d)
         .attr('dy', '0.35em')
-        .text("Fun fact")
+        .text("Fakta plats")
         );
     
 
@@ -651,6 +649,7 @@ function createScatterChart(){
 function createScatterChartInMapChart(){
     meanSumMedian.then(function(data){
 
+       
         xMax = d3.max(data, d => parseInt(d[yearData],10));
         yDomain = data.map(d => parseInt(d.Year, 10));
 
@@ -669,6 +668,13 @@ function createScatterChartInMapChart(){
         yAxis = d3.axisRight(yScale)
         .tickSizeOuter(0);
 
+        /*brush = d3.brush()
+        .extent([ [mapWidth*xRatio , 0 ], [ mapWidth, mapHeight] ])
+        .on('brush', brushing)
+
+        d3.select( '.chart2' )
+        .call( brush );*/
+
 
         d3.selectAll('.mainLine').remove();
         var lineMain = d3.line()
@@ -677,10 +683,12 @@ function createScatterChartInMapChart(){
             .y(function(d) { 
                 return yScale(d.Year); })
             .curve(d3.curveLinear);
-
+        
+        const chart1 = d3.select(".chart2").append("g").attr("class", 'chart1');
        
+        //chart1.append('g') //.attr("class", 'mainLine') 
         d3.select(".chart2").append("g")
-        .attr("class", 'mainLine')
+        .attr("class", 'mainLine')  
         .selectAll('path')
         .data(data)
         .join('path')
@@ -695,7 +703,7 @@ function createScatterChartInMapChart(){
 
        
         d3.selectAll('.scatter').remove();
-        const scatter = d3.select(".chart2").append('g')
+        const scatter = d3.select(".chart2").append('g')//chart1.append('g') //d3.select(".chart2").append('g')
         .selectAll('g')
         .data( data )
         .join('g')
@@ -745,8 +753,71 @@ function createScatterChartInMapChart(){
                             
                         }
                     });
-                })
+                    d.stopPropagation(); })
               );
+        
+
+        let svg = document.getElementById('c2');
+        var pt = svg.createSVGPoint();  // Created once for document
+        
+        function alert_coords(evt) {
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+        
+            // The cursor point, translated into svg coordinates
+            var cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse());
+            //console.log("(" + cursorpt.x + ", " + cursorpt.y + ")");
+            return cursorpt;
+        }
+        
+        d3.selectAll('.chart2').on('click', function(d,i){
+            //console.log(d);
+            let cc = alert_coords(d);
+            var allScatter=scatter.nodes();
+
+            let tempMin = 12000;
+            let index= 20000;
+
+            for(let i=0; i<allScatter.length; i++){
+                var split = d3.select(allScatter[i]).attr('transform').split(/[(]|[)]|[,]/);
+                var x=parseFloat(split[1],10);
+                var y=parseFloat(split[2],10);
+    
+                var dist = Math.sqrt((x - cc.x)**2 + (y-cc.y)**2);
+                if(dist < tempMin){
+                    tempMin=dist;
+                    index=i;
+                }
+            }
+                
+                d3.selectAll('.scatter').each((k,j) =>{
+                    if(j==index){
+                        //d3.select(this).style('stroke-width','0.2%');
+                        d3.select(allScatter[j]).select('circle').style('fill','#fc9272')
+                        .style('stroke-width','0.2%')
+                        .style('stroke','#99000d');
+                        year=k.Year;
+                        //document.getElementById("vizRange").value=i.Year;
+                        try {
+                            var e = document.getElementById("vizRange");
+                            if(window.getComputedStyle(e).display != 'none'){
+                            document.getElementById("vizRange").value = k.Year; //find a solution for this
+                            }
+                            }
+                            catch(err) {
+                            console.log('error');
+                            }
+                        setYear();
+
+                    }
+                    else{
+                        d3.select(allScatter[j]).select('circle').style('stroke-width','0.05%')
+                        .style('fill', '#d9d9d9')
+                        .style('stroke', '#000');
+                        
+                    }
+                });
+        })
 
         
         d3.selectAll('.x-axis').remove();
@@ -792,6 +863,51 @@ function createScatterChartInMapChart(){
        updateSelectedScatter();
 
     })
+
+}
+
+function brushing({selection}){
+
+    if( selection === null ) {
+
+        return;
+  
+      } else {
+        var allScatter = d3.selectAll(".scatter").nodes();
+        // First get the selection x coords in one array and the selection y coords in another
+        const centerX = selection[0][0]+(selection[1][0]-selection[0][0])/2;
+        const centerY= selection[0][1]+(selection[1][1] - selection[0][1])/2;
+
+        let tempMin=13000;
+        let e = 20000;
+        
+        for(let i=0; i<allScatter.length; i++){
+            var split = d3.select(allScatter[i]).attr('transform').split(/[(]|[)]|[,]/);
+            var x=parseFloat(split[1],10);
+            var y=parseFloat(split[2],10);
+
+            var d = Math.sqrt((x - centerX)**2 + (y-centerY)**2);
+            if(d < tempMin){
+                tempMin=d;
+                e=i;
+            }
+        }
+
+        d3.selectAll('.scatter').each((k,j) =>{
+            if (j==e){
+                d3.select(allScatter[j]).select('circle').style('stroke-width','0.2%')
+                .style('stroke','#99000d').style('fill','#fc9272');
+                //setYearValueText(k[yearData]);
+                //year=k.Year;
+                //setYear();
+            }
+            else{
+                d3.select(allScatter[j]).select('circle').style('stroke-width','0.05%').style('fill', '#d9d9d9')
+                .style('stroke', '#000');
+            }
+        });
+
+      }  
 
 }
 

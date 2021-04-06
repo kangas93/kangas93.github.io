@@ -561,14 +561,16 @@ body {
 
     .radiobutton1-container{
         position: relative;
-        left:115%;
-        top:10%;
+        left:110%;
+        top:7%;
         font-size:70%;
+        width: 15%;
+        height: 10%;
     }
 
     .chart1radio{
         position: relative;
-        margin: 3% 1% 2% 1%;
+        margin: 2% 1% 2% 1%;
         display: inline;
 
     }
@@ -604,7 +606,7 @@ body {
         position: absolute;
         left:0px;
         width:68%;
-        top:10%;
+        top:8%;
         font-size:70%;
     }
     
