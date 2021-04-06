@@ -457,8 +457,8 @@ function createStationBars(){
         }
         d3.select(".chart2 .stationText").text("");
         //d3.select(".infobox").style('visibility', 'hidden');
-    })
-    .on('click', function(d,i){
+    });
+    /*.on('click', function(d,i){
 
         if(subStations.includes(i.ID)){
             subStations = subStations.filter(item => item !== i.ID)
@@ -470,7 +470,7 @@ function createStationBars(){
         }
         createStationPlot();
             
-            });
+            });*/
 
     const barsFloor = d3.select('.chart2').append('g')
         .attr("class", "stationFloor")
