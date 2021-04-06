@@ -193,8 +193,8 @@ function setYear(){
       }
     
     //createStationCircles();
-    createScatterChartInMapChart();
     createStationBars();
+    createScatterChartInMapChart();
     updateSelectedScatter();
     setNarrativeText();
 }
@@ -457,8 +457,8 @@ function createStationBars(){
         }
         d3.select(".chart2 .stationText").text("");
         //d3.select(".infobox").style('visibility', 'hidden');
-    });
-    /*.on('click', function(d,i){
+    })
+    .on('click', function(d,i){
 
         if(subStations.includes(i.ID)){
             subStations = subStations.filter(item => item !== i.ID)
@@ -469,8 +469,9 @@ function createStationBars(){
             d3.select(this).style("stroke-width",'0.5%');
         }
         createStationPlot();
+        d.stopPropagation();
             
-            });*/
+            });
 
     const barsFloor = d3.select('.chart2').append('g')
         .attr("class", "stationFloor")
@@ -684,7 +685,7 @@ function createScatterChartInMapChart(){
                 return yScale(d.Year); })
             .curve(d3.curveLinear);
         
-        const chart1 = d3.select(".chart2").append("g").attr("class", 'chart1');
+        //const chart1 = d3.select(".chart2").append("g").attr("class", 'chart1');
        
         //chart1.append('g') //.attr("class", 'mainLine') 
         d3.select(".chart2").append("g")
@@ -956,19 +957,16 @@ function setYearValueText(yearValue){
 //of the station
 function createStationPlot(){
 
-    if(stationData.length ==0){
+    if(subStations.length == 0){
         d3.selectAll('.stationLines').remove();
-        createScatterChart();
+        //d3.selectAll('.scatterStation').remove();
         return;
 
     }
     stationData.then(function(stations){
-        //for(let i=0; i<subStations.length; i++){
-
             var data=stations.filter(function(d){
                 return subStations.includes(d.ID);
             })
-            //transformedData = {ID:[], Year:[], Value:[]}
             transformedData = [];
             
            for(let j=0; j<data.length; j++){
@@ -976,14 +974,31 @@ function createStationPlot(){
                 for(let i=1969; i<2021; i++){
                     object={ID:data[j].ID, Year:i, Value:parseInt(data[j][i],10)};
                     transformedData.push(object);
-                    //transformedData['ID'].push(data[j].ID);
-                    //transformedData['Year'].push(i);
-                    //transformedData['Value'].push(data[j][i]);
+                    
                 }
            }
-        console.log(transformedData);
+           
 
-        xMax = d3.max(transformedData, d => d.Value);
+           var nestedData = d3.groups(transformedData, d => d.ID);
+           console.log(nestedData[0][1][0].ID);
+           
+           meanSumMedian.then(function(data){
+
+       
+            xMax = d3.max(data, d => parseInt(d[yearData],10));
+            yDomain = data.map(d => parseInt(d.Year, 10));
+    
+            xScale = d3.scaleLinear()
+            .domain([ 0, xMax +1 ])
+            .range([chartOneWidth - marginChart1.left - marginChart1.right , marginChart1.right ]);
+    
+            yScale = d3.scaleBand()
+                .domain( yDomain )
+                .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
+                .padding(0.5)
+    
+
+        /*xMax = d3.max(transformedData, d => d.Value);
         yDomain = transformedData.map(d => d.Year);
         
 
@@ -1001,37 +1016,62 @@ function createStationPlot(){
 
         yAxis = d3.axisRight(yScale)
         .tickSizeOuter(0);
-
-        const names =  transformedData.map(d => d.ID);
+            */
+        
+        const names=nestedData.map(function(d){ return d[0] })
+        console.log(names);
         var colors=d3.scaleOrdinal( 
             names,
             d3.schemeCategory10
           );
-        
-
-
-        //d3.selectAll('.mainLine').remove();
         d3.selectAll('.stationLines').remove();
-        /*var lineStation = d3.line()
-            .x(function(d) { 
-                return xScale(d.Value); })
-            .y(function(d) { 
-                return yScale(d.Year); })
-            .curve(d3.curveLinear);*/
         var lineStation = d3.line()
-        .x( d => xScale(d.Value))
+        .x( (d) => {
+            if(d.Value == 999){
+                return xScale(0);
+            }
+            else{
+                return  xScale(d.Value);
+            }
+           })
         .y(d => yScale(d.Year))
         .curve(d3.curveLinear);
        
-        var stLine = d3.select(".chart1").append("g")
+        var stLine = d3.select(".chart2").append("g")
         .attr("class", 'stationLines')
         .selectAll('path')
-        .data(transformedData)
+        .data(nestedData)
         .join('path')
-            .attr('d', lineStation(transformedData))
-            .style('stroke',d => colors(d.ID))
-            .style('stroke-width', '0.5%')
-            .attr("fill", 'transparent');
+        .attr("transform", (d) => {
+            return "translate("+mapWidth*xRatio+","+mapHeight*yRatio+")"; //mapHeight*yRatio
+        })
+        .attr('d', d => lineStation(d[1]))
+        .style('stroke',(d,i) => colors(d[1][i].ID)) //colors(d.ID)
+        .style('stroke-width', '0.2%')
+        .attr("fill", 'transparent');
+
+
+        /*d3.selectAll('.scatterStation').remove();
+        const scatterStation = d3.select(".chart2").append('g')//chart1.append('g') //d3.select(".chart2").append('g')
+        .selectAll('g')
+        .data( nestedData )
+        .join('g')
+
+        scatterStation
+            .attr('class', 'scatterStation')
+            .attr('transform', (d,i) => `translate(${mapWidth*xRatio+xScale(d[1][i].Value)},${mapHeight*yRatio+yScale(d[1][i].Year)})`) //mapHeight*yRatio
+            .call(g => g
+                // first we append a circle to our data point
+                .append('circle')
+                //.attr('transform',`translate(0,1)`)
+                .attr('r', '1.5%')
+                .style('fill', (d,i) => colors(d[1][i].ID))
+                .style('stroke-width','0.05%')
+                .style('stroke', '#000')
+              );*/
+        
+    });
+
     });
 
    

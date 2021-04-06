@@ -33,8 +33,21 @@ createScatterChartInMapChart();
 updateSelectedScatter();
 //Sets the narrative text in the start
 setNarrativeText();
+</script>
 
+<script>
+  /*var expanded = false;
 
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}*/
 </script>
 
 <!-- Header -->
@@ -84,7 +97,6 @@ setNarrativeText();
     <h1>Visualisering</h1>
     <div class="viz">
 
-
       <div class='slider-container' >
         <input type="button" value="Spela" id="playButton" class="animation" onclick="playSlider()"></input>
         <input type="range" id="vizRange" class="rangeInput" min="1969" max="2020" step="1" value="1969" oninput='setYear()'> </input>
@@ -105,8 +117,26 @@ setNarrativeText();
           <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'>Extremt höga temperaturer </input> <br>
           <!--Dagar över 30 grader <input type="radio" class="chart2Radio"  name="filterData" value='Max' oninput='changeDataSet()'></input> -->
           <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'>Tropiska dygn </input> 
-          
         </div>
+
+        <!--<form>
+          <div class="multiselect">
+            <div class="selectBox" onclick="showCheckboxes()">
+              <select>
+                <option>Välj väderstation</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div id="checkboxes">
+              <label for="one">
+                <input type="checkbox" id="one" />First checkbox</label>
+              <label for="two">
+                <input type="checkbox" id="two" />Second checkbox</label>
+              <label for="three">
+                <input type="checkbox" id="three" />Third checkbox</label>
+            </div>
+          </div>
+        </form> -->
 
         <svg class="chart2" id="c2" viewbox="0,180,500,400">
           <text x="2%" y="10%" class="yearText"></text>
@@ -127,8 +157,6 @@ setNarrativeText();
      
       </div>
     </div>
-
-   
   </div>
 </div>
 
