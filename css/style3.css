@@ -268,6 +268,129 @@ body {
 
 }
 
+@media screen and (min-width: 374px) and (min-height: 800px){
+
+    .viz{
+        position: relative;
+        height:100vh;
+    }
+
+    .slider-container {
+        display: None;
+    }
+    
+    .rangeInput {
+        display:None;
+    }
+
+    .radiobutton1-container{
+        position: absolute;
+        left:70%;
+        top:21%;
+        font-size:70%;
+    }
+
+    .chart1radio{
+        position: relative;
+        margin: 3% 1% 2% 1%;
+
+    }
+    
+    
+    .chart2-container{
+        width: 90vw;
+        height:100%;
+        padding-top: 2%;
+        position: relative; 
+      
+    }
+    
+    .chart2 {
+        position: absolute;
+        width: 100%;
+        height:80vh;
+        padding-top: 1%;
+        top:22%;
+        left:0px;
+    }
+    
+    .narrativeText{
+        position: relative;
+        left:0vh;
+        top:75%;
+        width: 100%;
+        text-align: justify;
+        font-size: 80%;
+        color: "#000";
+    
+    }
+    
+    .radiobutton2-container{
+        position: relative;
+        left:0px;
+        width:68%;
+        top:12%;
+        font-size:70%;
+    }
+    
+    .chart2Radio{
+        position: relative;
+        margin: 2% 1% 2% 1%;
+        
+    }
+
+    #forwardB{
+        position: absolute;
+        transform: rotate(-270deg);
+        left: 92%;
+        bottom:32%;
+        display: unset;
+    }
+
+    #backwardB{
+        position: absolute;
+        transform: rotate(-270deg);
+        left: 92%;
+        top: 52%;
+        display: unset;
+        
+    }
+    
+    
+    .stepper-container {
+        width: 20%;
+        height: 10%;
+        left:80%;
+        bottom: 5%;
+        
+    }
+    
+    .stepper{
+        position: relative;
+        display: block;
+        justify-content: center;
+        
+    }
+    
+    .stationText{
+        font-size: 90%;
+    }
+
+    .yearValueText{
+        font-size: 100%;
+
+    }
+
+    .yearText{
+
+        font-size: 140%;
+
+    }
+
+
+
+}
+
 @media screen and (min-width: 400px){
 
     .viz{
