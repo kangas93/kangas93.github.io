@@ -35,21 +35,6 @@ updateSelectedScatter();
 setNarrativeText();
 </script>
 
-<script>
-  /*var expanded = false;
-
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
-  }
-}*/
-</script>
-
 <!-- Header -->
 <!-- <header class="w3-container w3-red w3-center" style="padding:128px 16px">  -->
 <header class="w3-container w3-gray w3-center" style="padding:128px 16px">
@@ -118,25 +103,6 @@ function showCheckboxes() {
           <!--Dagar över 30 grader <input type="radio" class="chart2Radio"  name="filterData" value='Max' oninput='changeDataSet()'></input> -->
           <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'>Tropiska dygn </input> 
         </div>
-
-        <!--<form>
-          <div class="multiselect">
-            <div class="selectBox" onclick="showCheckboxes()">
-              <select>
-                <option>Välj väderstation</option>
-              </select>
-              <div class="overSelect"></div>
-            </div>
-            <div id="checkboxes">
-              <label for="one">
-                <input type="checkbox" id="one" />First checkbox</label>
-              <label for="two">
-                <input type="checkbox" id="two" />Second checkbox</label>
-              <label for="three">
-                <input type="checkbox" id="three" />Third checkbox</label>
-            </div>
-          </div>
-        </form> -->
 
         <svg class="chart2" id="c2" viewbox="0,180,500,400">
           <text x="2%" y="10%" class="yearText"></text>
