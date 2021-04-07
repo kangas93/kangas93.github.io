@@ -22,6 +22,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <body> 
 <script>
 // The map is drawn and the legend is created
+createStackedBarChart();
 loadMap();
 // The bars that represent each station is created. They are updated on the input from the slider
 //createStationCircles();
@@ -50,6 +51,14 @@ setNarrativeText();
     <div class="w3-twothird">
     <h1 class="bodyHeader">Varningskriterier för höga temperaturer</h1>
     <p class="bodyText">Varma sommardagar är ofta förknippade med sköna dagar på stranden och härliga sommarminnen. Men hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället inför höga temperaturer. Men hur har det sett ut historiskt? Nedan har jag tittat på den dygnsmaxtemperaturen från året 1969 till 2020 från 38 stycken väderstationer som SMHI har. Jag har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har jag även räknat ihop antalet tropiska dygn och dagar med värmeböljor.</p>
+    </div>
+    <div class="w3-twothird">
+    <div class="introViz">
+      <svg class="barStacked" viewbox="0,0,500,700"></svg>
+    </div>
+  </div>
+
+    <div class="w3-twothird">
     <h1 class="bodyHeader">Negativ påverkan på hälsan</h1>
     <p class="bodyText">SMHI startade sitt projekt med varningssystem för höga temperaturer i Sverige år 2011. Inom ramen för projektet utredde Umeå universitet risker med för höga temperaturer. Deras resultat visar att den dagliga dödligheten ökar med cirka 10 procent om temperaturen når 26°C eller mer tre dygn i rad. Dödligheten ökar ytterligare med 10 procent om temperaturen når 30°C eller mer tre dygn i rad.
    </p>
@@ -79,7 +88,6 @@ setNarrativeText();
 <!-- Second Grid -->
 <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
   <div class="w3-content">
-    <h1>Visualisering</h1>
     <div class="viz">
 
       <div class='slider-container' >
@@ -89,20 +97,39 @@ setNarrativeText();
 
       <div class='chart2-container' >
 
-        <div class='radiobutton1-container'>
+
+        <div id="form1">
+          Välj värde: <select name="dataDes" id="dataDes" onchange='changeYearData()'>
+            <option value="Mean" selected="selected" >Medelvärde</option>
+            <option value="Sum" >Totalt</option>
+            <option value="Median" >Median</option>
+          </select>
+        </div>
+
+        <div id="form2">
+          Välj data: <select id="dataType" onchange='changeDataSet()'>
+            <option value="HeatWave" selected="selected">Värmebölja</option>
+            <option value="HighTemp" >Höga temperaturer</option>
+            <option value="Class1" >Mycket höga tempereturer</option>
+            <option value="Class2" >Extremt höga tempereturer</option>
+            <option value="Min" >Tropiska nätter</option>
+          </select>
+        </div>
+
+        <!--<div class='radiobutton1-container'>
           <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde <br>
           <input type="radio" class="chart1Radio" name="filterYear" value='Sum' oninput='changeYearData()'></input> Totalt <br>
           <input type="radio" class="chart1Radio" name="filterYear" value='Median' oninput='changeYearData()'> </input> Median <br>
-        </div>
+        </div>-->
 
-        <div class='radiobutton2-container'>
+        <!--<div class='radiobutton2-container'>
           <input type="radio" class="chart2Radio"  checked="checked" name="filterData" value='HeatWave' oninput='changeDataSet()'> Dagar med värmebölja </input> <br> 
           <input type="radio" class="chart2Radio" name="filterData" value='HighTemp' oninput='changeDataSet()'> Höga temperaturer</input>  <br>
           <input type="radio" class="chart2Radio" name="filterData" value='Class1' oninput='changeDataSet()'>Mycket höga temperaturer </input>  <br>
           <input type="radio" class="chart2Radio" name="filterData" value='Class2' oninput='changeDataSet()'>Extremt höga temperaturer </input> <br>
-          <!--Dagar över 30 grader <input type="radio" class="chart2Radio"  name="filterData" value='Max' oninput='changeDataSet()'></input> -->
+          Dagar över 30 grader <input type="radio" class="chart2Radio"  name="filterData" value='Max' oninput='changeDataSet()'></input>
           <input type="radio" class="chart2Radio" name="filterData" value='Min' oninput='changeDataSet()'>Tropiska dygn </input> 
-        </div>
+        </div> -->
 
         <svg class="chart2" id="c2" viewbox="0,180,500,400">
           <text x="2%" y="10%" class="yearText"></text>

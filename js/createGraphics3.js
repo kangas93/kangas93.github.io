@@ -514,6 +514,151 @@ function createStationBars(){
     });
     });
 }
+
+function createStackedBarChart(){
+    var stackedData=d3.csv('./../data/stackedMean.csv');
+    marginStacked =  ({top: 10, right: 20, bottom: 30, left: 20});
+    stackedWidth=400-marginStacked.left-marginStacked.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
+    stackedHeight=720-marginStacked.top-marginStacked.bottom;
+
+    stackedData.then(function(data){
+
+        var xTrans=125;
+
+        xMax = d3.max(data, d => parseInt(d['HighTemp'],10)+parseInt(d['Class1'],10)+parseInt(d['Class2'],10));
+        yDomain = data.map(d => parseInt(d.Year, 10));
+        
+
+        xScale = d3.scaleLinear()
+        .domain([ 0, xMax ])
+        .range([stackedWidth - marginStacked.left - marginStacked.right , marginStacked.right ]);
+        //.range([marginStacked.right,stackedWidth - marginStacked.left - marginStacked.right  ]);
+
+        yScale = d3.scaleBand()
+            .domain( yDomain )
+            .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ])
+            //.range([ stackedHeight - marginStacked.bottom, marginStacked.top+20,  ]) //
+            .padding(0.1)
+        /*yScale = d3.scaleLinear()
+        .domain([ 1969, 2020 ])
+        .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ]);*/
+
+        xAxis = d3.axisBottom(xScale)
+        .tickSizeOuter(0).ticks(10);
+
+        var tickVals =[]
+         for (let i = 1969; i < 2021; i+=3) {
+            tickVals.push(
+                (i).toString()
+            );
+        }
+
+        yAxis = d3.axisRight(yScale)
+        .tickSizeOuter(0).tickValues(tickVals);
+
+        colors = d3.scaleOrdinal(
+            ['HighTemp','Class1','Class2'],
+            d3.schemeReds[6].slice(2)
+          )
+
+        stack = d3.stack()
+            .keys( ['HighTemp','Class1','Class2'] )
+
+
+        const chartData = stack( data ) 
+
+        const groups = d3.select('.barStacked').append('g')
+            .selectAll('g')
+            .data( chartData )
+            .join('g')
+            .style('fill', (d,i) => colors(d.key))
+        
+        groups.selectAll('rect')
+        // Now we place the rects, which are the children of the layer array
+        .data(d => d)
+        .join('rect')
+            .attr("transform", `translate(${xTrans},0)`)
+            .attr('x', d => xScale(d[1]))
+            .attr('y', d => yScale(d.data.Year))
+            .attr('height', yScale.bandwidth())
+            .attr('width', d => xScale(d[0]) - xScale(d[1]))
+            //.attr('width', d => stackedWidth+xScale(d[0]) - xScale(d[1]))
+    
+        d3.select('.barStacked').append('g')
+        .attr('transform', `translate(${xTrans},${ stackedHeight - marginStacked.bottom })`)
+        .attr('color','gainsboro')
+        .call(xAxis);
+
+        d3.select('.barStacked').append("text")
+            .style("font-size", "100%")
+            .attr("text-anchor", "end")
+            .attr('fill','gainsboro')
+            .attr("transform", `translate(${xTrans},0)`)
+            .attr("x", stackedWidth/2 + 30)
+            .attr("y", stackedHeight+10)
+            .text("Antal mätningar");
+        
+        d3.select('.barStacked').append('g')
+        .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
+        //.attr('transform', `translate(${xTrans+marginStacked.right},0)`)
+        .attr('color','gainsboro')
+        .style('font-size','80%')
+        .call(yAxis)
+
+        d3.select(".barStacked").append("text")
+            .style("font-size", "100%")
+            .attr("text-anchor", "end")
+            .attr('fill','gainsboro')
+            .attr("transform", `translate(${xTrans},0)`)
+            //.attr("transform", `translate(${-xTrans-marginStacked.left},0)`)
+            //.attr("x", stackedWidth-70)
+            .attr("x", stackedWidth+50)
+            .attr("y", stackedHeight/2)
+            //.attr("dy", ".75em")
+            //.attr("transform", "rotate(-90)")
+            .text("Årtal");
+
+
+    //Creating legend
+        
+    var legendData = ["Höga temperaturer","Mycket höga temperaturer","Extremt höga temperaturer"]
+    colorsLegend = d3.scaleOrdinal(
+        ["Höga temperaturer","Mycket höga temperaturer","Extremt höga temperaturer"],
+        d3.schemeReds[6].slice(2)
+      );
+    const legend = d3.select('.barStacked').append('g');
+    
+    legend
+    .selectAll('g')
+    .data( legendData )
+    .join('g')
+        .attr('class', 'legendBar')
+        .attr("transform", (d,i) => {
+            return "translate("+0+","+(marginStacked.top+20+25*i)+")"; //mapWidth*0.8
+        })
+    .call(g => g
+        .append('rect')
+        .attr("height","2%")
+        .attr("width","2.5%") //1.0%
+        .style("fill",(d) => colorsLegend(d))
+        .style("stroke",'#000')
+        .style("stroke-width",'0.1%')
+        .style("opacity","0.7")
+    )
+    .call(g => g
+        .append('text')
+        .attr('x', '4%') //d => getValueOfYearLegend(d)
+        .attr('y', "1.0%")
+        .attr('dy', '0.35em')
+        .text(d => d)
+        );
+    
+
+
+    });
+
+
+}
 //Creates the bar chart showing the mean value
 function createScatterChart(){
     meanSumMedian.then(function(data){
@@ -664,10 +809,17 @@ function createScatterChartInMapChart(){
             .padding(0.5)
 
         xAxis = d3.axisBottom(xScale)
-        .tickSizeOuter(0).ticks(5);
+        .tickSizeOuter(0).ticks(4);
+
+        var tickVals =[]
+         for (let i = 1969; i < 2021; i+=3) {
+            tickVals.push(
+                (i).toString()
+            );
+        }
 
         yAxis = d3.axisRight(yScale)
-        .tickSizeOuter(0);
+        .tickSizeOuter(0).tickValues(tickVals);
 
         /*brush = d3.brush()
         .extent([ [mapWidth*xRatio , 0 ], [ mapWidth, mapHeight] ])
@@ -829,23 +981,23 @@ function createScatterChartInMapChart(){
         // Here the x axis is rendered
         d3.select(".chart2").append('g')
             .attr('class', 'x-axis')
-            .style("font-size", "70%")
+            .style("font-size", "80%")
             .style("stroke-width","0.15%")
             .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`) //mapHeight*yRatio
             .call( xAxis );
 
             d3.select(".chart2").append("text")
             .attr("class", "x-label")
-            .style("font-size", "70%")
+            .style("font-size", "80%")
             .attr("text-anchor", "end")
-            .attr("x", mapWidth*xRatio+chartOneWidth/2)
-            .attr("y", mapHeight*yRatio+chartOneHeight) //mapHeight*yRatio
+            .attr("x",30 + mapWidth*xRatio+chartOneWidth/2)
+            .attr("y", 10+mapHeight*yRatio+chartOneHeight) //mapHeight*yRatio
             .text("Antal mätningar");
         
         // Y axis is rendered
         d3.select(".chart2").append('g')
             .attr('class', 'y-axis')
-            .style("font-size", "60%")
+            .style("font-size", "80%")
             .style("stroke-width","0.15%")
             .attr('transform', `translate(${mapWidth*xRatio+ chartOneWidth - marginChart1.right - marginChart1.left},${mapHeight*yRatio})`) //mapHeight*yRatio
             .call( yAxis );
@@ -853,9 +1005,9 @@ function createScatterChartInMapChart(){
         
         d3.select(".chart2").append("text")
             .attr("class", "y-label")
-            .style("font-size", "70%")
+            .style("font-size", "80%")
             .attr("text-anchor", "end")
-            .attr("x", mapWidth*xRatio+chartOneWidth*1.08)
+            .attr("x", mapWidth*xRatio+chartOneWidth*1.18)
             .attr("y", mapHeight*yRatio+chartOneHeight/2) //mapHeight*yRatio
             //.attr("dy", ".75em")
             //.attr("transform", "rotate(-90)")
@@ -866,7 +1018,7 @@ function createScatterChartInMapChart(){
     })
 
 }
-
+//Not used
 function brushing({selection}){
 
     if( selection === null ) {
@@ -1142,22 +1294,23 @@ function setNarrativeSymhol(geo,data){
 }
 
 function changeDataSet() {
-    var type = document.querySelector('input[name="filterData"]:checked').value;
+    //var type = document.querySelector('input[name="filterData"]:checked').value;
+    var type = document.getElementById("dataType").value;
     if(type == 'Min'){
         meanSumMedian=d3.csv('./../data/meanMedianSumMin20.csv');
         stationData=d3.csv('./../data/stationMin20Proto2.csv');
     }
-    if(type == 'Max'){
+    /*if(type == 'Max'){
         stationData=d3.csv('./../data/stationOver30Proto2.csv');
         meanSumMedian=d3.csv('./../data/meanMedianSumOver30.csv');
-    }
+    }*/
     if(type == 'HeatWave')
     {
         stationData=d3.csv('./../data/stationHeatWaveDaysProto2.csv');
         meanSumMedian=d3.csv('./../data/HeatWaveMeanMedianSum.csv');
     }
     if(type == 'HighTemp')
-    {   console.log('hej');
+    {   
         stationData=d3.csv('./../data/stationHighTempDaysProto2.csv');
         meanSumMedian=d3.csv('./../data/HighTempMeanMedianSum.csv');
     }
@@ -1178,7 +1331,8 @@ function changeDataSet() {
 }
 
 function changeYearData(){
-    var type = document.querySelector('input[name="filterYear"]:checked').value;
+    //var type = document.querySelector('input[name="filterYear"]:checked').value;
+    var type = document.getElementById("dataDes").value;
     if(type == 'Sum'){
         yearData='Sum';
     }

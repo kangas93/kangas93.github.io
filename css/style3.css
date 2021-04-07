@@ -21,9 +21,42 @@ body {
 
 @media screen and (min-width: 300px){
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 5%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
+    }
+
+    #form1{
+        position: absolute;
+        right:15%;
+        top:5%;
+        font-size:80%;
+        width: 20%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:20%;
+        top:5%;
+        height: 10%;
+        font-size:80%;
+
     }
 
     .slider-container {
@@ -62,17 +95,17 @@ body {
         width: 100%;
         height:80vh;
         padding-top: 1%;
-        top:30%;
+        top:20%;
         left:0px;
     }
     
     .narrativeText{
         position: relative;
         left:0vh;
-        top:83%;
+        top:93%;
         width: 50vh;
         text-align: justify;
-        font-size: 45%;
+        font-size: 62%;
         color: "#000";
     
     }
@@ -97,7 +130,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        bottom:22%;
+        bottom:32%;
         display: unset;
     }
 
@@ -105,7 +138,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        top: 56%;
+        top: 46%;
         display: unset;
         
     }
@@ -147,10 +180,44 @@ body {
 
 @media screen and (min-width: 374px){
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
     }
+
+    #form1{
+        position: absolute;
+        right:15%;
+        top:5%;
+        font-size:80%;
+        width: 20%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:20%;
+        top:5%;
+        height: 10%;
+        font-size:80%;
+
+    }
+
 
     .slider-container {
         display: None;
@@ -187,17 +254,17 @@ body {
         width: 100%;
         height:80vh;
         padding-top: 1%;
-        top:30%;
+        top:19%;
         left:0px;
     }
     
     .narrativeText{
         position: relative;
         left:0vh;
-        top:85%;
+        top:91%;
         width: 100%;
         text-align: justify;
-        font-size: 52%;
+        font-size: 62%;
         color: "#000";
     
     }
@@ -220,7 +287,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        bottom:22%;
+        bottom:34%;
         display: unset;
     }
 
@@ -228,7 +295,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        top: 56%;
+        top: 44%;
         display: unset;
         
     }
@@ -270,9 +337,42 @@ body {
 
 @media screen and (min-width: 374px) and (min-height: 800px){
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
+    }
+
+    #form1{
+        position: absolute;
+        right:15%;
+        top:5%;
+        font-size:80%;
+        width: 20%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:20%;
+        top:5%;
+        height: 10%;
+        font-size:80%;
+
     }
 
     .slider-container {
@@ -310,14 +410,14 @@ body {
         width: 100%;
         height:80vh;
         padding-top: 1%;
-        top:22%;
+        top:10%;
         left:0px;
     }
     
     .narrativeText{
         position: relative;
         left:0vh;
-        top:75%;
+        top:78%;
         width: 100%;
         text-align: justify;
         font-size: 80%;
@@ -343,7 +443,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        bottom:32%;
+        bottom:45%;
         display: unset;
     }
 
@@ -351,7 +451,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        top: 52%;
+        top: 40%;
         display: unset;
         
     }
@@ -393,9 +493,42 @@ body {
 
 @media screen and (min-width: 400px){
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
+    }
+
+    #form1{
+        position: absolute;
+        right:15%;
+        top:5%;
+        font-size:80%;
+        width: 20%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:20%;
+        top:5%;
+        height: 10%;
+        font-size:80%;
+
     }
 
     .slider-container {
@@ -433,14 +566,14 @@ body {
         width: 100%;
         height:80vh;
         padding-top: 1%;
-        top:25%;
+        top:15%;
         left:0px;
     }
     
     .narrativeText{
         position: relative;
         left:0vh;
-        top:82%;
+        top:90%;
         width: 100%;
         text-align: justify;
         font-size: 68%;
@@ -466,7 +599,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        bottom:30%;
+        bottom:40%;
         display: unset;
     }
 
@@ -474,7 +607,7 @@ body {
         position: absolute;
         transform: rotate(-270deg);
         left: 92%;
-        top: 52%;
+        top: 42%;
         display: unset;
         
     }
@@ -516,9 +649,41 @@ body {
 
 @media screen and (min-width: 800px) and (min-height:600px){
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
     .viz{
         position: relative;
         height:100vh;
+    }
+
+    #form1{
+        position: absolute;
+        left:115%;
+        top:1%;
+        font-size:80%;
+        width: 15%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:15%;
+        top:0%;
+        height: 10%;
+        font-size:80%;
+
     }
 
 
@@ -649,9 +814,42 @@ body {
 
 @media screen and (min-width: 1020px){
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
+    }
+
+    #form1{
+        position: absolute;
+        left:105%;
+        top:1%;
+        font-size:80%;
+        width: 15%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:15%;
+        top:0%;
+        height: 10%;
+        font-size:80%;
+
     }
 
 
@@ -698,7 +896,7 @@ body {
     }
     
     .chart2-container{
-        width: 70%;
+        width: 65%;
         padding-top: 2%;
         position: relative; 
       
@@ -782,6 +980,19 @@ body {
 
 @media screen and (min-width: 1300px) and (min-height: 765px) {
 
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
@@ -812,6 +1023,26 @@ body {
         right: 200px;
         display: flex;
         justify-content: center;
+    }
+
+    #form1{
+        position: absolute;
+        left:102%;
+        top:1%;
+        font-size:80%;
+        width: 15%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:15%;
+        top:0%;
+        height: 10%;
+        font-size:80%;
+
     }
 
     .radiobutton1-container{
@@ -915,11 +1146,44 @@ body {
 }
 @media screen and (min-width: 1300px) and (min-height: 1023px) {
 
+
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
     .viz{
         position: relative;
         height:100vh;
     }
 
+    #form1{
+        position: absolute;
+        left:102%;
+        top:1%;
+        font-size:80%;
+        width: 15%;
+        height: 10%;
+
+    }
+
+    #form2{
+        position: absolute;
+        left:0px;
+        width:15%;
+        top:0%;
+        height: 10%;
+        font-size:80%;
+
+    }
 
     .slider-container {
         position: absolute;
@@ -983,7 +1247,7 @@ body {
         position: relative;
         left:0%;
         top:45%;
-        width: 35%;
+        width: 30%;
         text-align: justify;
         font-size: 90%;
         color: "#000";
