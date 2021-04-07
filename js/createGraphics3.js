@@ -594,9 +594,9 @@ function createStackedBarChart(){
             .attr("text-anchor", "end")
             .attr('fill','gainsboro')
             .attr("transform", `translate(${xTrans},0)`)
-            .attr("x", stackedWidth/2 + 30)
+            .attr("x", stackedWidth/2 + 70)
             .attr("y", stackedHeight+10)
-            .text("Antal mätningar");
+            .text("Medelvärde för antal dagar");
         
         d3.select('.barStacked').append('g')
         .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
