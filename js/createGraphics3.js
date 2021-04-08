@@ -1007,7 +1007,7 @@ function createScatterChartInMapChart(){
             .attr("class", "y-label")
             .style("font-size", "80%")
             .attr("text-anchor", "end")
-            .attr("x", mapWidth*xRatio+chartOneWidth*1.18)
+            .attr("x", mapWidth*xRatio+chartOneWidth*1.12)
             .attr("y", mapHeight*yRatio+chartOneHeight/2) //mapHeight*yRatio
             //.attr("dy", ".75em")
             //.attr("transform", "rotate(-90)")
@@ -1368,6 +1368,4 @@ function playSlider(){
         },225);
         
     }
-    
-    
 }
