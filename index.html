@@ -12,6 +12,7 @@
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://d3js.org/topojson.v3.min.js"></script>
   <script type="text/javascript" src="./js/createGraphics3.js"></script> 
+  <script src="https://unpkg.com/select-pure@latest/dist/bundle.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />                     
 </head>
 <style>
@@ -100,11 +101,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
           </select>
         </div>
 
-        <div id="selectStation">
+        <!--<div id="selectStation">
           Välj station: <select id="chooseStation" onchange='chooseStationWithSelect()' >
             <option value="Empty">Ingen</option>
           </select>
+        </div>-->
+        <div class="stationSelection">
+        <div class="select-wrapper" >
+          <span class="multi-select" ></span>
+          <button onclick="resetMulti()">Rensa</button>
         </div>
+      </div>
 
         <!--<div class='radiobutton1-container'>
           <input type="radio" class="chart1Radio" checked="checked" name="filterYear" value='Mean' oninput='changeYearData()'></input> Medelvärde <br>
