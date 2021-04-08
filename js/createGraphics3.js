@@ -596,7 +596,7 @@ function createStackedBarChart(){
             .attr("transform", `translate(${xTrans},0)`)
             .attr("x", stackedWidth/2 + 70)
             .attr("y", stackedHeight+10)
-            .text("Medelvärde för antal dagar");
+            .text("Antal dagar");
         
         d3.select('.barStacked').append('g')
         .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
@@ -634,7 +634,7 @@ function createStackedBarChart(){
     .join('g')
         .attr('class', 'legendBar')
         .attr("transform", (d,i) => {
-            return "translate("+0+","+(marginStacked.top+20+25*i)+")"; //mapWidth*0.8
+            return "translate("+0+","+(marginStacked.top+40+25*i)+")"; //mapWidth*0.8
         })
     .call(g => g
         .append('rect')
