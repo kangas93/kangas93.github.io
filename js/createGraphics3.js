@@ -195,6 +195,7 @@ function setYear(){
     //createStationCircles();
     createStationBars();
     createScatterChartInMapChart();
+    resetStationPlot();
     updateSelectedScatter();
     setNarrativeText();
 }
@@ -431,6 +432,7 @@ function createStationBars(){
             .data( stations )
             .join('rect')
     bars
+       .attr("id", d => d.Name)
        .attr("height",d => getValueOfYearRect(d,year))
        .attr("width","1.0%")
        .style("fill",d=>getColorOfYear(d,year))
@@ -443,7 +445,7 @@ function createStationBars(){
         }
     )
         .on("mouseover", function (d,c) {
-        if(!subStations.includes(c.ID)){ 
+        if(!subStations.includes(c.Name)){ 
             d3.select(this)
             .style("stroke-width",'0.2%');
         }
@@ -451,7 +453,7 @@ function createStationBars(){
             d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
     })
     .on("mouseout", function (d,i) {
-        if(!subStations.includes(i.ID)){
+        if(!subStations.includes(i.Name)){
             d3.select(this)
             .style("stroke-width",'0.1%');
         }
@@ -460,13 +462,13 @@ function createStationBars(){
     })
     .on('click', function(d,i){
 
-        if(subStations.includes(i.ID)){
-            subStations = subStations.filter(item => item !== i.ID)
+        if(subStations.includes(i.Name)){
+            subStations = subStations.filter(item => item !== i.Name)
             d3.select(this).style("stroke-width",'0.2%');
         }
         else{
-            subStations.push(i.ID);
-            d3.select(this).style("stroke-width",'0.5%');
+            subStations.push(i.Name);
+            d3.select(this).style("stroke-width",'0.5%').style("opacity","0.7");
         }
         createStationPlot();
         d.stopPropagation();
@@ -480,6 +482,7 @@ function createStationBars(){
         .join('rect');
     
     barsFloor
+        .attr("id", d => d.Name+"_Floor")
         .attr("height",d => getHeightOfYearBarFloor(d,year))
         .attr("width","2.0%")
         .style('stroke','#000')
@@ -491,7 +494,7 @@ function createStationBars(){
             }
         )
         .on("mouseover", function (d,c) {
-            if(!subStations.includes(c.ID)){ 
+            if(!subStations.includes(c.Name)){ 
                 //var val= parseFloat(d3.select(this).style('height').split('%')[0],10);
                 d3.select(this)
                 //.attr("height",(val+0.2)+'%');
@@ -501,7 +504,7 @@ function createStationBars(){
                 d3.select(".chart2 .stationText").text(c['Name']+': '+getStationInfo(c[year])).raise();
         })
         .on("mouseout", function (d,i) {
-            if(!subStations.includes(i.ID)){
+            if(!subStations.includes(i.Name)){
                 //var val= parseFloat(d3.select(this).style('height').split('%')[0],10);
                 d3.select(this)
                 //.attr("height",(val-0.2)+'%');
@@ -1066,8 +1069,6 @@ function brushing({selection}){
 
 //Updates the barchart so that the slider year is highlighted in the barchart
 function updateSelectedScatter(){
-    d3.selectAll('.stationLines').remove();
-    subStations=[];
     var allScatter=d3.selectAll(".scatter").nodes();
     d3.selectAll('.scatter').each((k,j) =>{
         if(parseInt(k.Year,10)==year){
@@ -1081,6 +1082,15 @@ function updateSelectedScatter(){
             .style('stroke', '#000');
         }
     });
+
+}
+
+function resetStationPlot(){
+
+    d3.selectAll('.stationLines').remove();
+    document.getElementById('chooseStation').value="Empty";
+    subStations=[];
+    d3.select(".chart2 .stationText").text("");
 
 }
 
@@ -1117,22 +1127,21 @@ function createStationPlot(){
     }
     stationData.then(function(stations){
             var data=stations.filter(function(d){
-                return subStations.includes(d.ID);
+                return subStations.includes(d.Name);
             })
             transformedData = [];
             
            for(let j=0; j<data.length; j++){
                 
                 for(let i=1969; i<2021; i++){
-                    object={ID:data[j].ID, Year:i, Value:parseInt(data[j][i],10)};
+                    object={Name:data[j].Name, Year:i, Value:parseInt(data[j][i],10)};
                     transformedData.push(object);
                     
                 }
            }
            
 
-           var nestedData = d3.groups(transformedData, d => d.ID);
-           console.log(nestedData[0][1][0].ID);
+           var nestedData = d3.groups(transformedData, d => d.Name);
            
            meanSumMedian.then(function(data){
 
@@ -1171,7 +1180,6 @@ function createStationPlot(){
             */
         
         const names=nestedData.map(function(d){ return d[0] })
-        console.log(names);
         var colors=d3.scaleOrdinal( 
             names,
             d3.schemeCategory10
@@ -1198,7 +1206,7 @@ function createStationPlot(){
             return "translate("+mapWidth*xRatio+","+mapHeight*yRatio+")"; //mapHeight*yRatio
         })
         .attr('d', d => lineStation(d[1]))
-        .style('stroke',(d,i) => colors(d[1][i].ID)) //colors(d.ID)
+        .style('stroke',(d,i) => colors(d[1][i].Name)) //colors(d.ID)
         .style('stroke-width', '0.2%')
         .attr("fill", 'transparent');
 
@@ -1344,6 +1352,7 @@ function changeYearData(){
     }
     //createScatterChart();
     createScatterChartInMapChart();
+    createStationPlot();
 }
 
 function playSlider(){
@@ -1368,4 +1377,62 @@ function playSlider(){
         },225);
         
     }
+}
+
+function createStationOptions(){
+    stationData.then(function(data){
+        for(let i=0; i<data.length; i++){
+            var select = document.getElementById("chooseStation");
+            var option = document.createElement("option");
+            option.text = data[i].Name;
+            option.value= data[i].Name;
+            select.add(option);
+        }
+    });
+}
+
+function chooseStationWithSelect(){
+    subStations = [];
+    var type = document.getElementById("chooseStation").value;
+    var allStations=d3.selectAll(".station").selectAll("rect").nodes();
+    var allStationFloors =d3.selectAll(".stationFloor").selectAll("rect").nodes();
+ 
+    for(let i=0; i<allStations.length; i++){
+        if(allStations[i].id==type){
+            //d3.select(this).style('stroke-width','0.2%');
+            var h=d3.select(allStations[i]).attr("height");
+            d3.select(allStations[i]).style('stroke-width','0.5%').style("opacity","0.7");
+            d3.select(".chart2 .stationText").text(allStations[i].id+': '+getStationInfo(rectHeight.invert(h))).raise();
+            subStations.push(allStations[i].id);
+            }
+        else if(type=="Empty") {
+            d3.select(allStations[i]).style('stroke-width','0.1%').style("opacity","0.7");
+        }
+        else{
+            d3.select(allStations[i]).style('stroke-width','0.1%').style("opacity","0.3");
+        }
+    }
+
+
+    for(let i=0; i<allStationFloors.length; i++){
+        if(allStationFloors[i].id==(type+"_Floor")){
+            d3.select(allStationFloors[i]).style('stroke-width','0.3%').style("opacity","1");
+            }
+        else if(type=="Empty") {
+            d3.select(allStationFloors[i]).style('stroke-width','0.1%').style("opacity","1");
+        }
+        else{
+            d3.select(allStationFloors[i]).style('stroke-width','0.1%').style("opacity","0.3");
+        }
+
+    }
+
+    if(type=="Empty"){
+        d3.select(".chart2 .stationText").text("");
+        resetStationPlot();
+        return;
+    }
+
+    createStationPlot();
+
 }
