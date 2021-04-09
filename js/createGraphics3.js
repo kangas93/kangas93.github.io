@@ -194,9 +194,9 @@ function setYear(){
     createStationBars();
     createScatterChartInMapChart();
     //resetStationPlot();
-    updateSelectedScatter();
+    //updateSelectedScatter();
     setNarrativeText();
-    updateStationWithSelected();
+    //updateStationWithSelected();
 }
 
 function stepperMoveBackward(){
@@ -436,8 +436,34 @@ function createStationBars(){
        .attr("width","1.0%")
        .style("fill",d=>getColorOfYear(d,year))
        .style("stroke",'#000')
-       .style("stroke-width",'0.1%')
-       .style("opacity","0.7")
+       .style('stroke-width', (d) => {
+        if(subStations.length>0){
+            if(subStations.includes(d.Name)){
+                //console.log("bar stroke");
+                return "0.5%";
+
+            }
+            else{
+                return "0.1%";
+            }
+        }
+        else{
+            return "0.1%";
+        }
+       })
+       .style("opacity", (d) => {
+        if(subStations.length>0){
+            if(subStations.includes( d.Name)){
+                return "0.7";
+            }
+            else{
+                return "0.3";
+            }
+        }
+        else{
+            return "0.7";
+        }
+       })
        .attr("transform", function(d,i) {
         var pos="translate(" +stationPosition[i][0].toString()+","+ (stationPosition[i][1]-getValueOfYearRect(d,year)).toString()+ ")";
         return pos;
@@ -459,7 +485,7 @@ function createStationBars(){
         d3.select(".chart2 .stationText").text("");
         //d3.select(".infobox").style('visibility', 'hidden');
     })
-    .on('click', function(d,i){
+    /*.on('click', function(d,i){
 
         if(subStations.includes(i.Name)){
             subStations = subStations.filter(item => item !== i.Name)
@@ -472,7 +498,7 @@ function createStationBars(){
         createStationPlot();
         d.stopPropagation();
             
-            });
+            });*/
 
     const barsFloor = d3.select('.chart2').append('g')
         .attr("class", "stationFloor")
@@ -485,7 +511,32 @@ function createStationBars(){
         .attr("height",d => getHeightOfYearBarFloor(d,year))
         .attr("width","2.0%")
         .style('stroke','#000')
-        .style('stroke-width','0.1%')
+        .style('stroke-width', (d) => {
+            if(subStations.length>0){
+                if(subStations.includes(d.Name)){
+                    return "0.3%";
+                }
+                else{
+                    return "0.1%";
+                }
+            }
+            else{
+                return "0.1%";
+            }
+           })
+        .style("opacity", (d) => {
+            if(subStations.length>0){
+                if(subStations.includes( d.Name)){
+                    return "1";
+                }
+                else{
+                    return "0.3";
+                }
+            }
+            else{
+                return "1";
+            }
+           })
         .style("fill",d => getColorOfYearBarFloor(d,year))
         .attr("transform", function(d,i) {
             var pos="translate(" +(stationPosition[i][0]-mapWidth*0.005).toString()+","+ stationPosition[i][1].toString()+ ")";
@@ -1081,12 +1132,44 @@ function updateSelectedScatter(){
             .style('stroke', '#000');
         }
     });
+    d3.selectAll(".stationLines").raise();
+    d3.selectAll(".allScaSta").raise();
+
+    updateStationText();
+
+}
+
+function updateStationText(){
+    if(subStations.length == 1){
+        var allStations=d3.selectAll(".station").selectAll("rect").nodes();
+        
+        for(let i=0; i<allStations.length; i++){
+        
+            if(allStations[i].id==subStations[0]){
+                
+                //d3.select(this).style('stroke-width','0.2%');
+                stationData.then(function(stations){
+                    var data=stations.filter(function(d){
+                        return subStations.includes(d.Name);
+                    })
+                    //console.log(data[0][year]);
+                    d3.select(".chart2 .stationText").text(allStations[i].id+': '+getStationInfo(data[0][year])).raise();
+                })
+                return;
+                }
+        }
+
+    }
+    else{
+        d3.select(".chart2 .stationText").text("");
+    }
 
 }
 
 function resetStationPlot(){
 
     d3.selectAll('.stationLines').remove();
+    d3.selectAll('.scatterStation').remove();
     //document.getElementById('chooseStation').value="Empty";
     subStations=[];
     d3.select(".chart2 .stationText").text("");
@@ -1096,14 +1179,14 @@ function resetStationPlot(){
 function setYearValueText(yearValue){
 
     if(yearData=='Mean'){
-        var text="Medelvärde: "+yearValue.toString()+" dagar";
+        var text="Medelvärde: "+yearValue.toString().split(".")[0]+" dagar";
     }
     else if (yearData=='Sum'){
-        var text="Totalt: "+yearValue.toString()+" mätningar";
+        var text="Totalt: "+yearValue.toString().split(".")[0]+" mätningar";
 
     }
     else if (yearData=='Median'){
-        var text="Median: "+yearValue.toString()+" dagar";
+        var text="Median: "+yearValue.toString().split(".")[0]+" dagar";
     };
      d3.select('.chart2 .yearValueText')
             .attr('font-size', '1em')
@@ -1113,37 +1196,11 @@ function setYearValueText(yearValue){
 
 }
 
-var colorDict = {};
-/*function checkColorsStationPlot(){
-    if (Object.keys(colorDict).length < 1){
-        subStations.forEach(
-
-        );
-    }
-}*/
-//Not used
-function createStationPlotColors(){
-    var colorRange=d3.scaleSequential().domain([1,30])
-      .interpolator(d3.interpolateReds);
-        
-      return stationData.then(function(stations){
-        var names=[]
-        for(let j=0; j<stations.length; j++){
-            names.push(stations[j].Name)
-        }
-        var color = d3.scaleOrdinal(names,d3.interpolateTurbo);
-        return color;
-        
-    });
-}
-
-
-
 function createStationPlot(){
 
     if(subStations.length < 1){
         d3.selectAll('.stationLines').remove();
-        //d3.selectAll('.scatterStation').remove();
+        d3.selectAll('.scatterStation').remove();
         return;
 
     }
@@ -1179,31 +1236,6 @@ function createStationPlot(){
                 .domain( yDomain )
                 .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
                 .padding(0.5)
-    
-
-        /*xMax = d3.max(transformedData, d => d.Value);
-        yDomain = transformedData.map(d => d.Year);
-        
-
-        xScale = d3.scaleLinear()
-        .domain([ 0, xMax +1 ])
-        .range([chartOneWidth - marginChart1.left - marginChart1.right , marginChart1.right ]);
-
-        yScale = d3.scaleBand()
-            .domain( yDomain )
-            .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
-            .padding(0.5)
-
-        xAxis = d3.axisBottom(xScale)
-        .tickSizeOuter(0);
-
-        yAxis = d3.axisRight(yScale)
-        .tickSizeOuter(0);
-            */
-        
-        //const names=nestedData.map(function(d){ return d[0] })
-        
-       
 
           var names=[]
           for(let j=0; j<stations.length; j++){
@@ -1247,28 +1279,30 @@ function createStationPlot(){
         })
         .attr('d', d => lineStation(d[1]))
         .style('stroke',(d,i) => color(d[1][i].Name)) //colors(d[1][i].Name)
-        .style('stroke-width', '0.2%')
+        .style('stroke-width', '0.4%')
         .attr("fill", 'transparent');
 
-
-        /*d3.selectAll('.scatterStation').remove();
+        d3.selectAll('.scatterStation').remove();
         const scatterStation = d3.select(".chart2").append('g')//chart1.append('g') //d3.select(".chart2").append('g')
+        .attr('class','allScaSta')
         .selectAll('g')
-        .data( nestedData )
+        .data( transformedData )
         .join('g')
 
         scatterStation
             .attr('class', 'scatterStation')
-            .attr('transform', (d,i) => `translate(${mapWidth*xRatio+xScale(d[1][i].Value)},${mapHeight*yRatio+yScale(d[1][i].Year)})`) //mapHeight*yRatio
+            .attr('transform', (d,i) =>
+                //console.log(d))
+             `translate(${mapWidth*xRatio+xScale(d.Value)},${mapHeight*yRatio+yScale(d.Year)})`) //mapHeight*yRatio
             .call(g => g
                 // first we append a circle to our data point
                 .append('circle')
                 //.attr('transform',`translate(0,1)`)
-                .attr('r', '1.5%')
-                .style('fill', (d,i) => colors(d[1][i].ID))
+                .attr('r', '0.5%')
+                .style('fill', (d,i) => color(d.Name))
                 .style('stroke-width','0.05%')
                 .style('stroke', '#000')
-              );*/
+              );
         
     });
 
@@ -1427,12 +1461,6 @@ function createStationOptions(){
 
         var optionData = []
         for(let i=0; i<data.length; i++){
-            /*
-            var select = document.getElementById("chooseStation");
-            var option = document.createElement("option");
-            option.text = data[i].Name;
-            option.value= data[i].Name;
-            select.add(option);*/
             optionData.push({label: data[i].Name, value: data[i].Name})
         }
 
@@ -1440,7 +1468,8 @@ function createStationOptions(){
             options: optionData,
             multiple: true,
             icon: "fa fa-times",
-            placeholder: "Välj station",
+            placeholder: "Välj stationer",
+            autocomplete: true,
             onChange: value => { chooseStationWithSelect(value) },
             classNames: {
           select: "select-pure__select",
@@ -1460,16 +1489,37 @@ function createStationOptions(){
     });
 }
 
+
+function createStationOptionsMobile(){
+    stationData.then(function(data){
+
+        var optionData = []
+        for(let i=0; i<data.length; i++){
+            
+            var select = document.getElementById("chooseStation");
+            var option = document.createElement("option");
+            option.text = data[i].Name;
+            option.value= data[i].Name;
+            select.add(option);
+            optionData.push({label: data[i].Name, value: data[i].Name})
+        }
+    });
+}
+
 function resetMulti(){
+    try{
     multiSelect.reset();
     resetStationBars();
     resetStationPlot();
+    }
+    catch(err){
+        console.log('Mobile Device');
+    }
 }
-/* //Works for single select
-function chooseStationWithSelect(){
+
+function chooseStationWithSelectMobile(){
     subStations = [];
     var type = document.getElementById("chooseStation").value;
-    console.log(multiSelect.value());
     var allStations=d3.selectAll(".station").selectAll("rect").nodes();
     var allStationFloors =d3.selectAll(".stationFloor").selectAll("rect").nodes();
  
@@ -1509,9 +1559,12 @@ function chooseStationWithSelect(){
         return;
     }
 
+
+
+
     createStationPlot();
 
-}*/
+}
 //For multi-select
 function resetStationBars(){
 
@@ -1529,18 +1582,6 @@ function resetStationBars(){
 
 function chooseStationWithSelect(value){
     subStations=[...value];
-    //console.log(value);
-    //console.log("-----")
-    
-    /*if(subStations.includes(value)){
-        subStations = subStations.filter(item => item !== value)
-    }
-    else{
-        subStations.push(value);
-    }*/
-    //console.log(subStations);
-    //console.log("- - - - - ");
-    
     
     if(subStations.length<1){
         d3.select(".chart2 .stationText").text("");
@@ -1586,17 +1627,33 @@ visitedFl=[];
 
     }
   }
+    stationData.then(function(stations){
+        var names=[]
+        for(let j=0; j<stations.length; j++){
+            names.push(stations[j].Name)
+        }
+    
+    var color=d3.scaleOrdinal( 
+        names,
+        d3.schemeTableau10
+        );
+
+        var sLabels = document.getElementsByClassName('select-pure__selected-label');
+        for(let j=0; j<sLabels.length; j++){
+            sLabels[j].style.background = color(sLabels[j].innerHTML.split("<")[0]);
+        }
+    });
+  
 
 createStationPlot();
 
 }
-
+/*
 function updateStationWithSelected(){
 
 
     if(subStations.length<1){
         d3.select(".chart2 .stationText").text("");
-        console.log("finns inga stationer");
         return;
     }
  var allStations=d3.selectAll(".station").selectAll("rect").nodes();
@@ -1611,17 +1668,13 @@ visitedFl=[];
             continue;
         }
         else if(allStations[i].id==subStations[j]){
-            //d3.select(this).style('stroke-width','0.2%');
             visitedSt.push(i);
-            var h=d3.select(allStations[i]).attr("height");
             d3.select(allStations[i]).style('stroke-width','0.5%').style("opacity","0.7");
-            d3.select(".chart2 .stationText").text(allStations[i].id+': '+getStationInfo(rectHeight.invert(h))).raise();
-            //subStations.push(allStations[i].id);
-            
-
             }
         else {
             d3.select(allStations[i]).style('stroke-width','0.1%').style("opacity","0.3");
+            //console.log("changing opacity");
+            //console.log(allStations[i]);
         }
     }
 
@@ -1642,4 +1695,4 @@ visitedFl=[];
 
 createStationPlot();
 
-}
+}*/

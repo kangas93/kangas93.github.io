@@ -84,7 +84,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 
         <div id="selectDes">
-          Välj värde: <select name="dataDes" id="dataDes" onchange='changeYearData()'>
+          Välj års värde: <select name="dataDes" id="dataDes" onchange='changeYearData()'>
             <option value="Mean" selected="selected" >Medelvärde</option>
             <option value="Sum" >Totalt</option>
             <option value="Median" >Median</option>
@@ -101,13 +101,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
           </select>
         </div>
 
-        <!--<div id="selectStation">
-          Välj station: <select id="chooseStation" onchange='chooseStationWithSelect()' >
+        <div id="selectStationMobile">
+          Välj station: <select id="chooseStation" onchange='chooseStationWithSelectMobile()' >
             <option value="Empty">Ingen</option>
           </select>
-        </div>-->
+        </div>
         <div class="stationSelection">
         <div class="select-wrapper" >
+          Se tidslinje för stationer:
           <span class="multi-select" ></span>
           <button onclick="resetMulti()">Rensa</button>
         </div>
@@ -178,7 +179,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 </div>
 
 <script>
-  createStationOptions();
+  if( screen.width <500){
+    createStationOptionsMobile();
+  }
+  else{
+    createStationOptions();
+  }
+  
   // The map is drawn and the legend is created
   createStackedBarChart();
   loadMap();

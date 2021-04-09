@@ -143,6 +143,14 @@ body {
     display: none;
   }
 
+  .stationSelection{
+    position:absolute;
+    top:10%;
+    right:66%;
+    width: 40%;
+    transform: scale(0.8);
+}
+
 
 @media screen and (min-width: 300px){
 
@@ -186,20 +194,30 @@ body {
 
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
-        width:30%;
-        top:12%;
+        width:20%;
+        top:13%;
         height: 10%;
-        font-size:75%;
+        font-size:55%;
+        display: unset;
     }
 
     #chooseStation{
         position: relative;
         left:90%;
-        bottom:30%;
+        bottom:26%;
 
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:8%;
+        right:50%;
+        width: 70%;
+        transform: scale(0.5);
+        display:None;
     }
 
     .slider-container {
@@ -361,13 +379,14 @@ body {
 
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
         width:30%;
         top:12%;
         height: 10%;
         font-size:75%;
+        display:unset;
     }
 
     #chooseStation{
@@ -375,6 +394,15 @@ body {
         left:80%;
         bottom:27%;
 
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:None;
     }
 
 
@@ -533,13 +561,14 @@ body {
         font-size:80%;
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
         width:30%;
         top:12%;
         height: 10%;
         font-size:75%;
+        display:unset;
     }
 
     #chooseStation{
@@ -547,6 +576,15 @@ body {
         left:80%;
         bottom:24%;
 
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:None;
     }
 
     .slider-container {
@@ -705,7 +743,7 @@ body {
 
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
         width:30%;
@@ -719,6 +757,15 @@ body {
         left:80%;
         bottom:25%;
 
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:None;
     }
 
     .slider-container {
@@ -876,13 +923,14 @@ body {
 
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
         width:30%;
         top:12%;
         height: 10%;
         font-size:75%;
+        display:None;
     }
 
     #chooseStation{
@@ -890,6 +938,15 @@ body {
         left:60%;
         bottom:27%;
 
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:unset;
     }
 
 
@@ -1058,13 +1115,14 @@ body {
 
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
         width:30%;
         top:12%;
         height: 10%;
         font-size:100%;
+        display:None;
     }
 
     #chooseStation{
@@ -1072,6 +1130,15 @@ body {
         left:0%;
         bottom:0%;
 
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:unset;
     }
 
 
@@ -1267,13 +1334,14 @@ body {
 
     }
 
-    #selectStation{
+    #selectStationMobile{
         position: absolute;
         left:0px;
         width:30%;
         top:7%;
         height: 10%;
         font-size:65%;
+        display:None;
     }
 
     #chooseStation{
@@ -1289,6 +1357,7 @@ body {
         right:66%;
         width: 40%;
         transform: scale(0.8);
+        display:unset;
     }
 
 
