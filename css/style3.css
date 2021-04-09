@@ -22,6 +22,19 @@ body {
     font-size: 150%;
 }
 
+.clickable-container {margin:0px !important; 
+    background-color:#7b7b7b !important }
+.clickable-container:hover {color:#000 !important;background-color:#afafaf !important}
+.clickable-container:active {border:0px !important; outline: 0}
+.clickable-container:focus {border:0px !important; outline: 0}
+
+.definitionsContainer{
+    position: relative;
+    bottom:70%;
+    left:15%;
+    
+}
+
 
 .select-wrapper {
     margin: auto;
