@@ -696,13 +696,160 @@ function createStackedBarChart(){
         .style("fill",(d) => colorsLegend(d))
         .style("stroke",'#000')
         .style("stroke-width",'0.1%')
-        .style("opacity","0.7")
+        .style("opacity","1")
     )
     .call(g => g
         .append('text')
         .attr('x', '4%') //d => getValueOfYearLegend(d)
         .attr('y', "1.0%")
         .attr('dy', '0.35em')
+        .attr("fill","#e6e6e6")
+        .text(d => d)
+        );
+    
+
+
+    });
+
+
+}
+
+function createStackedBarChartTropical(){
+    var stackedData=d3.csv('./../data/stackedMinHeatWaveMean.csv');
+    marginStacked =  ({top: 10, right: 20, bottom: 30, left: 20});
+    stackedWidth=400-marginStacked.left-marginStacked.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
+    stackedHeight=720-marginStacked.top-marginStacked.bottom;
+
+    stackedData.then(function(data){
+
+        var xTrans=125;
+
+        xMax = d3.max(data, d => parseInt(d['HeatWave'],10)+parseInt(d['Min'],10));
+        yDomain = data.map(d => parseInt(d.Year, 10));
+        
+
+        xScale = d3.scaleLinear()
+        .domain([ 0, xMax ])
+        .range([stackedWidth - marginStacked.left - marginStacked.right , marginStacked.right ]);
+        //.range([marginStacked.right,stackedWidth - marginStacked.left - marginStacked.right  ]);
+
+        yScale = d3.scaleBand()
+            .domain( yDomain )
+            .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ])
+            //.range([ stackedHeight - marginStacked.bottom, marginStacked.top+20,  ]) //
+            .padding(0.1)
+        /*yScale = d3.scaleLinear()
+        .domain([ 1969, 2020 ])
+        .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ]);*/
+
+        xAxis = d3.axisBottom(xScale)
+        .tickSizeOuter(0).ticks(10);
+
+        var tickVals =[]
+         for (let i = 1969; i < 2021; i+=3) {
+            tickVals.push(
+                (i).toString()
+            );
+        }
+
+        yAxis = d3.axisRight(yScale)
+        .tickSizeOuter(0).tickValues(tickVals);
+
+        colors = d3.scaleOrdinal(
+            ['HeatWave','Min'],
+            ['#feb24c','#ffeda0']
+          )
+
+        stack = d3.stack()
+            .keys( ['HeatWave','Min'] )
+
+
+        const chartData = stack( data ) 
+
+        const groups = d3.select('.barStacked-2').append('g')
+            .selectAll('g')
+            .data( chartData )
+            .join('g')
+            .style('fill', (d,i) => colors(d.key))
+        
+        groups.selectAll('rect')
+        // Now we place the rects, which are the children of the layer array
+        .data(d => d)
+        .join('rect')
+            .attr("transform", `translate(${xTrans},0)`)
+            .attr('x', d => xScale(d[1]))
+            .attr('y', d => yScale(d.data.Year))
+            .attr('height', yScale.bandwidth())
+            .attr('width', d => xScale(d[0]) - xScale(d[1]))
+            //.attr('width', d => stackedWidth+xScale(d[0]) - xScale(d[1]))
+    
+        d3.select('.barStacked-2').append('g')
+        .attr('transform', `translate(${xTrans},${ stackedHeight - marginStacked.bottom })`)
+        .attr('color','gainsboro')
+        .call(xAxis);
+
+        d3.select('.barStacked-2').append("text")
+            .style("font-size", "100%")
+            .attr("text-anchor", "end")
+            .attr('fill','gainsboro')
+            .attr("transform", `translate(${xTrans},0)`)
+            .attr("x", stackedWidth/2 + 70)
+            .attr("y", stackedHeight+10)
+            .text("Antal dagar");
+        
+        d3.select('.barStacked-2').append('g')
+        .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
+        //.attr('transform', `translate(${xTrans+marginStacked.right},0)`)
+        .attr('color','gainsboro')
+        .style('font-size','80%')
+        .call(yAxis)
+
+        d3.select(".barStacked-2").append("text")
+            .style("font-size", "100%")
+            .attr("text-anchor", "end")
+            .attr('fill','gainsboro')
+            .attr("transform", `translate(${xTrans},0)`)
+            //.attr("transform", `translate(${-xTrans-marginStacked.left},0)`)
+            //.attr("x", stackedWidth-70)
+            .attr("x", stackedWidth+50)
+            .attr("y", stackedHeight/2)
+            //.attr("dy", ".75em")
+            //.attr("transform", "rotate(-90)")
+            .text("Årtal");
+
+
+    //Creating legend
+        
+    var legendData = ["Värmebölja","Tropiska dygn"]
+    colorsLegend = d3.scaleOrdinal(
+        ["Värmebölja","Tropiska dygn"],
+        ['#feb24c','#ffeda0']
+      );
+    const legend = d3.select('.barStacked-2').append('g');
+    
+    legend
+    .selectAll('g')
+    .data( legendData )
+    .join('g')
+        .attr('class', 'legendBar-2')
+        .attr("transform", (d,i) => {
+            return "translate("+0+","+(marginStacked.top+40+25*i)+")"; //mapWidth*0.8
+        })
+    .call(g => g
+        .append('rect')
+        .attr("height","2%")
+        .attr("width","2.5%") //1.0%
+        .style("fill",(d) => colorsLegend(d))
+        .style("stroke",'#000')
+        .style("stroke-width",'0.1%')
+        .style("opacity","1")
+    )
+    .call(g => g
+        .append('text')
+        .attr('x', '4%') //d => getValueOfYearLegend(d)
+        .attr('y', "1.0%")
+        .attr('dy', '0.35em')
+        .attr("fill","#e6e6e6")
         .text(d => d)
         );
     

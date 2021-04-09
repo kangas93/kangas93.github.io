@@ -7,7 +7,7 @@ body {
 }
 
 .bodyHeader{
-    color:ghostwhite;
+    color:rgb(230, 230, 230);
 }
 
 .viz {
@@ -20,6 +20,12 @@ body {
 
 .introText{
     font-size: 150%;
+    fill: rgb(230, 230, 230);
+}
+
+.introText-2{
+    font-size: 150%;
+    fill: rgb(230, 230, 230);
 }
 
 .clickable-container {margin:0px !important; 
@@ -30,8 +36,8 @@ body {
 
 .definitionsContainer{
     position: relative;
-    bottom:70%;
-    left:15%;
+    padding-bottom: 15%;
+    left:55%;
     
 }
 
@@ -1288,6 +1294,19 @@ body {
     }
 
     .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }
+
+    .introViz-2{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked-2{
         position:relative;
         width: 90%;
         height: 90%;

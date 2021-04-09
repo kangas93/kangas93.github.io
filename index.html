@@ -36,7 +36,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <div class="w3-content">
     <div class="w3-twothird">
     <h1 class="bodyHeader">Varningskriterier för höga temperaturer</h1>
-    <p class="bodyText">Varma sommardagar är ofta förknippade med sköna dagar på stranden och härliga sommarminnen. Men hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället inför höga temperaturer. Men hur har det sett ut historiskt? Nedan har jag tittat på den dygnsmaxtemperaturen från året 1969 till 2020 från 38 stycken väderstationer som SMHI har. Jag har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har jag även räknat ihop antalet tropiska dygn och dagar med värmeböljor.</p>
+    <p class="bodyText">Varma sommardagar är ofta förknippade med sköna dagar på stranden och härliga sommarminnen. Men hög värme under längre tid kan också ha en negativ inverkan på människors hälsa. SMHI har definierat tre varningskriterier för prognoser som de använder för att varna samhället om kommande höga temperaturer. Dessa varningar är till  för att öka beredskapen i samhället inför höga temperaturer. Men hur har det sett ut historiskt? Nedan har jag tittat på dygnsmaxtemperaturen från året 1969 till 2020 från 38 stycken väderstationer som styrs av SMHI. Jag har sedan räknat ihop hur många dagar som skulle passa in i SMHIs varningskriterier för varje år. Utöver varningskriterierna har jag även räknat ihop antalet dagar med värmeböljor och tropiska dygn.</p>
     </div>
     <div class="w3-twothird">
      
@@ -45,49 +45,62 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <svg class="barStacked" viewbox="0,0,500,700">
         <text class='introText' x="0%" y="5%" > Medelvärde per år</text>
       </svg>
-      <div class="definitionsContainer">
-        <button class="col-xs-2 w3-button clickable-container w3-padding-small"
-          onclick="document.getElementById('definitions').style.display='block'">
-          <p style="font-size:18px; margin: 0.5em;">Definitioner</p>
-        </button>
-  
-        <div id="definitions" class="w3-modal">
-          <div class="w3-modal-content w3-animate-top w3-card-4">
-            <header class="w3-container palette-1-dark w3-center w3-padding-32">
-              <span onclick="document.getElementById('definitions').style.display='none'"
-                class="w3-button palette-3 p1 w3-xlarge w3-display-topright">×</span>
-              <h2 class="w3-wide">Definitioner</h2>
-            </header>
-            <div class="card w3-center" style="background-color: #101013">
-              <div class="info">
-                <div class="w3-container palette-2-dark side-padding-32 content">
-              <h3 class="bodyHeader">Meddelande om höga temperaturer</h3>
-              <p class="bodyText"> Prognosen visar att maxtemperaturen ligger på minst 26°C tre dagar i följd.
-              </p>
-              <h3 class="bodyHeader">Klass 1-varning för mycket höga temperaturer</h3>
-              <p class="bodyText">Prognosen visar att maxtemperaturen ligger på minst 30°C tre dagar i följd.
-              </p>
-              <h3 class="bodyHeader">Klass 2-varning för extremt höga temperaturer</h3>
-              <p class="bodyText">Prognos som visar en maxtemperatur på minst 30°C i fem dagar i följd och/eller att maxtemperaturen ligger på minst 33°C tre dagar i följd.
-              </p>
-              <h3 class="bodyHeader">Tropiska dygn</h3>
-              <p class="bodyText">Med tropiskt dygn menas att temperaturen inte sjunker under 20° under hela temperaturdygnet (klockan 20-20 svensk sommartid). Tropiska dygn kan ge en indikation på hur mycket människor hinner återhämta sig från värmen under dagen. Om en värmebölja kombineras med tropiska dygn kan effekterna på hälsan förvärras.
-              </p>
-              <h3 class="bodyHeader">Värmebölja</h3>
-              <p class="bodyText">En sammanhängande period då dygnets högsta temperatur är minst 25.0°C minst fem dagar i sträck.</p>
-                  
-                </div>                 
-              </div>
+     
+    </div>
+  </div>
+
+  <div class="w3-twothird">
+    <div class="definitionsContainer">
+      <button class="col-xs-2 w3-button clickable-container w3-padding-small"
+        onclick="document.getElementById('definitions').style.display='block'">
+        <p style="font-size:18px; margin: 0.5em;">Definitioner</p>
+      </button>
+
+      <div id="definitions" class="w3-modal">
+        <div class="w3-modal-content w3-animate-top w3-card-4">
+          <header class="w3-container palette-1-dark w3-center w3-padding-32">
+            <span onclick="document.getElementById('definitions').style.display='none'"
+              class="w3-button palette-3 p1 w3-xlarge w3-display-topright">×</span>
+            <h2 class="w3-wide">Definitioner</h2>
+          </header>
+          <div class="card w3-left" style="background-color: #3e3e3e">
+            <div class="info">
+              <div class="w3-container palette-2-dark side-padding-32 content">
+            <h3 class="bodyHeader">Meddelande om höga temperaturer</h3>
+            <p class="bodyText"> Prognosen visar att maxtemperaturen ligger på minst 26°C tre dagar i följd.
+            </p>
+            <h3 class="bodyHeader">Klass 1-varning för mycket höga temperaturer</h3>
+            <p class="bodyText">Prognosen visar att maxtemperaturen ligger på minst 30°C tre dagar i följd.
+            </p>
+            <h3 class="bodyHeader">Klass 2-varning för extremt höga temperaturer</h3>
+            <p class="bodyText">Prognos som visar en maxtemperatur på minst 30°C i fem dagar i följd och/eller att maxtemperaturen ligger på minst 33°C tre dagar i följd.
+            </p>
+            <h3 class="bodyHeader">Värmebölja</h3>
+            <p class="bodyText">En sammanhängande period då dygnets högsta temperatur är minst 25.0°C minst fem dagar i sträck.</p>
+                
+            <h3 class="bodyHeader">Tropiska dygn</h3>
+            <p class="bodyText">Med tropiskt dygn menas att temperaturen inte sjunker under 20° under hela temperaturdygnet (klockan 20-20 svensk sommartid). Tropiska dygn kan ge en indikation på hur mycket människor hinner återhämta sig från värmen under dagen. Om en värmebölja kombineras med tropiska dygn kan effekterna på hälsan förvärras.
+            </p>
+            
+              </div>                 
             </div>
           </div>
         </div>
       </div>
     </div>
+
+  </div>
+
+  <div class="w3-twothird"> 
+    <div class="introViz-2">
+
+      <svg class="barStacked-2" viewbox="0,0,500,700">
+        <text class='introText-2' x="0%" y="5%" > Medelvärde per år</text>
+      </svg>
+    </div>
+
   </div>
   <div class="w3-twothird">
-
-      
-
     <h1 class="bodyHeader">Negativ påverkan på hälsan</h1>
     <p class="bodyText">SMHI startade sitt projekt med varningssystem för höga temperaturer i Sverige år 2011. Inom ramen för projektet utredde Umeå universitet risker med för höga temperaturer. Deras resultat visar att den dagliga dödligheten ökar med cirka 10 procent om temperaturen når 26°C eller mer tre dygn i rad. Dödligheten ökar ytterligare med 10 procent om temperaturen når 30°C eller mer tre dygn i rad.
    </p>
@@ -215,6 +228,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   
   // The map is drawn and the legend is created
   createStackedBarChart();
+  createStackedBarChartTropical();
   loadMap();
   // The bars that represent each station is created. They are updated on the input from the slider
   //createStationCircles();
