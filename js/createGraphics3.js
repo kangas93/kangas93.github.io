@@ -848,6 +848,11 @@ function createScatterChart(){
 function createScatterChartInMapChart(){
     meanSumMedian.then(function(data){
 
+        if(yearData == "None"){
+            updateSelectedScatter();
+            return;
+        }
+
        
         xMax = d3.max(data, d => parseInt(d[yearData],10));
         yDomain = data.map(d => parseInt(d.Year, 10));
@@ -979,10 +984,61 @@ function createScatterChartInMapChart(){
         d3.selectAll('.chart2').on('click', function(d,i){
             //console.log(d);
             let cc = alert_coords(d);
-            var allScatter=scatter.nodes();
-
             let tempMin = 12000;
             let index= 20000;
+
+            if(yearData=="None"){
+
+                if(subStations.length < 1){
+                    return;
+                }
+                var allScatter=d3.selectAll(".scatterStation").nodes();
+                var scattYear=0;
+
+                for(let i=0; i<allScatter.length; i++){
+                    var split = d3.select(allScatter[i]).attr('transform').split(/[(]|[)]|[,]/);
+                    var x=parseFloat(split[1],10);
+                    var y=parseFloat(split[2],10);
+                    console.log("inne nivå 2");
+        
+                    var dist = Math.sqrt((x - cc.x)**2 + (y-cc.y)**2);
+                    if(dist < tempMin){
+                        tempMin=dist;
+                        index=i;
+                        scattYear=d3.selectAll('.scatterStation').data()[i].Year;
+                        //console.log(d3.selectAll('.scatterStation').data()[i].Year);
+    
+                    }
+                }
+                    
+                    d3.selectAll('.scatterStation').each((k,j) =>{
+                        if(k.Year==scattYear){
+                            //d3.select(this).style('stroke-width','0.2%');
+                            d3.select(allScatter[j]).select('circle')
+                            .style('stroke-width','0.2%')
+                            year=k.Year;
+                            //document.getElementById("vizRange").value=i.Year;
+                            try {
+                                var e = document.getElementById("vizRange");
+                                if(window.getComputedStyle(e).display != 'none'){
+                                document.getElementById("vizRange").value = k.Year; //find a solution for this
+                                }
+                                }
+                                catch(err) {
+                                console.log('error');
+                                }
+                            setYear();
+    
+                        }
+                        else{
+                            d3.select(allScatter[j]).select('circle').style('stroke-width','0.05%')
+                            
+                        }
+                    });
+
+            }
+            else{
+            var allScatter=scatter.nodes();
 
             for(let i=0; i<allScatter.length; i++){
                 var split = d3.select(allScatter[i]).attr('transform').split(/[(]|[)]|[,]/);
@@ -993,6 +1049,7 @@ function createScatterChartInMapChart(){
                 if(dist < tempMin){
                     tempMin=dist;
                     index=i;
+
                 }
             }
                 
@@ -1023,6 +1080,7 @@ function createScatterChartInMapChart(){
                         
                     }
                 });
+            }
         })
 
         
@@ -1119,6 +1177,22 @@ function brushing({selection}){
 
 //Updates the barchart so that the slider year is highlighted in the barchart
 function updateSelectedScatter(){
+    if(yearData == "None"){
+        var allScatter=d3.selectAll(".scatterStation circle").nodes();
+        d3.selectAll(".scatterStation").each((k,j) =>{
+
+            if(parseInt(k.Year,10)==year){
+                //d3.select(this).style('stroke-width','0.2%');
+                d3.select(allScatter[j]).style('stroke-width','0.2%').attr("r","1%");
+                setYearValueText(yearData);
+                }
+            else{
+                d3.select(allScatter[j]).style('stroke-width','0.05%').attr('r', '0.5%');
+            }
+
+        });
+    }
+    else{
     var allScatter=d3.selectAll(".scatter").nodes();
     d3.selectAll('.scatter').each((k,j) =>{
         if(parseInt(k.Year,10)==year){
@@ -1134,6 +1208,7 @@ function updateSelectedScatter(){
     });
     d3.selectAll(".stationLines").raise();
     d3.selectAll(".allScaSta").raise();
+    }
 
     updateStationText();
 
@@ -1187,6 +1262,9 @@ function setYearValueText(yearValue){
     }
     else if (yearData=='Median'){
         var text="Median: "+yearValue.toString().split(".")[0]+" dagar";
+    }
+    else if(yearData=="None"){
+        var text="";
     };
      d3.select('.chart2 .yearValueText')
             .attr('font-size', '1em')
@@ -1224,12 +1302,24 @@ function createStationPlot(){
            
            meanSumMedian.then(function(data){
 
-       
-            xMax = d3.max(data, d => parseInt(d[yearData],10));
+            if(yearData == "None"){
+                xMax = d3.max(transformedData, (d) => {
+                    if(d.Value == 999){
+                        return 0;
+                    }
+                    else{
+                        return d.Value;
+                    }
+                    });
+            }
+            else{
+                xMax = d3.max(data, d => parseInt(d[yearData],10));
+            }
+            
             yDomain = data.map(d => parseInt(d.Year, 10));
     
             xScale = d3.scaleLinear()
-            .domain([ 0, xMax +1 ])
+            .domain([ 0, xMax ])
             .range([chartOneWidth - marginChart1.left - marginChart1.right , marginChart1.right ]);
     
             yScale = d3.scaleBand()
@@ -1283,6 +1373,7 @@ function createStationPlot(){
         .attr("fill", 'transparent');
 
         d3.selectAll('.scatterStation').remove();
+        d3.selectAll('.allScaSta').remove();
         const scatterStation = d3.select(".chart2").append('g')//chart1.append('g') //d3.select(".chart2").append('g')
         .attr('class','allScaSta')
         .selectAll('g')
@@ -1291,9 +1382,16 @@ function createStationPlot(){
 
         scatterStation
             .attr('class', 'scatterStation')
-            .attr('transform', (d,i) =>
+            .attr('transform', (d,i) =>{
                 //console.log(d))
-             `translate(${mapWidth*xRatio+xScale(d.Value)},${mapHeight*yRatio+yScale(d.Year)})`) //mapHeight*yRatio
+                if(d.Value == 999){
+                    var x = 0;
+                }
+                else{
+                    var x = d.Value;
+                }
+            return `translate(${mapWidth*xRatio+xScale(x)},${mapHeight*yRatio+yScale(d.Year)})`
+            }) //mapHeight*yRatio
             .call(g => g
                 // first we append a circle to our data point
                 .append('circle')
@@ -1303,6 +1401,92 @@ function createStationPlot(){
                 .style('stroke-width','0.05%')
                 .style('stroke', '#000')
               );
+        //_____________
+
+        /*d3.selectAll('.chart2').on('click', function(d,i){
+            //console.log(d);
+            if(yearData=="None"){
+            let cc = alert_coords(d);
+            var allScatter=scatterStation.nodes();
+
+            let tempMin = 12000;
+            let index= 20000;
+            let scattYear=0;
+
+            for(let i=0; i<allScatter.length; i++){
+                var split = d3.select(allScatter[i]).attr('transform').split(/[(]|[)]|[,]/);
+                var x=parseFloat(split[1],10);
+                var y=parseFloat(split[2],10);
+
+    
+                var dist = Math.sqrt((x - cc.x)**2 + (y-cc.y)**2);
+                if(dist < tempMin){
+                    tempMin=dist;
+                    index=i;
+                    scattYear=d3.selectAll('.scatterStation')[i].Year;
+                    console.log(scattYear);
+                }
+            }
+                
+                d3.selectAll('.scatterStation').each((k,j) =>{
+                    if(k.Year==scattYear){
+                        //d3.select(this).style('stroke-width','0.2%');
+                        d3.select(allScatter[j]).select('circle')
+                        .style('stroke-width','0.2%');
+                        year=k.Year;
+                        //document.getElementById("vizRange").value=i.Year;
+                        try {
+                            var e = document.getElementById("vizRange");
+                            if(window.getComputedStyle(e).display != 'none'){
+                            document.getElementById("vizRange").value = k.Year; //find a solution for this
+                            }
+                            }
+                            catch(err) {
+                            console.log('error');
+                            }
+                        setYear();
+
+                    }
+                    else{
+                        d3.select(allScatter[j]).select('circle').style('stroke-width','0.05%');
+                        
+                    }
+                });
+            }
+            else{
+                return;
+            }
+        })*/
+
+        
+
+        //__________________
+
+        if(yearData =="None"){
+
+            xAxis = d3.axisBottom(xScale)
+            .tickSizeOuter(0).ticks(4);
+            d3.select(".x-axis").remove();
+            d3.select(".chart2").append('g')
+            .attr('class', 'x-axis')
+            .style("font-size", "80%")
+            .style("stroke-width","0.15%")
+            .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`) //mapHeight*yRatio
+            .call( xAxis );
+
+            d3.select(".chart2").append("text")
+            .attr("class", "x-label")
+            .style("font-size", "80%")
+            .attr("text-anchor", "end")
+            .attr("x",30 + mapWidth*xRatio+chartOneWidth/2)
+            .attr("y", 10+mapHeight*yRatio+chartOneHeight) //mapHeight*yRatio
+            .text("Antal mätningar");
+
+            if(yearData=="None"){
+                setYear();
+            }
+
+        }
         
     });
 
@@ -1424,6 +1608,13 @@ function changeYearData(){
     }
     else if(type == 'Median'){
         yearData='Median';
+    }
+    else if(type == 'None'){
+        yearData='None';
+        d3.selectAll(".mainLine").remove();
+        d3.selectAll('.scatter').remove();
+        createStationPlot();
+        return;
     }
     //createScatterChart();
     createScatterChartInMapChart();
