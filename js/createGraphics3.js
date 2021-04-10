@@ -1729,7 +1729,7 @@ function setNarrativeText(){
 }
 
 function setNarrativeSymhol(geo,data){
-    var projection= d3.geoMercator().fitSize([mapWidth*0.8,mapHeight],geo);
+    var projection= d3.geoMercator().fitSize([mapWidth*0.8,mapHeight*1.5],geo);
     var coord = "translate("+projection([data[year].Long,data[year].Lat])+")";
     //d3.selectAll('.station').remove();
     //d3.selectAll('.stationCenter').remove();
