@@ -49,18 +49,25 @@ function adaptToScreenSize() {
     || document.body.clientHeight;
 
     console.log(w);
-    if(w > 1000){
-        intro1[0].style.maxHeight = "70vh";
-        intro2[0].style.maxHeight = "70vh";
-        return;
+    //To be fixed
+    if(w > 1100){
+        intro1[0].style.maxHeight = "100vh";
+        intro2[0].style.maxHeight = "100vh";
+        chart2[0].style.maxHeight = "100vh";
     }
-    else{
+    else if( (1000<w) && (w < 1100)){
+        intro1[0].style.maxHeight = "80vh";
+        intro2[0].style.maxHeight = "80vh";
+        chart2[0].style.maxWidth = "90vh";
+    }
+    else if( (500<w) && (w < 1000)){
         console.log(chart2[0]);
     chart2[0].style.maxWidth = "80vh";
     intro1[0].style.maxHeight = "70vh";
     intro2[0].style.maxHeight = "70vh";
-    
-    
+    }
+    else{
+        return;
     }
 }
 
