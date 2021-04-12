@@ -42,7 +42,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
      
     <div class="introViz">
 
-      <svg class="barStacked" viewbox="0,0,500,700">
+      <svg class="barStacked" id="intro1" viewbox="0,0,500,700">
         <text class='introText' x="0%" y="5%" > Medelvärde per år</text>
       </svg>
      
@@ -94,7 +94,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <div class="w3-twothird"> 
     <div class="introViz-2">
 
-      <svg class="barStacked-2" viewbox="0,0,500,700">
+      <svg class="barStacked-2" id="intro2" viewbox="0,0,500,700">
         <text class='introText-2' x="0%" y="5%" > Medelvärde per år</text>
       </svg>
     </div>
@@ -225,6 +225,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   else{
     createStationOptions();
   }
+
+  adaptToScreenSize();
   
   // The map is drawn and the legend is created
   createStackedBarChart();

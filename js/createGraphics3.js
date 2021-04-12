@@ -34,6 +34,36 @@ else{
     var yRatioLegend=0.25;
 }
 
+
+function adaptToScreenSize() {
+    var intro1= document.getElementsByClassName("introViz");
+    var intro2= document.getElementsByClassName("introViz-2");
+    var chart2 = document.getElementsByClassName("viz");
+
+    var w = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+
+    var h = window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+
+    console.log(w);
+    if(w > 1000){
+        intro1[0].style.maxHeight = "70vh";
+        intro2[0].style.maxHeight = "70vh";
+        return;
+    }
+    else{
+        console.log(chart2[0]);
+    chart2[0].style.maxWidth = "80vh";
+    intro1[0].style.maxHeight = "70vh";
+    intro2[0].style.maxHeight = "70vh";
+    
+    
+    }
+}
+
 var year = 1969;
 var subStations=[];
 

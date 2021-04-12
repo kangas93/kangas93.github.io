@@ -735,6 +735,19 @@ body {
         height: 90%;
         left: 10%;
 
+    }
+    
+    .introViz-2{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked-2{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
     }    
 
     .viz{
@@ -820,7 +833,7 @@ body {
     .chart2 {
         position: absolute;
         width: 100%;
-        height:80vh;
+        height:80%;
         padding-top: 1%;
         top:15%;
         left:0px;
@@ -903,6 +916,406 @@ body {
 
 }
 
+@media screen and (min-width: 480px){
+
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }
+    
+    .introViz-2{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked-2{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
+    .viz{
+        position: relative;
+        height:100vh;
+    }
+
+    #selectDes{
+        position: absolute;
+        right:15%;
+        top:5%;
+        font-size:80%;
+        width: 20%;
+        height: 10%;
+
+    }
+
+    #selectData{
+        position: absolute;
+        left:0px;
+        width:20%;
+        top:5%;
+        height: 10%;
+        font-size:80%;
+
+    }
+
+    #selectStationMobile{
+        position: absolute;
+        left:0px;
+        width:30%;
+        top:12%;
+        height: 10%;
+        font-size:75%;
+    }
+
+    #chooseStation{
+        position: relative;
+        left:80%;
+        bottom:25%;
+
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:None;
+    }
+
+    .slider-container {
+        display: None;
+    }
+    
+    .rangeInput {
+        display:None;
+    }
+
+    .radiobutton1-container{
+        position: absolute;
+        left:70%;
+        top:21%;
+        font-size:70%;
+    }
+
+    .chart1radio{
+        position: relative;
+        margin: 3% 1% 2% 1%;
+
+    }
+    
+    
+    .chart2-container{
+        width: 90vw;
+        height:100%;
+        padding-top: 2%;
+        position: relative; 
+      
+    }
+    
+    .chart2 {
+        position: absolute;
+        width: 100%;
+        height:80%;
+        padding-top: 1%;
+        top:15%;
+        left:0px;
+    }
+    
+    .narrativeText{
+        position: relative;
+        left:0vh;
+        top:87%;
+        width: 100%;
+        text-align: justify;
+        font-size: 78%;
+        color: "#000";
+    
+    }
+    
+    .radiobutton2-container{
+        position: relative;
+        left:0px;
+        width:68%;
+        top:10%;
+        font-size:70%;
+    }
+    
+    .chart2Radio{
+        position: relative;
+        margin: 2% 1% 2% 1%;
+        
+    }
+
+    #forwardB{
+        position: absolute;
+        transform: rotate(-270deg);
+        left: 92%;
+        bottom:40%;
+        display: unset;
+    }
+
+    #backwardB{
+        position: absolute;
+        transform: rotate(-270deg);
+        left: 92%;
+        top: 42%;
+        display: unset;
+        
+    }
+    
+    
+    .stepper-container {
+        width: 20%;
+        height: 10%;
+        left:80%;
+        bottom: 5%;
+        
+    }
+    
+    .stepper{
+        position: relative;
+        display: block;
+        justify-content: center;
+        
+    }
+    
+    .stationText{
+        font-size: 90%;
+    }
+
+    .yearValueText{
+        font-size: 100%;
+
+    }
+
+    .yearText{
+
+        font-size: 140%;
+
+    }
+
+
+
+}
+
+@media screen and (min-width: 600px){
+
+    .introViz{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }  
+    
+    .introViz-2{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked-2{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+    }   
+
+    .viz{
+        position: relative;
+        height:100vh;
+    }
+
+    #selectDes{
+        position: absolute;
+        left:115%;
+        top:1%;
+        font-size:80%;
+        width: 15%;
+        height: 10%;
+
+    }
+
+    #selectData{
+        position: absolute;
+        left:0px;
+        width:15%;
+        top:0%;
+        height: 10%;
+        font-size:80%;
+
+    }
+
+    #selectStationMobile{
+        position: absolute;
+        left:0px;
+        width:30%;
+        top:12%;
+        height: 10%;
+        font-size:75%;
+        display:None;
+    }
+
+    #chooseStation{
+        position: relative;
+        left:60%;
+        bottom:27%;
+
+    }
+
+    .stationSelection{
+        position:absolute;
+        top:10%;
+        right:66%;
+        width: 40%;
+        transform: scale(0.8);
+        display:unset;
+    }
+
+
+    .slider-container {
+        position: absolute;
+        width: 10%;
+        height: 130%;
+        padding-bottom: 0px;
+        right:5%;
+        top:0%;
+        display: unset;
+    }
+
+    #playButton{
+        position: absolute;
+        top:15%;
+        right: 75%;
+    }
+    
+    .rangeInput {
+        position: relative;
+        transform: rotate(-270deg);
+        width:500%;
+        top:350px;
+        right: 200px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .radiobutton1-container{
+        position: relative;
+        left:120%;
+        top:6%;
+        font-size:70%;
+        width: 20%;
+        height: 10%;
+    }
+
+    .chart1radio{
+        position: relative;
+        margin: 2% 1% 2% 1%;
+        display: inline;
+
+    }
+    
+    .chart2-container{
+        width: 60%;
+        padding-top: 2%;
+        position: relative; 
+      
+    }
+    
+    .chart2 {
+        position: absolute;
+        width: 80%;
+        height:110%;
+        padding-top: 1%;
+        top:0%;
+        left:40%;
+    }
+    
+    .narrativeText{
+        position: relative;
+        left:5%;
+        top:45%;
+        width: 35%;
+        text-align: justify;
+        font-size: 70%;
+        color: "#000";
+    
+    }
+    
+    .radiobutton2-container{
+        position: absolute;
+        left:0px;
+        width:68%;
+        top:6%;
+        font-size:70%;
+    }
+    
+    .chart2Radio{
+        position: relative;
+        margin: 2% 1% 2% 1%;
+        display: inline;
+        
+    }
+
+    #forwardB{
+        display:None;
+    }
+
+    #backwardB{
+        display:None;
+        
+    }
+    
+    .stepper-container {
+        width: 20%;
+        height: 10%;
+        left:80%;
+        bottom: 5%;
+        
+    }
+    
+    .stepper{
+        position: relative;
+        display: block;
+        justify-content: center;
+        
+    }
+    
+    .stationText{
+        font-size: 85%;
+    }
+
+    .yearValueText{
+        font-size: 100%;
+
+    }
+
+    .yearText{
+
+        font-size: 140%;
+
+    }
+
+
+
+}
+
 @media screen and (min-width: 800px) and (min-height:600px){
 
     .introViz{
@@ -916,7 +1329,20 @@ body {
         height: 90%;
         left: 10%;
 
-    }    
+    }  
+    
+    .introViz-2{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked-2{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+    }   
+
     .viz{
         position: relative;
         height:100vh;
@@ -1102,6 +1528,19 @@ body {
     }
 
     .barStacked{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+
+    }    
+
+    .introViz-2{
+        position:relative;
+        height:100vh;
+    }
+
+    .barStacked-2{
         position:relative;
         width: 90%;
         height: 90%;
@@ -1497,7 +1936,7 @@ body {
 
     .introViz{
         position:relative;
-        height:100vh;
+        height:75vh;
     }
 
     .barStacked{
@@ -1505,8 +1944,20 @@ body {
         width: 90%;
         height: 90%;
         left: 10%;
+    } 
+    
+    .introViz-2{
+        position:relative;
+        height:75vh;
+    }
 
-    }    
+    .barStacked-2{
+        position:relative;
+        width: 90%;
+        height: 90%;
+        left: 10%;
+    }
+
 
     .viz{
         position: relative;
