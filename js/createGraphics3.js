@@ -204,6 +204,8 @@ rectHeight=d3.scaleLinear(
       [0,60]
   );
 
+
+
   
 
 //Returns the number of days from each station
@@ -1042,8 +1044,9 @@ function createScatterChartInMapChart(){
         yDomain = data.map(d => parseInt(d.Year, 10));
 
         xScale = d3.scaleLinear()
-        .domain([ 0, xMax +1 ])
+        .domain([ 0, xMax+1])
         .range([chartOneWidth - marginChart1.left - marginChart1.right , marginChart1.right ]);
+
 
         yScale = d3.scaleBand()
             .domain( yDomain )
@@ -1069,6 +1072,33 @@ function createScatterChartInMapChart(){
 
         d3.select( '.chart2' )
         .call( brush );*/
+
+        function make_x_gridlines() {	
+            return d3.axisBottom(xScale).ticks(4);
+        }
+        d3.selectAll('.grid').remove();
+        // add the X gridlines
+        d3.select(".chart2").append('g')		
+        .attr("class", "grid")
+        .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
+        .call(make_x_gridlines()
+            .tickSize(-(mapHeight*yRatio -40+ chartOneHeight - marginChart1.bottom))
+            .tickFormat("")
+        ).style("opacity", "0.1")
+        .style("stroke","#f0f0f0").lower()
+
+        /*d3.select(".chart2").append('g').attr("stroke", "currentColor")
+        .attr("stroke-opacity", 0.1)
+        .call(g => g.append("g")
+      .selectAll("line")
+      .data(xScale.ticks())
+      .join("line")
+        .attr("x1", d => 0.5 + xScale(d))
+        .attr("x2", d => 0.5 + xScale(d))
+        .attr("y1", margin.top)
+        .attr("y2", height - margin.bottom))*/
+    
+        
 
 
         d3.selectAll('.mainLine').remove();
@@ -1272,6 +1302,7 @@ function createScatterChartInMapChart(){
         d3.selectAll('.y-axis').remove();
         d3.selectAll('.x-label').remove();
         d3.selectAll('.y-label').remove();
+        
 
         // Here the x axis is rendered
         d3.select(".chart2").append('g')
@@ -1280,7 +1311,8 @@ function createScatterChartInMapChart(){
             .style("stroke-width","0.15%")
             .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`) //mapHeight*yRatio
             .call( xAxis );
-
+        
+            
             d3.select(".chart2").append("text")
             .attr("class", "x-label")
             .style("font-size", "80%")
@@ -1510,6 +1542,23 @@ function createStationPlot(){
                 .domain( yDomain )
                 .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
                 .padding(0.5)
+
+        if(yearData=="None"){
+            function make_x_gridlines() {	
+                return d3.axisBottom(xScale).ticks(4);
+            }
+            d3.selectAll('.grid').remove();
+            // add the X gridlines
+            d3.select(".chart2").append('g')		
+            .attr("class", "grid")
+            .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
+            .call(make_x_gridlines()
+                .tickSize(-(mapHeight*yRatio-40+ chartOneHeight - marginChart1.bottom))
+                .tickFormat("")
+            ).style("opacity", "0.1")
+            .style("stroke","#f0f0f0").lower()
+            
+        }
 
           var names=[]
           for(let j=0; j<stations.length; j++){
