@@ -137,7 +137,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <option value="HighTemp" >Höga temperaturer</option>
             <option value="Class1" >Mycket höga temperaturer</option>
             <option value="Class2" >Extremt höga temperaturer</option>
-            <option value="Min" >Tropiska nätter</option>
+            <option value="Min" >Tropiska dygn</option>
           </select>
         </div>
 
@@ -195,20 +195,40 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <div class="w3-content">
     <div class="w3-twothird"> 
       <h1 class="bodyHeader">Varför bara 113 väderstationer?</h1>
-      <p class="bodyText"> Antalet väderstationer i Sverige har ökat genom åren. För att rättvist kunna jämföra mätningarna genom åren har jag valt att bara titta på samma 113 platser för varje år. Detta för att många platser med väderstationer i Sverige idag har inte någon referenspunkt som sträcker sig ända till år 1969.
+      <p class="bodyText"> Antalet väderstationer i Sverige har genom åren varierat. För att rättvist kunna jämföra mätningarna genom åren har jag valt att bara titta på samma 113 platser för varje år. Detta för att många platser med väderstationer i Sverige idag inte har någon referenspunkt som sträcker sig ända till år 1969.
+      </p>
+      
+    </div> 
+
+    <div class="w3-twothird"> 
+        <div class="stationViz">
+
+          <svg class="barStation" viewbox="0,0,500,700">
+            <text class='endingText' x="0%" y="5%" > Antalet temperaturstationer har varierat</text>
+          </svg>
+         
+        </div>
+
+    </div>
+
+    <div class="w3-twothird"> 
+      
+      </p>
+      <p class="bodyText"> I grafen ovan ser vi att antalet stationer har minskat sedan år 1969. Detta betyder att det till antalet finns färre mätningar idag (delvis pga. av färre väderstationer) än vad de fanns för 30-50 år sedan. 
+        Men det går att se de övergripande temperatur trenderna genom åren även med 113 stationer.
+        För om vi tittar på de 113 stationerna som funnits i hela tidsperioden är variation i temperatur mellan åren oftast ungefär detsamma när alla stationer skulle användas. Det betyder att ett ovanligt varmt eller kallt år sticker oftast ut även om ett färre antal stationer användas jämfört med ett större antal.
+        Detta är dock inte statistiskt säkerställt i denna visualisering.
 
       </p>
-      <p class="bodyText"> [PLACE HOLDER: LÄGG IN GRAF FÖR ANTALET STATIONER]
-
-
-      </p>
-      <p class="bodyText"> Men detta betyder även att det till antalet finns fler mätningar idag (delvis pga. av fler väderstationer) än vad de fanns för 30-50 år sedan. Men variation mellan åren är oftast ungefär densamma oavsett om 113 stationer eller alla stationer används. Detta innebär att det går att se de övergripande trenderna genom åren även med 113 stationer. Detta är dock inte statistiskt säkerställt i denna visualisering.
-
-      </p>
-      <p class="bodyText"> Ungefär hälften av stationerna har sammansatta tidsserier. Detta betyder stationer kan ha bytt plats eller haft kortare avbrott under tidsserien. Ibland har även icke-aktiva stationer lagts samman med aktiva stationer idag om de legat geografiskt nära varandra. Detta för att kunna skapa en tidsserier för en och samma plats som sträcker sig från år 1969 till år 2020. De krav som har ställts för att kunna lägga ihop två stationer är att det får högst vara 10 km ifrån varandra och det får högst vara 100 meter skillnad i havsnivå höjd mellan stationernas platser. Att sätta samman stationer kan introducerar fel eftersom det är svårt att kontrollera att stationerna har haft exakt samma mätnings förutsättningar. Dessa fel skulle kunna vara att den nya stationen systematiskt läser av temperaturen någon grad högre eller lägre än den gamla stationen. Men den övergripande variationen mellan åren är ungefär densamma. Detta innebär att ett varmt år även skulle synas som utstickande för båda stationer även om deras mätnings förutsättningar är lite olika.
+      <p class="bodyText"> Ungefär hälften av stationerna har sammansatta tidsserier. Detta betyder stationer kan ha bytt plats eller haft kortare avbrott under tidsserien. 
+        Ibland har även icke-aktiva stationer lagts samman med aktiva stationer idag om de legat geografiskt nära varandra. 
+        Detta för att kunna skapa tidsserier för en och samma plats som sträcker sig från år 1969 till år 2020. 
+        De krav som har ställts för att kunna lägga ihop två stationer är att det får högst vara 10 km ifrån varandra och att det får högst vara 100 meter skillnad i havsnivå höjd mellan stationernas platser. 
+        Att sätta samman stationer kan introducerar fel eftersom det är svårt att kontrollera att stationerna har haft exakt samma mätnings förutsättningar. Dessa fel skulle kunna vara att den nya stationen systematiskt läser av temperaturen någon grad högre eller lägre än den gamla stationen. Men den övergripande variationen mellan åren är ungefär densamma. Detta innebär att ett varmt år även skulle synas som utstickande för båda stationer även om deras mätnings förutsättningar är lite olika.
 
       </p>
-      <p class="bodyText"> Ett ständigt problem med SMHIs väderstationer är att de kan sluta fungera under perioder. Dessa fel kan ibland inte upptäckas förens veckor eller månader senare. I visualiseringen ovan är det vissa år där stationerna har haft avbrott i sina mätningar. Om en station under sommarmånaderna haft ett avbrott på totalt 3 veckor eller mer så har mätningarna för det året tagits bort i visualiseringen. Det är dessa platser där det står “Ingen data”. Detta har gjorts för att inte ge missvisande värden.
+      <p class="bodyText"> Ett ständigt problem med SMHIs väderstationer är att de kan sluta fungera under perioder. 
+        Dessa fel kan ibland inte upptäckas förens veckor eller månader senare. I visualiseringen ovan är det vissa år där stationerna har haft avbrott i sina mätningar. Om en station under sommarmånaderna haft ett avbrott på totalt 3 veckor eller mer så har mätningarna för det året tagits bort i visualiseringen. Det är dessa platser där det står “Ingen data”. Detta har gjorts för att inte ge missvisande värden.
       </p>
       <p class="bodyText"> Värdena i visualiseringen är inte perfekta. Till min bästa kunskap har jag inte hittat några fel men det betyder inte att den är garanterat felfri. Men trots detta borde den övergripande trenden i visualiseringen inte påverkas avsevärt. Om du hittar något fel får du gärna kontakta mig på jkangas@kth.se.
       </p>
@@ -244,6 +264,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   updateSelectedScatter();
   //Sets the narrative text in the start
   setNarrativeText();
+
+  createStationCountBarChart();
   </script>
 
 <!-- Footer -->

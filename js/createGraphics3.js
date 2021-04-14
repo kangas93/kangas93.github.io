@@ -38,6 +38,7 @@ else{
 function adaptToScreenSize() {
     var intro1= document.getElementsByClassName("introViz");
     var intro2= document.getElementsByClassName("introViz-2");
+    var stationCount= document.getElementsByClassName("stationViz");
     var chart2 = document.getElementsByClassName("viz");
 
     var w = window.innerWidth
@@ -54,17 +55,21 @@ function adaptToScreenSize() {
         intro1[0].style.maxHeight = "100vh";
         intro2[0].style.maxHeight = "100vh";
         chart2[0].style.maxHeight = "100vh";
+        stationCount[0].style.maxHeight = "95vh";
+
     }
     else if( (1000<w) && (w < 1100)){
         intro1[0].style.maxHeight = "80vh";
         intro2[0].style.maxHeight = "80vh";
         chart2[0].style.maxWidth = "90vh";
+        stationCount[0].style.maxHeight = "75vh";
     }
     else if( (500<w) && (w < 1000)){
         console.log(chart2[0]);
     chart2[0].style.maxWidth = "80vh";
     intro1[0].style.maxHeight = "70vh";
     intro2[0].style.maxHeight = "70vh";
+    stationCount[0].style.maxHeight = "65vh";
     }
     else{
         return;
@@ -893,6 +898,115 @@ function createStackedBarChartTropical(){
         );
     
 
+
+    });
+
+
+}
+
+function createStationCountBarChart(){
+    var stackedData=d3.csv('./../data2/stationCount.csv');
+    marginStacked =  ({top: 40, right: 20, bottom: 30, left: 20});
+    stackedWidth=400-marginStacked.left-marginStacked.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
+    stackedHeight=720-marginStacked.top-marginStacked.bottom;
+
+    stackedData.then(function(data){
+
+        var xTrans=125;
+
+        xMax = d3.max(data, d => parseInt(d['AmountOfStations'],10));
+        yDomain = data.map(d => parseInt(d.Year, 10));
+        
+
+        xScale = d3.scaleLinear()
+        .domain([ 0, xMax ])
+        .range([stackedWidth - marginStacked.left - marginStacked.right , marginStacked.right ]);
+        //.range([marginStacked.right,stackedWidth - marginStacked.left - marginStacked.right  ]);
+
+        yScale = d3.scaleBand()
+            .domain( yDomain )
+            .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ])
+            //.range([ stackedHeight - marginStacked.bottom, marginStacked.top+20,  ]) //
+            .padding(0.1)
+        /*yScale = d3.scaleLinear()
+        .domain([ 1969, 2020 ])
+        .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ]);*/
+
+        xAxis = d3.axisBottom(xScale)
+        .tickSizeOuter(0).ticks(10);
+
+        var tickVals =[]
+         for (let i = 1969; i < 2021; i+=3) {
+            tickVals.push(
+                (i).toString()
+            );
+        }
+
+        yAxis = d3.axisRight(yScale)
+        .tickSizeOuter(0).tickValues(tickVals);
+
+        colors = d3.scaleOrdinal(
+            ['AmountOfStations'],
+            ['#fc9272']
+          )
+
+        stack = d3.stack()
+            .keys( ['AmountOfStations'] )
+
+
+        const chartData = stack( data ) 
+
+        const groups = d3.select('.barStation').append('g')
+            .selectAll('g')
+            .data( chartData )
+            .join('g')
+            .style('fill', (d,i) => colors(d.key))
+        
+        groups.selectAll('rect')
+        // Now we place the rects, which are the children of the layer array
+        .data(d => d)
+        .join('rect')
+            .attr("transform", `translate(${xTrans},0)`)
+            .attr('x', d => xScale(d[1]))
+            .attr('y', d => yScale(d.data.Year))
+            .attr('height', yScale.bandwidth())
+            .attr('width', d => xScale(d[0]) - xScale(d[1]))
+            //.attr('width', d => stackedWidth+xScale(d[0]) - xScale(d[1]))
+    
+        d3.select('.barStation').append('g')
+        .attr('transform', `translate(${xTrans},${ stackedHeight - marginStacked.bottom })`)
+        .attr('color','gainsboro')
+        .style('font-size','80%')
+        .call(xAxis);
+
+        d3.select('.barStation').append("text")
+            .style("font-size", "100%")
+            .attr("text-anchor", "end")
+            .attr('fill','gainsboro')
+            .attr("transform", `translate(${xTrans},0)`)
+            .attr("x", stackedWidth/2 + 70)
+            .attr("y", stackedHeight+10)
+            .text("Antal stationer");
+        
+        d3.select('.barStation').append('g')
+        .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
+        //.attr('transform', `translate(${xTrans+marginStacked.right},0)`)
+        .attr('color','gainsboro')
+        .style('font-size','80%')
+        .call(yAxis)
+
+        d3.select(".barStation").append("text")
+            .style("font-size", "100%")
+            .attr("text-anchor", "end")
+            .attr('fill','gainsboro')
+            .attr("transform", `translate(${xTrans},0)`)
+            //.attr("transform", `translate(${-xTrans-marginStacked.left},0)`)
+            //.attr("x", stackedWidth-70)
+            .attr("x", stackedWidth+50)
+            .attr("y", stackedHeight/2)
+            //.attr("dy", ".75em")
+            //.attr("transform", "rotate(-90)")
+            .text("Årtal");
 
     });
 
