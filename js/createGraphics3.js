@@ -14,7 +14,12 @@ var animationStartYear;
 var narrativeYears =[1969,1975,1982,1992,1994,2007,2011,2018,2019,2020];
 var narrativeData = d3.json('./../data/narrativeData.json');
 
-if (screen.width >= 1020) {
+var xRatio=0.45;
+var yRatio=0.000;
+var xRatioLegend=0.05;
+var yRatioLegend=0.25;
+
+/*if (screen.width >= 1020) {
     var xRatio=0.6;
     var yRatio=0.020;
 
@@ -32,7 +37,7 @@ else{
     var yRatio=0.000;
     var xRatioLegend=0.05;
     var yRatioLegend=0.25;
-}
+}*/
 
 
 function adaptToScreenSize() {
@@ -40,6 +45,9 @@ function adaptToScreenSize() {
     var intro2= document.getElementsByClassName("introViz-2");
     var stationCount= document.getElementsByClassName("stationViz");
     var chart2 = document.getElementsByClassName("viz");
+
+
+    
 
     var w = window.innerWidth
     || document.documentElement.clientWidth
@@ -56,6 +64,24 @@ function adaptToScreenSize() {
         intro2[0].style.maxHeight = "100vh";
         chart2[0].style.maxHeight = "100vh";
         stationCount[0].style.maxHeight = "95vh";
+
+        //var c2 = document.getElementById("c2");
+        //console.log(c2);
+        //console.log(c2.getAttribute("viewBox"));
+        //c2.setAttribute("viewBox", "0 180 530 400"); //500 400
+        //console.log(c2.getAttribute("viewBox"));
+        //c2.style.width="75%" //75%
+        //c2.style.height="110%" //110%
+
+        //xRatio=0.68; //0.6
+        xRatio=0.6; 
+        yRatio=0.020;
+        chartOneWidth=230-marginChart1.left-marginChart1.right;
+        chartOneHeight=720-marginChart1.top-marginChart1.bottom;
+        mapWidth=500-marginChart2.left-marginChart2.right;
+        mapHeight=470-marginChart2.top-marginChart2.bottom;
+        xRatioLegend=0.02;
+        yRatioLegend=0.25;
 
     }
     else if( (1000<w) && (w < 1100)){
@@ -1577,6 +1603,7 @@ function resetStationPlot(){
     d3.selectAll('.scatterStation').remove();
     //document.getElementById('chooseStation').value="Empty";
     subStations=[];
+    stationLineColors={};
     d3.select(".chart2 .stationText").text("");
 
 }
@@ -1603,6 +1630,27 @@ function setYearValueText(yearValue){
             .text(text).raise();
 
 }
+
+var stationLineColors={}
+function checkColorsForStationplot(){
+    if(Object.keys(stationLineColors).length==0){
+        for(let i=0; i <subStations.length; i++){
+            stationLineColors[subStations[i]]=d3.schemeTableau10[i];
+        }
+    }
+    else{
+        var keys = Object.keys(stationLineColors)
+        for(let i=0; i <subStations.length; i++){
+            if (!keys.includes(subStations[i])){
+                    index = (Object.keys(stationLineColors).length)%10;
+                    stationLineColors[subStations[i]]=d3.schemeTableau10[index];
+
+            }
+        }
+            
+    }
+}
+
 
 function createStationPlot(){
 
@@ -1674,10 +1722,12 @@ function createStationPlot(){
             
         }
 
-          var names=[]
+          /*var names=[]
           for(let j=0; j<stations.length; j++){
               names.push(stations[j].Name)
-          }
+          }*/
+
+          checkColorsForStationplot();
 
           /*var range = [];
             for (let i = 0; i < names.length; i++) {
@@ -1747,10 +1797,10 @@ function createStationPlot(){
             return names[val];
         };*/
 
-         var color=d3.scaleOrdinal( 
+         /*var color=d3.scaleOrdinal( 
             names,
             d3.schemeTableau10
-          );
+          );*/
 
         d3.selectAll('.stationLines').remove();
         var lineStation = d3.line()
@@ -1774,7 +1824,7 @@ function createStationPlot(){
             return "translate("+mapWidth*xRatio+","+mapHeight*yRatio+")"; //mapHeight*yRatio
         })
         .attr('d', d => lineStation(d[1]))
-        .style('stroke',(d,i) => color(d[1][i].Name)) //colors(d[1][i].Name)
+        .style('stroke',(d,i) => stationLineColors[d[1][i].Name]) //colors(d[1][i].Name) 
         .style('stroke-width', '0.4%')
         .attr("fill", 'transparent');
 
@@ -1803,7 +1853,7 @@ function createStationPlot(){
                 .append('circle')
                 //.attr('transform',`translate(0,1)`)
                 .attr('r', '0.5%')
-                .style('fill', (d,i) => color(d.Name))
+                .style('fill', (d,i) => stationLineColors[d.Name]) //color(d.Name)
                 .style('stroke-width','0.05%')
                 .style('stroke', '#000')
               );
@@ -2224,7 +2274,7 @@ visitedFl=[];
 
     }
   }
-    stationData.then(function(stations){
+    /*stationData.then(function(stations){
         var names=[]
         for(let j=0; j<stations.length; j++){
             names.push(stations[j].Name)
@@ -2235,11 +2285,18 @@ visitedFl=[];
         d3.schemeTableau10
         );
 
+
         var sLabels = document.getElementsByClassName('select-pure__selected-label');
         for(let j=0; j<sLabels.length; j++){
             sLabels[j].style.background = color(sLabels[j].innerHTML.split("<")[0]);
         }
-    });
+    });*/
+    checkColorsForStationplot();
+    var sLabels = document.getElementsByClassName('select-pure__selected-label');
+        for(let j=0; j<sLabels.length; j++){
+            sLabels[j].style.background = stationLineColors[sLabels[j].innerHTML.split("<")[0]];
+        }
+
   
 
 createStationPlot();
