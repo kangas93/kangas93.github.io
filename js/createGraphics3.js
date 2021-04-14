@@ -57,7 +57,7 @@ function adaptToScreenSize() {
     || document.documentElement.clientHeight
     || document.body.clientHeight;
 
-    console.log(w);
+    //console.log(w);
     //To be fixed
     if(w > 1100){
         intro1[0].style.maxHeight = "100vh";
@@ -1213,11 +1213,11 @@ function createScatterChartInMapChart(){
         d3.select( '.chart2' )
         .call( brush );*/
 
-        function make_x_gridlines() {	
+        /*function make_x_gridlines() {	
             return d3.axisBottom(xScale).ticks(4);
         }
-        d3.selectAll('.grid').remove();
-        // add the X gridlines
+        
+        
         d3.select(".chart2").append('g')		
         .attr("class", "grid")
         .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
@@ -1225,7 +1225,30 @@ function createScatterChartInMapChart(){
             .tickSize(-(mapHeight*yRatio -40+ chartOneHeight - marginChart1.bottom))
             .tickFormat("")
         ).style("opacity", "0.1")
-        .style("stroke","#f0f0f0").lower()
+        .style("stroke","#f0f0f0").lower()*/
+
+        // add the X gridlines
+        d3.selectAll('.grid').remove();
+
+        d3.select(".chart2").append('g')		
+        .attr("class", "grid")
+        .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
+        .selectAll("line")
+        .data(xScale.ticks(4))
+        .join("line")
+        .attr("class", "gridLine")
+        .attr("x1", d =>   xScale(d))
+        .attr("x2", d =>   xScale(d))
+        .attr("y1", 0)
+        .attr("y2", -(chartOneHeight-marginChart1.top - mapHeight*yRatio - marginChart1.bottom-10 ))
+        .style("opacity", "0.1")
+        .style("stroke","#000");
+
+        d3.select(".chart2").select(".grid").lower();
+        
+
+
+        //console.log(xScale.ticks(4));
 
         /*d3.select(".chart2").append('g').attr("stroke", "currentColor")
         .attr("stroke-opacity", 0.1)
@@ -1715,11 +1738,13 @@ function createStationPlot(){
                 .padding(0.5)
 
         if(yearData=="None"){
-            function make_x_gridlines() {	
+            /*function make_x_gridlines() {	
                 return d3.axisBottom(xScale).ticks(4);
             }
-            d3.selectAll('.grid').remove();
+            
+            
             // add the X gridlines
+            d3.selectAll('.grid').remove();
             d3.select(".chart2").append('g')		
             .attr("class", "grid")
             .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
@@ -1727,7 +1752,25 @@ function createStationPlot(){
                 .tickSize(-(mapHeight*yRatio-40+ chartOneHeight - marginChart1.bottom))
                 .tickFormat("")
             ).style("opacity", "0.1")
-            .style("stroke","#f0f0f0").lower()
+            .style("stroke","#f0f0f0").lower()*/
+
+            // add the X gridlines
+            d3.selectAll('.grid').remove();
+            d3.select(".chart2").append('g')		
+            .attr("class", "grid")
+            .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`)
+            .selectAll("line")
+            .data(xScale.ticks(4))
+            .join("line")
+            .attr("class", "gridLine")
+            .attr("x1", d =>   xScale(d))
+            .attr("x2", d =>   xScale(d))
+            .attr("y1", 0)
+            .attr("y2", -(chartOneHeight-marginChart1.top - mapHeight*yRatio - marginChart1.bottom-10 ))
+            .style("opacity", "0.1")
+            .style("stroke","#000");
+
+            d3.select(".chart2").select(".grid").lower();
             
         }
 
