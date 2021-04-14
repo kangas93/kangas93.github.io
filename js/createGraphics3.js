@@ -1638,8 +1638,16 @@ function checkColorsForStationplot(){
             stationLineColors[subStations[i]]=d3.schemeTableau10[i];
         }
     }
-    else{
+    else {
+
         var keys = Object.keys(stationLineColors)
+
+        /*for(let i=0; i <keys.length; i++){
+            if (!subStations.includes(keys[i])){
+                delete stationLineColors[keys[i]];
+            }
+        }*/
+        
         for(let i=0; i <subStations.length; i++){
             if (!keys.includes(subStations[i])){
                     index = (Object.keys(stationLineColors).length)%10;
@@ -1649,6 +1657,7 @@ function checkColorsForStationplot(){
         }
             
     }
+    
 }
 
 
