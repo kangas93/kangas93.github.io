@@ -1,6 +1,6 @@
 
-var stationData=d3.csv('./../data/stationHeatWaveDaysProto2.csv');
-var meanSumMedian=d3.csv('./../data/HeatWaveMeanMedianSum.csv');
+var stationData=d3.csv('./../data2/stationHeatWaveDaysProto2.csv');
+var meanSumMedian=d3.csv('./../data2/HeatWaveMeanMedianSum.csv');
 marginChart1 = ({top: 10, right: 20, bottom: 30, left: 20}); //10,30
 marginChart2 = ({top: 10, right: 10, bottom: 10, left: 30});
 chartOneWidth=300-marginChart1.left-marginChart1.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
@@ -608,7 +608,7 @@ function createStationBars(){
 }
 
 function createStackedBarChart(){
-    var stackedData=d3.csv('./../data/stackedMean.csv');
+    var stackedData=d3.csv('./../data2/stackedMean.csv');
     marginStacked =  ({top: 10, right: 20, bottom: 30, left: 20});
     stackedWidth=400-marginStacked.left-marginStacked.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
     stackedHeight=720-marginStacked.top-marginStacked.bottom;
@@ -754,7 +754,7 @@ function createStackedBarChart(){
 }
 
 function createStackedBarChartTropical(){
-    var stackedData=d3.csv('./../data/stackedMinHeatWaveMean.csv');
+    var stackedData=d3.csv('./../data2/stackedMinHeatWaveMean.csv');
     marginStacked =  ({top: 10, right: 20, bottom: 30, left: 20});
     stackedWidth=400-marginStacked.left-marginStacked.right;//screen.width*0.5-marginChart1.left-marginChart1.right;//250
     stackedHeight=720-marginStacked.top-marginStacked.bottom;
@@ -1855,8 +1855,8 @@ function changeDataSet() {
     //var type = document.querySelector('input[name="filterData"]:checked').value;
     var type = document.getElementById("dataType").value;
     if(type == 'Min'){
-        meanSumMedian=d3.csv('./../data/meanMedianSumMin20.csv');
-        stationData=d3.csv('./../data/stationMin20Proto2.csv');
+        meanSumMedian=d3.csv('./../data2/meanMedianSumMin20.csv');
+        stationData=d3.csv('./../data2/stationMin20Proto2.csv');
     }
     /*if(type == 'Max'){
         stationData=d3.csv('./../data/stationOver30Proto2.csv');
@@ -1864,23 +1864,23 @@ function changeDataSet() {
     }*/
     if(type == 'HeatWave')
     {
-        stationData=d3.csv('./../data/stationHeatWaveDaysProto2.csv');
-        meanSumMedian=d3.csv('./../data/HeatWaveMeanMedianSum.csv');
+        stationData=d3.csv('./../data2/stationHeatWaveDaysProto2.csv');
+        meanSumMedian=d3.csv('./../data2/HeatWaveMeanMedianSum.csv');
     }
     if(type == 'HighTemp')
     {   
-        stationData=d3.csv('./../data/stationHighTempDaysProto2.csv');
-        meanSumMedian=d3.csv('./../data/HighTempMeanMedianSum.csv');
+        stationData=d3.csv('./../data2/stationHighTempDaysProto2.csv');
+        meanSumMedian=d3.csv('./../data2/HighTempMeanMedianSum.csv');
     }
     if(type == 'Class1')
     {
-        stationData=d3.csv('./../data/stationClass1DaysProto2.csv');
-        meanSumMedian=d3.csv('./../data/Class1MeanMedianSum.csv');
+        stationData=d3.csv('./../data2/stationClass1DaysProto2.csv');
+        meanSumMedian=d3.csv('./../data2/Class1MeanMedianSum.csv');
     }
     if(type == 'Class2')
     {
-        stationData=d3.csv('./../data/stationClass2DaysProto2.csv');
-        meanSumMedian=d3.csv('./../data/Class2MeanMedianSum.csv');
+        stationData=d3.csv('./../data2/stationClass2DaysProto2.csv');
+        meanSumMedian=d3.csv('./../data2/Class2MeanMedianSum.csv');
     }
     //createStationCircles();
     createStationBars();
