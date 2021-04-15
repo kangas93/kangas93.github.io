@@ -543,7 +543,7 @@ function createStationBars(){
                 return "0.7";
             }
             else{
-                return "0.3";
+                return "0.1"; //0.3
             }
         }
         else{
@@ -1195,8 +1195,28 @@ function createScatterChartInMapChart(){
             return;
         }
 
+        if(subStations.length>0){
+            xMaxData = d3.max(data, d => parseInt(d[yearData],10));
+            xMaxStation = d3.max(transformedData, (d) => {
+                if(d.Value == 999){
+                    return 0;
+                }
+                else{
+                    return d.Value;
+                }
+                });
+
+            xMax = d3.max([xMaxData,xMaxStation]);
+
+        }
+        else{
+            xMax = d3.max(data, d => parseInt(d[yearData],10));
+
+            
+        }
+
        
-        xMax = d3.max(data, d => parseInt(d[yearData],10));
+        
         yDomain = data.map(d => parseInt(d.Year, 10));
 
         xScale = d3.scaleLinear()
@@ -1699,7 +1719,7 @@ function checkColorsForStationplot(){
     
 }
 
-
+var transformedData = [];
 function createStationPlot(){
 
     if(subStations.length < 1){
@@ -1739,8 +1759,19 @@ function createStationPlot(){
                     });
             }
             else{
-                xMax = d3.max(data, d => parseInt(d[yearData],10));
+                xMaxStation = d3.max(transformedData, (d) => {
+                    if(d.Value == 999){
+                        return 0;
+                    }
+                    else{
+                        return d.Value;
+                    }
+                    });
+                xMaxData = d3.max(data, d => parseInt(d[yearData],10));
+
+                xMax = d3.max([xMaxStation,xMaxData]);
             }
+            console.log(xMax);
             
             yDomain = data.map(d => parseInt(d.Year, 10));
     
@@ -1753,7 +1784,7 @@ function createStationPlot(){
                 .range([ marginChart1.top+20, chartOneHeight - marginChart1.bottom ]) //
                 .padding(0.5)
 
-        if(yearData=="None"){
+        //if(yearData=="None"){
             /*function make_x_gridlines() {	
                 return d3.axisBottom(xScale).ticks(4);
             }
@@ -1787,8 +1818,29 @@ function createStationPlot(){
             .style("stroke","#000");
 
             d3.select(".chart2").select(".grid").lower();
+
+
+            xAxis = d3.axisBottom(xScale)
+            .tickSizeOuter(0).ticks(4);
+
+            d3.select(".x-axis").remove();
+            d3.select(".chart2").append('g')
+            .attr('class', 'x-axis')
+            .style("font-size", "80%")
+            .style("stroke-width","0.15%")
+            .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`) //mapHeight*yRatio
+            .call( xAxis );
+
+            d3.select(".x-label").remove();
+            d3.select(".chart2").append("text")
+            .attr("class", "x-label")
+            .style("font-size", "80%")
+            .attr("text-anchor", "end")
+            .attr("x",30 + mapWidth*xRatio+chartOneWidth/2)
+            .attr("y", 10+mapHeight*yRatio+chartOneHeight) //mapHeight*yRatio
+            .text("Antal mätningar");
             
-        }
+        //}
 
           /*var names=[]
           for(let j=0; j<stations.length; j++){
@@ -1986,7 +2038,7 @@ function createStationPlot(){
 
         //__________________
 
-        if(yearData =="None"){
+        /*if(yearData =="None"){
 
            
 
@@ -2014,7 +2066,12 @@ function createStationPlot(){
                 setYear();
             }
 
-        }
+        }*/
+
+        //if(yearData=="None"){
+            setYear();
+       // }
+        
         
     });
 
@@ -2328,7 +2385,7 @@ visitedFl=[];
             //subStations.push(allStations[i].id);
             }
         else {
-            d3.select(allStations[i]).style('stroke-width','0.1%').style("opacity","0.3");
+            d3.select(allStations[i]).style('stroke-width','0.1%').style("opacity","0.3"); // 0.1% 0.3
         }
     }
 
@@ -2341,7 +2398,7 @@ visitedFl=[];
             d3.select(allStationFloors[i]).style('stroke-width','0.3%').style("opacity","1");
             }
         else{
-            d3.select(allStationFloors[i]).style('stroke-width','0.1%').style("opacity","0.3");
+            d3.select(allStationFloors[i]).style('stroke-width','0.1%').style("opacity","0.3"); //0.3
         }
 
     }
