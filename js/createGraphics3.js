@@ -683,7 +683,7 @@ function createStackedBarChart(){
         .range([ marginStacked.top+20, stackedHeight - marginStacked.bottom ]);*/
 
         xAxis = d3.axisBottom(xScale)
-        .tickSizeOuter(0).ticks(10);
+        .tickSizeOuter(0).ticks(5);
 
         var tickVals =[]
          for (let i = 1969; i < 2021; i+=3) {
@@ -697,8 +697,9 @@ function createStackedBarChart(){
 
         colors = d3.scaleOrdinal(
             ['HighTemp','Class1','Class2'],
-            d3.schemeReds[6].slice(2)
+            ['#fee0d2','#fb6a4a','#a50f15']
           )
+          //d3.schemeReds[6].slice(2)
 
         stack = d3.stack()
             .keys( ['HighTemp','Class1','Class2'] )
@@ -763,8 +764,9 @@ function createStackedBarChart(){
     var legendData = ["Höga temperaturer","Mycket höga temperaturer","Extremt höga temperaturer"]
     colorsLegend = d3.scaleOrdinal(
         ["Höga temperaturer","Mycket höga temperaturer","Extremt höga temperaturer"],
-        d3.schemeReds[6].slice(2)
+        ['#fee0d2','#fb6a4a','#a50f15']
       );
+      //d3.schemeReds[6].slice(2)
     const legend = d3.select('.barStacked').append('g');
     
     legend
@@ -2244,7 +2246,7 @@ function createStationOptions(){
             options: optionData,
             multiple: true,
             icon: "fa fa-times",
-            placeholder: "Välj stationer",
+            placeholder: "Sök eller välj stationer",
             autocomplete: true,
             onChange: value => { chooseStationWithSelect(value) },
             classNames: {
