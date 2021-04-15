@@ -59,7 +59,7 @@ function adaptToScreenSize() {
 
     //console.log(w);
     //To be fixed
-    if(w > 1100){
+    if(w > 1100 ){
         intro1[0].style.maxHeight = "100vh";
         intro2[0].style.maxHeight = "100vh";
         chart2[0].style.maxHeight = "100vh";
@@ -87,18 +87,34 @@ function adaptToScreenSize() {
     else if( (1000<w) && (w < 1100)){
         intro1[0].style.maxHeight = "80vh";
         intro2[0].style.maxHeight = "80vh";
-        chart2[0].style.maxWidth = "90vh";
+        chart2[0].style.maxWidth = "90vw";
         stationCount[0].style.maxHeight = "75vh";
     }
     else if( (500<w) && (w < 1000)){
         console.log(chart2[0]);
-    chart2[0].style.maxWidth = "80vh";
+    chart2[0].style.maxWidth = "80vw";
     intro1[0].style.maxHeight = "70vh";
     intro2[0].style.maxHeight = "70vh";
     stationCount[0].style.maxHeight = "65vh";
     }
-    else{
-        return;
+    
+
+    if( (h < 700) && (h>625)){
+        console.log('h');
+        chart2[0].style.maxWidth="70vw";
+        //chart2[0].style.maxHeight="0vh";
+        
+        var c2 = document.getElementById("c2");
+        c2.setAttribute("viewBox", "-100 180 600 500"); //500 400
+
+    }
+    else if( (h < 625) && (h>400)){
+        console.log('h');
+        chart2[0].style.maxWidth="60vw";
+        var c2 = document.getElementById("c2");
+        c2.setAttribute("viewBox", "-100 180 550 450");
+        
+
     }
 }
 
@@ -1482,7 +1498,7 @@ function createScatterChartInMapChart(){
             .attr("text-anchor", "end")
             .attr("x",30 + mapWidth*xRatio+chartOneWidth/2)
             .attr("y", 10+mapHeight*yRatio+chartOneHeight) //mapHeight*yRatio
-            .text("Antal mätningar");
+            .text("Antal mätningar"); //"Antal mätningar"
         
         // Y axis is rendered
         d3.select(".chart2").append('g')
@@ -1972,8 +1988,11 @@ function createStationPlot(){
 
         if(yearData =="None"){
 
+           
+
             xAxis = d3.axisBottom(xScale)
             .tickSizeOuter(0).ticks(4);
+
             d3.select(".x-axis").remove();
             d3.select(".chart2").append('g')
             .attr('class', 'x-axis')
@@ -1982,6 +2001,7 @@ function createStationPlot(){
             .attr('transform', `translate(${mapWidth*xRatio},${mapHeight*yRatio+ chartOneHeight - marginChart1.bottom })`) //mapHeight*yRatio
             .call( xAxis );
 
+            d3.select(".x-label").remove();
             d3.select(".chart2").append("text")
             .attr("class", "x-label")
             .style("font-size", "80%")
