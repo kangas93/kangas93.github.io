@@ -34,8 +34,8 @@ body {
 }
 
 .clickable-container {margin:0px !important; 
-    background-color:#7b7b7b !important }
-.clickable-container:hover {color:#000 !important;background-color:#afafaf !important}
+    background-color:#fcbba1 !important }
+.clickable-container:hover {color:#000 !important;background-color:#ef3b2c !important}
 .clickable-container:active {border:0px !important; outline: 0}
 .clickable-container:focus {border:0px !important; outline: 0}
 

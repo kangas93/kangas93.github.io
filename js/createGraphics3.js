@@ -736,7 +736,7 @@ function createStackedBarChart(){
             .attr("transform", `translate(${xTrans},0)`)
             .attr("x", stackedWidth/2 + 70)
             .attr("y", stackedHeight+10)
-            .text("Antal dagar");
+            .text("Medel antal dagar");
         
         d3.select('.barStacked').append('g')
         .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
@@ -883,7 +883,7 @@ function createStackedBarChartTropical(){
             .attr("transform", `translate(${xTrans},0)`)
             .attr("x", stackedWidth/2 + 70)
             .attr("y", stackedHeight+10)
-            .text("Antal dagar");
+            .text("Medel antal dagar");
         
         d3.select('.barStacked-2').append('g')
         .attr('transform', `translate(${xTrans+stackedWidth - marginStacked.right - marginStacked.left},0)`)
