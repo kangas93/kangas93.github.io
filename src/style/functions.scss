@@ -1,0 +1,18 @@
+@use "sass:map";
+
+
+@function spaces($space_value) {
+    @return map.get($space, $space_value);
+}
+
+@function colors($color_value) {
+    @return map.get($color, $color_value);
+}
+
+@function text-colors($text_color_value) {
+    @return map.get($text-color, $text-color_value);
+}
+
+@function get-rem($pixels) {
+    @return map.get($font-sizes, $pixels)
+}

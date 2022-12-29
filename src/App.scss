@@ -1,0 +1,27 @@
+//Global
+@import 'style/functions.scss';
+@import 'style/variables.scss';
+@import 'style/typography.scss';
+
+//Modules
+@import 'style/navigation.scss';
+
+
+//Pages
+@import 'style/home.scss';
+
+.main-container {
+    padding: spaces("medium");
+    background: colors('ebony');
+    color: text-colors('ebony');
+    //height: 100vh;
+}
+
+@media(max-width: $screen-size-small) {
+    .main-container {
+
+        //width: 100vw;
+        height: initial;
+    }
+
+}

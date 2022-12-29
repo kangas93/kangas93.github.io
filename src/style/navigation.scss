@@ -1,0 +1,20 @@
+.navigation {
+    //width: 100%;
+    padding: spaces(mediumlarge) spaces("medium");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $english-violet;
+
+    &__link {
+        padding: spaces("medium");
+
+        color: text-colors('english-violet');
+
+        &:hover {
+            background: $ebony;
+            border-radius: 8px;
+        }
+
+    }
+}

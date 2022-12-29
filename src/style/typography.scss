@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'ChivoMonoRegular';
+    src: url('../assets/fonts/Chivo_Mono/static/ChivoMono-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'RubikDirtRegular';
+    src: url('../assets/fonts/Rubik_Dirt/RubikDirt-Regular.ttf');
+}
+
+
+
+.typo_style_main {
+    font-family: 'ChivoMonoRegular';
+}
+
+.typo_style_secondary {
+    font-family: 'RubikDirtRegular';
+}
+
+p {
+    @extend .typo_style_main;
+}
+
+a {
+    @extend .typo_style_main;
+}
+
+li {
+    @extend .typo_style_main;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    @extend .typo_style_main;
+}
+
+h1 {
+    font-size: get-rem('40');
+}
+
+h2 {
+    font-size: get-rem('32');
+}
+
+h3 {
+    font-size: get-rem('24');
+}
+
+h4 {
+    font-size: get-rem('20');
+}
+
+p {
+    font-size: get-rem('16');
+}
