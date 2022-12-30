@@ -2,7 +2,9 @@
 function Projects() {
     return (
         <>
-            <p>This is the Projects pages</p>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                <h1 style={{ fontSize: '2.0rem' }}>Work-in-progress</h1>
+            </div>
         </>
     )
 }
