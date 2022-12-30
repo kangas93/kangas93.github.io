@@ -6,14 +6,27 @@ interface Job {
     description: string;
 }
 
-const education = [
-    "Exchange program at DTU Technical University of Denmark, 30 ECTS,  Spring semester 2020",
-    "Master’s program in Computer Science, KTH Royal Institute of Technology, 120 ECTS, 2019 - 2021",
-    "Bachelor’s program in Media Technology, KTH Royal Institute of Technology, 180 ECTS, 2017 - 2019"]
+interface EducationProgram {
+    program: string;
+    credits: string;
+    period: string;
+}
+
+const skills = ['Clean code', 'Vue.js', 'React.js', 'TypeScript', 'JavaScript', 'CSS', 'SCSS', 'Git', 'Python', 'Docker', 'Usability', 'Accessability', 'C#', '.NET']
+
+const educations: EducationProgram[] = [
+    { program: "Exchange program at DTU Technical University of Denmark", credits: "30 ECTS", period: "Spring semester 2020" },
+    { program: "Master’s program in Computer Science, KTH Royal Institute of Technology", credits: "120 ECTS", period: "2019 - 2021" },
+    { program: "Bachelor’s program in Media Technology, KTH Royal Institute of Technology", credits: "180 ECTS", period: "2017 - 2019" }]
 
 const worklife: Job[] = [
     { titel: "Full-stack developer", company: "Tikab", start_period: "October 2022", end_period: "December 2022", description: "Full-stack development with React, Python, Django and Three.js" },
     { titel: "Front-end developer", company: "Valtech", start_period: "September 2021", end_period: "October 2022", description: "Technical consultant with focus on front-end development." },
-    { titel: "Master thesis", company: "SVT Interactive", start_period: "January 2021", end_period: "June 2021", description: "Master thesis conducted at SVT Interactive with focus on usability in data visualizations." },
+    { titel: "Master's thesis", company: "SVT Interactive", start_period: "January 2021", end_period: "June 2021", description: "Master thesis conducted at SVT Interactive with focus on usability in data visualizations." },
 ]
-export { education, worklife } 
+
+const intro = "Hi!\n\nMy name is Jussi, I’m a front-end developer and aspiring full-stack developer. Welcome to my cv site!\nHere you can find info about me, my skills and projects (work-in-progress)."
+const biography = "As a developer I like to practice clean code principles to create code that is both easy to read and to maintain. Collaboration is close to my heart and I believe the best code is often produced together through collaboration. It’s also more fun!"
+
+
+export { educations, worklife, skills, biography, intro } 
