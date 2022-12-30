@@ -5,30 +5,25 @@ $space: (
     "large": 32px,
     "xlarge": 40px
 );
-
-$cerise: rgba(218, 65, 103, 1);
-$english-violet: rgba(72, 58, 88, 1);
-$cambridge-blue: rgba(158, 197, 171, 1);
-$dark-green: rgba(1, 32, 15, 1);
-$ebony: rgba(95, 99, 79, 1);
-
 $screen-size-small: 600px;
 
+$primary-background-color: #5f634f !default;
+$secondary-background-color: #483a58 !default;
+$tertiary-background-color: #da4167 !default;
+
 $color: (
-    'cerise': $cerise,
-    'english-violet': $english-violet,
-    'cambridge-blue': $cambridge-blue,
-    'dark-green': $dark-green,
-    'ebony': $ebony
-);
+    'pbc': $primary-background-color,
+    'sbc': $secondary-background-color,
+    'tbc': $tertiary-background-color,
+    ) !default;
 
 $text-color: (
-    'cerise': black,
-    'english-violet': white,
-    'cambridge-blue': white,
-    'dark-green': white,
-    'ebony': white
-);
+    'primary': white,
+    'secondary': black,
+    'tbc': black,
+    'pbc': white,
+    'sbc':white,
+    ) !default;
 $font-sizes: (
     '16': 1rem,
     '20': 1.25rem,
@@ -38,3 +33,15 @@ $font-sizes: (
     '36': 2.25rem,
     '40': 2.5rem,
 );
+
+.dark-theme {
+    @include set-theme(dark);
+}
+
+.hacker-theme {
+    @include set-theme(hacker);
+}
+
+.default-theme {
+    @include set-theme(default)
+}

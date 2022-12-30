@@ -1,0 +1,53 @@
+@mixin set-theme($theme) {
+
+    @if $theme ==default {
+        $primary-background-color: #5f634f !global;
+        $secondary-background-color: #483a58 !global;
+        $tertiary-background-color: #da4167 !global;
+
+        $color: ('pbc': $primary-background-color,
+            'sbc': $secondary-background-color,
+            'tbc': $tertiary-background-color,
+        ) !global;
+
+        $text-color: ('primary': white,
+            'secondary': black,
+            'tbc': black,
+            'pbc': white,
+            'sbc':white,
+        ) !global;
+    }
+
+    @if $theme ==dark {
+
+        $primary-background-color: black !global;
+        $secondary-background-color: gray !global;
+        $tertiary-background-color: pink !global;
+
+        $color: ('pbc': $primary-background-color,
+            'sbc': $secondary-background-color,
+            'tbc': $tertiary-background-color,
+        ) !global;
+    }
+
+    @if $theme ==hacker {
+
+        $primary-background-color: gray !global;
+        $secondary-background-color: black !global;
+        $tertiary-background-color: pink !global;
+
+        $color: ('pbc': $primary-background-color,
+            'sbc': $secondary-background-color,
+            'tbc': $tertiary-background-color,
+        ) !global;
+
+        $text-color: ('primary': green,
+            'secondary': white,
+            'tbc': black,
+            'pbc': white,
+            'sbc':green,
+        ) !global;
+    }
+
+
+}

@@ -14,5 +14,5 @@
 }
 
 @function get-rem($pixels) {
-    @return map.get($font-sizes, $pixels)
+    @return map.get($font-sizes, $pixels);
 }

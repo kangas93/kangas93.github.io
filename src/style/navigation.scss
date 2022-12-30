@@ -1,18 +1,17 @@
 .navigation {
-    //width: 100%;
     padding: spaces(mediumlarge) spaces("medium");
     display: flex;
     align-items: center;
     justify-content: center;
-    background: $english-violet;
+    background: colors('sbc');
 
     &__link {
         padding: spaces("medium");
 
-        color: text-colors('english-violet');
+        color: text-colors('sbc');
 
         &:hover {
-            background: $ebony;
+            background: colors('pbc');
             border-radius: 8px;
         }
 

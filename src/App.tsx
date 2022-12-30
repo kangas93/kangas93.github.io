@@ -5,7 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App default-theme">
       <header className='navigation'>
         <nav >
           <Link className='navigation__link' to="/">Home</Link>
