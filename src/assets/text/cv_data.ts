@@ -12,7 +12,7 @@ interface EducationProgram {
     period: string;
 }
 
-const skills = ['Clean code', 'Vue.js', 'React.js', 'TypeScript', 'JavaScript', 'CSS', 'SCSS', 'Git', 'Python', 'Docker', 'Usability', 'Accessability', 'C#', '.NET']
+const skills = ['Clean code', 'Vue.js', 'React.js', 'TypeScript', 'JavaScript', 'CSS', 'SCSS', 'Git', 'Python', 'Docker', 'Usability', 'Accessability', 'C#', '.NET', 'Data visualization']
 
 const educations: EducationProgram[] = [
     { program: "Exchange program at DTU Technical University of Denmark", credits: "30 ECTS", period: "Spring semester 2020" },
