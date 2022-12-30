@@ -11,16 +11,22 @@
         align-items: center;
         background: colors('sbc');
         border-radius: 16px;
-        padding: spaces(medium)
+        padding: spaces(medium);
+        margin-bottom: spaces(xlarge)
     }
 
     &__img-wrapper {
         max-width: 500px;
     }
 
-    &__section {
+    &__bio-section {
         padding: spaces("medium");
         max-width: 50%;
+
+        p {
+            white-space: pre-line;
+            font-size: get-rem('20');
+        }
     }
 
     &__img {
@@ -33,17 +39,48 @@
     }
 
     &__cv {
+
+        h2,
+        h3 {
+            margin-bottom: spaces(xlarge);
+        }
+
         li {
             list-style: none;
             margin-bottom: spaces(large);
         }
+
+        div {
+            margin-bottom: spaces(xxlarge)
+        }
     }
 
-    &__worklife {
+    &__worklife,
+    &__education {
         li {
             background: colors('sbc');
-            padding: spaces(medium) spaces(mediumlarge);
+            padding: spaces(medium) spaces(xlarge);
             border-radius: 32px;
+        }
+    }
+
+    &__skills {
+        width: 75%;
+
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: spaces(mediumlarge);
+            position: relative;
+            left: 15%;
+
+            li {
+                padding: spaces(small) spaces(medium);
+                margin: 0px;
+                border-radius: 16px;
+                background: colors('sbc');
+            }
         }
     }
 }
@@ -58,6 +95,10 @@
             align-items: center;
         }
 
+        &__bio-section {
+            max-width: unset;
+        }
+
         &__img-wrapper {
             max-width: 350px;
         }
@@ -65,6 +106,13 @@
         &__cv {
             ul {
                 padding: 0px;
+            }
+        }
+
+        &__worklife,
+        &__education {
+            li {
+                padding: spaces(medium) spaces(mediumlarge);
             }
         }
     }

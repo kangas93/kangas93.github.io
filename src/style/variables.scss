@@ -3,13 +3,15 @@ $space: (
     "medium": 16px,
     "mediumlarge": 24px,
     "large": 32px,
-    "xlarge": 40px
+    "xlarge": 40px,
+    'xxlarge': 80px,
 );
 $screen-size-small: 600px;
 
 $primary-background-color: #5f634f !default;
 $secondary-background-color: #483a58 !default;
 $tertiary-background-color: #da4167 !default;
+$outline-color: #00000045 !default;
 
 $color: (
     'pbc': $primary-background-color,

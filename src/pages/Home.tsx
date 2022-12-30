@@ -1,5 +1,5 @@
 import cv_picture from '../assets/images/Jussi_Kangas_VLTH9366.jpg'
-import { education, worklife } from '../assets/text/cv_data';
+import { educations, worklife, skills, biography, intro } from '../assets/text/cv_data';
 
 
 
@@ -11,17 +11,33 @@ function Home() {
                 <div className='home__img-wrapper'>
                     <img className="home__img" src={cv_picture} alt="Jussi Kangas"></img>
                 </div>
-                <div className='home__section'>
-                    <p>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
+                <div className='home__bio-section'>
+                    <h2>About me</h2>
+                    <p>{intro}</p>
+                    <p>{biography}</p>
                 </div>
             </section>
             <section className='home__cv'>
                 <h2> Curriculum Vitae</h2>
-                <div>
+                <div className="home__skills">
+                    <h3>Skills</h3>
+                    <ul>
+                        {skills.map((skill, index) => {
+                            return (<li key={skill}><p>{skill}</p></li>)
+                        })}
+
+                    </ul>
+
+                </div>
+                <div className='home__education'>
                     <h3> Education </h3>
                     <ul>
-                        {education.map((school, index) => {
-                            return (<li key={index}> <p>{school}</p></li>)
+                        {educations.map((education, index: number) => {
+                            return (<li key={index}>
+                                <h4>{'Education: ' + education.program}</h4>
+                                <h4>{'Credits: ' + education.credits}</h4>
+                                <h4>{'Period: ' + education.period}</h4>
+                            </li>)
                         })}
                     </ul>
 
@@ -30,7 +46,10 @@ function Home() {
                     <h3> Work-life experience</h3>
                     <ul> {worklife.map((job) => {
                         return (<li key={job.company}>
-                            <h4>{job.titel + ", " + job.company + ", " + job.start_period + " - " + job.end_period}</h4>
+                            <h4>{'Job: ' + job.titel} </h4>
+                            <h4>{'Company: ' + job.company} </h4>
+                            <h4>{'Period: ' + job.start_period + " - " + job.end_period} </h4>
+                            <h4>Description:</h4>
                             <p>{job.description}</p>
                         </li>)
                     })}</ul>
