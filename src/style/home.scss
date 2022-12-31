@@ -139,6 +139,12 @@
 
     .home {
 
+        &__titel {
+            max-height: 41px;
+            max-width: 80%;
+            padding-bottom: spaces(xlarge);
+        }
+
         &__bio {
             flex-direction: column;
             justify-content: initial;
