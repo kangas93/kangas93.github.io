@@ -1,0 +1,30 @@
+@mixin skill-move-animation($x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4, $duration) {
+
+    animation: skill-move $duration ease-in-out infinite;
+
+    @keyframes skill-move {
+        0% {
+            transform: translate(0px, 0px);
+        }
+
+        20% {
+            transform: translate($x1, $y1);
+        }
+
+        40% {
+            transform: translate($x2, $y2);
+        }
+
+        60% {
+            transform: translate($x3, $y3)
+        }
+
+        80% {
+            transform: translate($x4, $y4);
+        }
+
+        100% {
+            transform: translate(0px, 0px);
+        }
+    }
+}

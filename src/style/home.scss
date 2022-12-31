@@ -10,10 +10,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: colors('sbc');
+        background-image: linear-gradient(-225deg,
+                colors('sbc'),
+                colors('tbc'),
+
+            );
+        background-size: 200% auto;
         border-radius: 16px;
         padding: spaces(medium);
-        margin-bottom: spaces(xlarge)
+        margin-bottom: spaces(xlarge);
+        filter: drop-shadow(2px 2px 5px black);
     }
 
     &__img-wrapper {
@@ -59,9 +65,15 @@
     &__worklife,
     &__education {
         li {
-            background: colors('sbc');
+            background-image: linear-gradient(-225deg,
+                    colors('sbc'),
+                    colors('tbc'),
+
+                );
+            background-size: 200% auto;
             padding: spaces(medium) spaces(xlarge);
             border-radius: 32px;
+            filter: drop-shadow(2px 2px 5px black)
         }
     }
 
@@ -80,7 +92,40 @@
                 padding: spaces(small) spaces(medium);
                 margin: 0px;
                 border-radius: 16px;
-                background: colors('sbc');
+                background-image: linear-gradient(-225deg,
+                        colors('sbc'),
+                        colors('tbc'),
+
+                    );
+                background-size: 200% auto;
+                filter: drop-shadow(2px 2px 5px black)
+            }
+
+            $distance: 4px;
+
+            li:nth-child(even) {
+                @include skill-move-animation(-$distance, -$distance, -$distance, $distance, $distance, -$distance, -$distance, -$distance, 15.2s);
+                animation-delay: 0.5s;
+
+            }
+
+            li:nth-child(odd) {
+                @include skill-move-animation($distance, $distance, $distance, -$distance, -$distance, $distance, -$distance, $distance, 20.2s);
+            }
+
+            li:nth-child(3n) {
+                @include skill-move-animation($distance, -$distance, $distance, $distance, -$distance, $distance, -$distance, -$distance, 10.2s);
+                animation-delay: 0.3s;
+            }
+
+            li:nth-child(9n) {
+                @include skill-move-animation(-$distance, $distance, -$distance, -$distance, $distance, -$distance, $distance, $distance, 12.2s);
+
+            }
+
+            li:last-child {
+                animation-delay: 0.8s;
+
             }
         }
     }
