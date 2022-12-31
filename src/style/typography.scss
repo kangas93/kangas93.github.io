@@ -4,8 +4,13 @@
 }
 
 @font-face {
-    font-family: 'RubikDirtRegular';
-    src: url('../assets/fonts/Rubik_Dirt/RubikDirt-Regular.ttf');
+    font-family: 'MajorMono';
+    src: url('../assets/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'ShareTechMono';
+    src: url('../assets/fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf');
 }
 
 
@@ -15,7 +20,9 @@
 }
 
 .typo_style_secondary {
-    font-family: 'RubikDirtRegular';
+    //font-family: 'BungeeShade';
+    font-family: 'ShareTechMono'
+
 }
 
 p {
@@ -32,7 +39,11 @@ li {
 
 h1,
 h2,
-h3,
+h3 {
+    @extend .typo_style_secondary;
+}
+
+
 h4 {
     @extend .typo_style_main;
 }
