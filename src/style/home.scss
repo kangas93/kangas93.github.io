@@ -6,6 +6,10 @@
     color: text-colors('primary');
     max-width: $page-max-width;
 
+    &__titel {
+        margin: spaces(xxlarge) 0px;
+    }
+
     &__bio {
         display: flex;
         justify-content: center;

@@ -1,18 +1,45 @@
+import { useEffect } from 'react';
 import cv_picture from '../assets/images/Jussi_Kangas_VLTH9366.jpg'
 import { educations, worklife, skills, biography, intro } from '../assets/text/cv_data';
+import Typed from 'typed.js';
 
 
 
 function Home() {
+    useEffect(() => {
+        var options = {
+            typeSpeed: 100,
+            backSpeed: 30,
+            stringsElement: '.home__titel__elements',
+            loop: true,
+            loopCount: Infinity,
+            backDelay: 1000,
+        };
+
+        var typed = new Typed('.home__titel__typed', options);
+
+        return function cleanup() {
+            typed.destroy()
+        }
+
+    }, [])
+
     return (
         <div className='home'>
-            <h1> Jussi Kangas</h1>
+            <h1 className='home__titel'>
+                <div className='home__titel__elements'>
+                    <span>Welcome!</span>
+                    <span>My name is Jussi.</span>
+                    <span>I'm a developer.</span>
+                </div>
+                <span className='home__titel__typed'></span>
+            </h1>
             <section className='home__bio'>
                 <div className='home__img-wrapper'>
                     <img className="home__img" src={cv_picture} alt="Jussi Kangas"></img>
                 </div>
                 <div className='home__bio-section'>
-                    <h2>About me</h2>
+                    <h2>About Jussi Kangas</h2>
                     <p>{intro}</p>
                     <p>{biography}</p>
                 </div>

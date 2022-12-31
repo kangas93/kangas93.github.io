@@ -25,7 +25,7 @@ const worklife: Job[] = [
     { titel: "Master's thesis", company: "SVT Interactive", start_period: "January 2021", end_period: "June 2021", description: "Master thesis conducted at SVT Interactive with focus on usability in data visualizations." },
 ]
 
-const intro = "Hi!\n\nMy name is Jussi, I’m a front-end developer and aspiring full-stack developer. Welcome to my cv site!\nHere you can find info about me, my skills and projects (work-in-progress)."
+const intro = "Hi!\n\nMy name is Jussi Kangas, I’m a front-end developer and aspiring full-stack developer.\nOn this site you can find info about my skills, my experience and projects (work-in-progress)."
 const biography = "As a developer I like to practice clean code principles to create code that is both easy to read and to maintain. Collaboration is close to my heart and I believe the best code is often produced together through collaboration. It’s also more fun!"
 
 
