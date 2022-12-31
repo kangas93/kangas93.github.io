@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.bf23bdf3.css",
-    "main.js": "/static/js/main.43f13349.js",
+    "main.css": "/static/css/main.ce1f7ced.css",
+    "main.js": "/static/js/main.4e759e3b.js",
     "static/js/787.c566475e.chunk.js": "/static/js/787.c566475e.chunk.js",
-    "static/media/RubikDirt-Regular.ttf": "/static/media/RubikDirt-Regular.7c2e9501e6fa6713b659.ttf",
     "static/media/Jussi_Kangas_VLTH9366.jpg": "/static/media/Jussi_Kangas_VLTH9366.a53f4008609ed83cb7bd.jpg",
+    "static/media/MajorMonoDisplay-Regular.ttf": "/static/media/MajorMonoDisplay-Regular.68a265ac783795c7bcc1.ttf",
     "static/media/ChivoMono-Regular.ttf": "/static/media/ChivoMono-Regular.a627697a9b0005aa6c30.ttf",
+    "static/media/ShareTechMono-Regular.ttf": "/static/media/ShareTechMono-Regular.d753b5dc50d171ecc94b.ttf",
     "index.html": "/index.html",
-    "main.bf23bdf3.css.map": "/static/css/main.bf23bdf3.css.map",
-    "main.43f13349.js.map": "/static/js/main.43f13349.js.map",
+    "main.ce1f7ced.css.map": "/static/css/main.ce1f7ced.css.map",
+    "main.4e759e3b.js.map": "/static/js/main.4e759e3b.js.map",
     "787.c566475e.chunk.js.map": "/static/js/787.c566475e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bf23bdf3.css",
-    "static/js/main.43f13349.js"
+    "static/css/main.ce1f7ced.css",
+    "static/js/main.4e759e3b.js"
   ]
 }
