@@ -9,24 +9,18 @@ $space: (
 $screen-size-small: 600px;
 $page-max-width: 1200px;
 
-$primary-background-color: #5f634f !default;
-$secondary-background-color: #483a58 !default;
-$tertiary-background-color: #da4167 !default;
-$outline-color: #00000045 !default;
-
 $color: (
-    'pbc': $primary-background-color,
-    'sbc': $secondary-background-color,
-    'tbc': $tertiary-background-color,
-    ) !default;
+    'primary-background': var(--primary-background-color),
+    'secondary-background': var(--secondary-background-color),
+    'tertiary-background': var(--tertiary-background-color),
+    'outline-color': var(--outline-color)
+);
 
 $text-color: (
-    'primary': white,
-    'secondary': black,
-    'tbc': black,
-    'pbc': white,
-    'sbc':white,
-    ) !default;
+    'primary': var(--primary-text-color),
+    'secondary': var(--secondary-text-color),
+);
+
 $font-sizes: (
     '16': 1rem,
     '20': 1.25rem,
@@ -40,15 +34,3 @@ $font-sizes: (
     '52': 3.25,
     '56': 3.5rem,
 );
-
-.dark-theme {
-    @include set-theme(dark);
-}
-
-.hacker-theme {
-    @include set-theme(hacker);
-}
-
-.default-theme {
-    @include set-theme(default)
-}

@@ -15,8 +15,8 @@
         justify-content: center;
         align-items: center;
         background-image: linear-gradient(-225deg,
-                colors('sbc'),
-                colors('tbc'),
+                colors('secondary-background'),
+                colors('tertiary-background'),
 
             );
         background-size: 200% auto;
@@ -70,8 +70,8 @@
     &__education {
         li {
             background-image: linear-gradient(-225deg,
-                    colors('sbc'),
-                    colors('tbc'),
+                    colors('secondary-background'),
+                    colors('tertiary-background'),
 
                 );
             background-size: 200% auto;
@@ -97,8 +97,8 @@
                 margin: 0px;
                 border-radius: 16px;
                 background-image: linear-gradient(-225deg,
-                        colors('sbc'),
-                        colors('tbc'),
+                        colors('secondary-background'),
+                        colors('tertiary-background'),
 
                     );
                 background-size: 200% auto;

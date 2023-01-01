@@ -1,7 +1,7 @@
 //Global
 @import 'style/functions.scss';
 @import 'style/animations.scss';
-@import 'style/theme.scss';
+@import 'style/theme.css';
 @import 'style/variables.scss';
 @import 'style/typography.scss';
 
@@ -16,8 +16,8 @@
 
 .main-container {
     padding: spaces("medium");
-    background: colors('pbc');
-    color: text-colors('pbc');
+    background: colors('primary-background');
+    color: text-colors('primary');
     display: flex;
     flex-direction: column;
     align-items: center;

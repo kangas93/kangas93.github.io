@@ -3,19 +3,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: colors('sbc');
+    background: colors('secondary-background');
     position: sticky;
     top: 0px;
     z-index: 100;
-    border-bottom: 1px solid $outline-color;
+    border-bottom: 1px solid colors('outline-color');
 
     &__link {
         padding: spaces("medium");
 
-        color: text-colors('sbc');
+        color: text-colors('primary');
 
         &:hover {
-            background: colors('pbc');
+            background: colors('primary-background');
             border-radius: 8px;
         }
 

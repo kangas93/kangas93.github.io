@@ -1,0 +1,25 @@
+:root {
+    --primary-background-color: #5f634f;
+    --secondary-background-color: #483a58;
+    --tertiary-background-color: #da4167;
+    --primary-text-color: white;
+    --secondary-text-color: black;
+    --outline-color: #00000045;
+}
+
+.dark-theme {
+    --primary-background-color: #07023f;
+    --secondary-background-color: #161a68;
+    --tertiary-background-color: #fffb05;
+    --primary-text-color: white;
+    --secondary-text-color: black;
+}
+
+.hacker-theme {
+    --primary-background-color: #202020;
+    --secondary-background-color: #4a4949;
+    --tertiary-background-color: white;
+    --primary-text-color: #14fe14;
+    --secondary-text-color: white;
+
+}
