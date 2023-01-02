@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.scss';
 import { Link, Outlet } from "react-router-dom";
 import { Button, Drawer, SelectChangeEvent, StyledEngineProvider } from '@mui/material';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import SiteSettings from './components/SiteSettings';
+import CloseIcon from '@mui/icons-material/Close';
 import { COLOR_THEMES } from './constants/constants';
 
 
@@ -53,6 +54,7 @@ function App() {
         <main className='main-container'>
           <Outlet></Outlet>
           <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} className="drawer">
+            <Button className="drawer__close" onClick={() => setOpenDrawer(false)}> <CloseIcon></CloseIcon></Button>
             <SiteSettings theme={colorTheme} setTheme={handleThemeChange}></SiteSettings>
           </Drawer>
         </main>

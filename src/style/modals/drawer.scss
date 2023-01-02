@@ -8,4 +8,12 @@
     &__toggle {
         color: text-colors('primary')
     }
+
+    &__close {
+        position: relative;
+        margin-left: auto;
+        padding: spaces(medium);
+        width: min-content;
+        color: text-colors('primary')
+    }
 }
