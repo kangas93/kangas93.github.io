@@ -18,8 +18,17 @@
 .hacker-theme {
     --primary-background-color: #202020;
     --secondary-background-color: #4a4949;
-    --tertiary-background-color: white;
+    --tertiary-background-color: #cebfbf;
     --primary-text-color: #14fe14;
     --secondary-text-color: white;
+
+}
+
+.tropical-theme {
+    --primary-background-color: #f58032;
+    --secondary-background-color: #f54f32;
+    --tertiary-background-color: #73f532;
+    --primary-text-color: white;
+    --secondary-text-color: black;
 
 }

@@ -1,0 +1,11 @@
+.drawer {
+
+    .MuiPaper-root {
+        background: colors('secondary-background');
+        color: text-colors('primary')
+    }
+
+    &__toggle {
+        color: text-colors('primary')
+    }
+}

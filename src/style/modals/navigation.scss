@@ -1,13 +1,23 @@
 .navigation {
     padding: spaces(mediumlarge) spaces("medium");
+    background: colors('secondary-background');
     display: flex;
     align-items: center;
     justify-content: center;
-    background: colors('secondary-background');
     position: sticky;
     top: 0px;
     z-index: 100;
     border-bottom: 1px solid colors('outline-color');
+
+    &__page-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: min-content;
+        margin-right: auto;
+        margin-left: auto;
+
+    }
 
     &__link {
         padding: spaces("medium");

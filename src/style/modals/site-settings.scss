@@ -1,0 +1,19 @@
+.site-settings {
+    color: text-colors('primary');
+
+    &__text {
+        color: text-colors('primary');
+    }
+
+    &__color-menu {
+        svg {
+            color: text-colors('primary');
+        }
+
+        fieldset {
+            border-color: text-colors('primary');
+        }
+    }
+
+
+}
