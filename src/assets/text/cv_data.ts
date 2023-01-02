@@ -21,7 +21,7 @@ const educations: EducationProgram[] = [
 
 const worklife: Job[] = [
     { titel: "Full-stack developer", company: "Tikab", start_period: "October 2022", end_period: "December 2022", description: "Full-stack development with React, Python, Django and Three.js" },
-    { titel: "Front-end developer", company: "Valtech", start_period: "September 2021", end_period: "October 2022", description: "Technical consultant with focus on front-end development." },
+    { titel: "Front-end developer", company: "Valtech", start_period: "September 2021", end_period: "October 2022", description: "Technical consultant with focus on front-end development. The main client during this period was Kinnarps. The tech-stack consisted of Vue.js, .NET, Episerver, and SCSS." },
     { titel: "Master's thesis", company: "SVT Interactive", start_period: "January 2021", end_period: "June 2021", description: "Master thesis conducted at SVT Interactive with focus on usability in data visualizations." },
 ]
 
