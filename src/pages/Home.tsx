@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cv_picture from '../assets/images/Jussi_Kangas_VLTH9366.jpg'
 import { educations, worklife, skills, biography, intro } from '../assets/text/cv_data';
 import Typed from 'typed.js';
@@ -6,6 +6,9 @@ import Typed from 'typed.js';
 
 
 function Home() {
+    const [skillStates, setSkillStates] = useState<Boolean[]>([])
+    const skillStateRef = useRef(skillStates);
+
     useEffect(() => {
         var options = {
             typeSpeed: 100,
@@ -23,6 +26,27 @@ function Home() {
         }
 
     }, [])
+
+    useEffect(() => {
+        const initialSkillStates = skills.map((skill) => false)
+        setSkillStates(initialSkillStates);
+    }, [])
+
+    const onSkillButtonClick = (index: number) => {
+        const tempSkills = [...skillStates];
+        if (!tempSkills[index]) {
+            tempSkills[index] = true;
+            skillStateRef.current = tempSkills;
+            setSkillStates(tempSkills)
+
+            setTimeout(() => {
+                const tempSkills = [...skillStateRef.current]
+                tempSkills[index] = false;
+                skillStateRef.current = tempSkills;
+                setSkillStates(tempSkills)
+            }, 4010)
+        }
+    }
 
     return (
         <div className='home'>
@@ -50,7 +74,7 @@ function Home() {
                     <h3>Skills</h3>
                     <ul>
                         {skills.map((skill, index) => {
-                            return (<li key={skill}><p>{skill}</p></li>)
+                            return (<li key={skill}><button onClick={() => onSkillButtonClick(index)} className={skillStates[index] ? "home__skills--dissolve" : ""} type="button" ><p>{skill}</p></button></li>)
                         })}
 
                     </ul>

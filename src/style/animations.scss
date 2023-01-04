@@ -28,3 +28,21 @@
         }
     }
 }
+
+@mixin skill-dissolve-animation {
+    animation: skill-dissolve 4s ease-in-out;
+
+    @keyframes skill-dissolve {
+        0% {
+            filter: blur(0px) opacity(100%);
+        }
+
+        50% {
+            filter: blur(5px) opacity(0%);
+        }
+
+        100% {
+            filter: blur(0px) opacity(100%);
+        }
+    }
+}

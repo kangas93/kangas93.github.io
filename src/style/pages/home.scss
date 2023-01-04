@@ -93,16 +93,21 @@
             left: 15%;
 
             li {
-                padding: spaces(small) spaces(medium);
                 margin: 0px;
-                border-radius: 16px;
-                background-image: linear-gradient(-225deg,
-                        colors('secondary-background'),
-                        colors('tertiary-background'),
+                filter: drop-shadow(2px 2px 5px black);
 
-                    );
-                background-size: 200% auto;
-                filter: drop-shadow(2px 2px 5px black)
+                button {
+                    padding: spaces(small) spaces(medium);
+                    background-image: linear-gradient(-225deg,
+                            colors('secondary-background'),
+                            colors('tertiary-background'),
+
+                        );
+                    background-size: 200% auto;
+                    border: none;
+                    border-radius: 16px;
+                    color: text-colors('primary')
+                }
             }
 
             $distance: 4px;
@@ -131,6 +136,10 @@
                 animation-delay: 0.8s;
 
             }
+        }
+
+        &--dissolve {
+            @include skill-dissolve-animation;
         }
     }
 }
