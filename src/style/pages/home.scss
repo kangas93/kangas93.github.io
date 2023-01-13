@@ -189,5 +189,11 @@
                 padding: spaces(medium) spaces(mediumlarge);
             }
         }
+
+        &__skills {
+            button {
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
     }
 }
