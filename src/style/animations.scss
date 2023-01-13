@@ -2,6 +2,12 @@
 
     animation: skill-move $duration ease-in-out infinite;
 
+
+    @media (prefers-reduced-motion) {
+        animation: none;
+
+    }
+
     @keyframes skill-move {
         0% {
             transform: translate(0px, 0px);
@@ -48,7 +54,12 @@
 }
 
 @mixin card-animation {
-    animation: card-shake 1s ease-in-out infinite;
+    animation: card-shake 2s ease-in-out infinite;
+
+    @media (prefers-reduced-motion) {
+        animation: none;
+
+    }
 
     @keyframes card-shake {
         0% {
