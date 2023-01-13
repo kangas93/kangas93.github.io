@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.987230b9.css",
-    "main.js": "/static/js/main.56b69f11.js",
+    "main.js": "/static/js/main.b6f7dc6d.js",
     "static/js/787.c566475e.chunk.js": "/static/js/787.c566475e.chunk.js",
     "static/media/Jussi_Kangas_VLTH9366.jpg": "/static/media/Jussi_Kangas_VLTH9366.a53f4008609ed83cb7bd.jpg",
     "static/media/MajorMonoDisplay-Regular.ttf": "/static/media/MajorMonoDisplay-Regular.68a265ac783795c7bcc1.ttf",
@@ -9,11 +9,11 @@
     "static/media/ShareTechMono-Regular.ttf": "/static/media/ShareTechMono-Regular.d753b5dc50d171ecc94b.ttf",
     "index.html": "/index.html",
     "main.987230b9.css.map": "/static/css/main.987230b9.css.map",
-    "main.56b69f11.js.map": "/static/js/main.56b69f11.js.map",
+    "main.b6f7dc6d.js.map": "/static/js/main.b6f7dc6d.js.map",
     "787.c566475e.chunk.js.map": "/static/js/787.c566475e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.987230b9.css",
-    "static/js/main.56b69f11.js"
+    "static/js/main.b6f7dc6d.js"
   ]
 }
