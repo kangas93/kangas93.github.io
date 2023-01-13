@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.scss';
+import linkedInLogo from './assets/images/LI-In-Bug.png'
 import { Link, Outlet } from "react-router-dom";
 import { Button, Drawer, SelectChangeEvent, StyledEngineProvider } from '@mui/material';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -58,9 +59,14 @@ function App() {
             <SiteSettings theme={colorTheme} setTheme={handleThemeChange}></SiteSettings>
           </Drawer>
         </main>
-        <footer></footer>
-      </div>
-    </StyledEngineProvider>
+        <footer className='footer'>
+          <p>Email: <br /> <br /> jussi.v.kangas@gmail.com</p>
+          <a className="footer__linked-in" href='https://www.linkedin.com/in/jussi-kangas-49309741/' target="_blank">
+            <img src={linkedInLogo} alt="Linked in logo"></img>
+          </a>
+        </footer>
+      </div >
+    </StyledEngineProvider >
   );
 }
 
