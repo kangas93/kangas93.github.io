@@ -34,7 +34,7 @@ function Home() {
 
     useEffect(() => {
         let options = {
-            rootMargin: '-17% 0% -17% 0%',
+            rootMargin: '-15% 0% -12% 0%',
             threshold: [0.8, 1.0]
         }
 
