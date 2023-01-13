@@ -41,7 +41,7 @@ function Home() {
         const targets = document.getElementsByClassName("card")
         const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio == 1) {
+                if (entry.isIntersecting && entry.intersectionRatio === 1) {
                     let elem = entry.target;
                     elem.classList.add("card-animation")
                 }
