@@ -68,7 +68,8 @@
 
     &__worklife,
     &__education {
-        li {
+        .card {
+            transition: background-position 0.5s ease-in;
             background-image: linear-gradient(-225deg,
                     colors('secondary-background'),
                     colors('tertiary-background'),
@@ -77,7 +78,14 @@
             background-size: 200% auto;
             padding: spaces(medium) spaces(xlarge);
             border-radius: 32px;
-            filter: drop-shadow(2px 2px 5px black)
+            filter: drop-shadow(2px 2px 5px black);
+
+        }
+
+        .card-animation {
+            background-position-x: 80%;
+            @include card-animation;
+
         }
     }
 

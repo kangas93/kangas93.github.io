@@ -46,3 +46,27 @@
         }
     }
 }
+
+@mixin card-animation {
+    animation: card-shake 1s ease-in-out infinite;
+
+    @keyframes card-shake {
+        0% {
+            transform: translateX(0px);
+        }
+
+        25% {
+            transform: translateX(2px);
+        }
+
+        75% {
+            transform: translateX(-2px);
+        }
+
+        100% {
+            transform: translateX(0px);
+        }
+
+
+    }
+}

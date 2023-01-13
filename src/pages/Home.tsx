@@ -32,6 +32,36 @@ function Home() {
         setSkillStates(initialSkillStates);
     }, [])
 
+    useEffect(() => {
+        let options = {
+            rootMargin: '-17% 0% -17% 0%',
+            threshold: [0.8, 1.0]
+        }
+
+        const targets = document.getElementsByClassName("card")
+        const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio == 1) {
+                    let elem = entry.target;
+                    elem.classList.add("card-animation")
+                }
+                else if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
+                    let elem = entry.target;
+                    if (elem.classList.contains("card-animation")) elem.classList.remove("card-animation")
+                }
+            });
+        }
+
+        let observer = new IntersectionObserver(intersectionCallback, options);
+        console.log(targets)
+        Array.from(targets).forEach((target) => {
+            console.log(target)
+            observer.observe(target)
+        })
+
+
+    }, [])
+
     const onSkillButtonClick = (index: number) => {
         const tempSkills = [...skillStates];
         if (!tempSkills[index]) {
@@ -84,7 +114,7 @@ function Home() {
                     <h3> Education </h3>
                     <ul>
                         {educations.map((education, index: number) => {
-                            return (<li key={index}>
+                            return (<li key={index} className="card">
                                 <h4>{'Education: ' + education.program}</h4>
                                 <h4>{'Credits: ' + education.credits}</h4>
                                 <h4>{'Period: ' + education.period}</h4>
@@ -96,7 +126,7 @@ function Home() {
                 <div className='home__worklife'>
                     <h3> Work-life experience</h3>
                     <ul> {worklife.map((job) => {
-                        return (<li key={job.company}>
+                        return (<li key={job.company} className="card">
                             <h4>{'Job: ' + job.titel} </h4>
                             <h4>{'Company: ' + job.company} </h4>
                             <h4>{'Period: ' + job.start_period + " - " + job.end_period} </h4>
