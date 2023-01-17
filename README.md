@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# About this repository
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains Jussi Kangas CV site. It's currently a work-in-progress but the main Home page is fairly finished. The site works best using Chrome, there might be CSS bugs present in Safari.
+
+Technologies used:
+ - React
+ - TypeScript
+ - SCSS
+ - MUI
+
+The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Prerequisites
+
+NPM v8.6.0 should be installed (might work with older versions also).
+
+## Getting started
+
+Download the repository. The install all the dependencies with: ``` npm install ```. After that you should be good to go!
 
 ## Available Scripts
 
