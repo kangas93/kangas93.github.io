@@ -45,7 +45,7 @@ function Home() {
                     let elem = entry.target;
                     elem.classList.add("card-animation")
                 }
-                else if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
+                else if (entry.isIntersecting && entry.intersectionRatio >= 0.8) {
                     let elem = entry.target;
                     if (elem.classList.contains("card-animation")) elem.classList.remove("card-animation")
                 }
@@ -53,11 +53,11 @@ function Home() {
         }
 
         let observer = new IntersectionObserver(intersectionCallback, options);
-        console.log(targets)
         Array.from(targets).forEach((target) => {
-            console.log(target)
             observer.observe(target)
         })
+
+        return () => { observer.disconnect() }
 
 
     }, [])
